@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <pre>
  *
@@ -21,9 +24,14 @@ import org.apache.ibatis.annotations.Select;
  * --------------------------------------------------------------------
  * </pre>
  */
-@Mapper
+
+
 public interface UserMapper {
 
+    User findById(String id);
+
+    List<Map<String,Object>> findMapById(String id);
+
     @Select("select * from user where id = #{id} ")
-    User findById(@Param("id") String id);
+    User findByIdA(@Param("id") String id);
 }

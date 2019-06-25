@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <pre>
  *
@@ -29,13 +32,41 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes={Application.class})// 指定启动类
 public class demoTest {
 
+
+
     @Autowired
     private UserMapper userMapper;
 
     @Test
     public void testOne(){
         System.out.println("test hello 1");
-        User user =userMapper.findById("11");
+
+    }
+
+    @Test
+    public void test(){
+
+        System.out.println("test hello 1");
+        User user =userMapper.findByIdA("11");
         System.out.println(user.getName());
+
+        user =userMapper.findById("11");
+        System.out.println(user.getName());
+
+    }
+
+    @Test
+    public void test1(){
+
+
+        List<Map<String,Object>> list =userMapper.findMapById("11");
+
+        for (Map<String,Object> map: list){
+            System.out.println(map.toString());
+        }
+
+
+
+
     }
 }

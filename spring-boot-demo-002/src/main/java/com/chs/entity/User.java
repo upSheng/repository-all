@@ -23,6 +23,7 @@ public class User {
     private int age;
     private Date createTime;
     private String name;
+    private String realName;
 
     public String getId() {
         return id;
@@ -54,5 +55,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }
