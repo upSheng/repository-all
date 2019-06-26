@@ -1,6 +1,6 @@
-package com.chs;
+package com.chs.dao;
 
-import com.chs.dao.UserMapper;
+import com.chs.Application;
 import com.chs.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,44 +29,48 @@ import java.util.Map;
  */
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={Application.class})// 指定启动类
-public class demoTest {
-
+@SpringBootTest(classes = {Application.class})// 指定启动类
+public class UserMapperTest {
 
 
     @Autowired
     private UserMapper userMapper;
 
-    @Test
-    public void testOne(){
-        System.out.println("test hello 1");
-
-    }
 
     @Test
-    public void test(){
-
-        System.out.println("test hello 1");
-        User user =userMapper.findByIdA("11");
-        System.out.println(user.getName());
-
-        user =userMapper.findById("11");
+    public void findByIdTest() {
+        User user = userMapper.findByIdA("11");
         System.out.println(user.getName());
 
     }
 
     @Test
-    public void test1(){
+    public void findByIdATest() {
+        User user = userMapper.findByIdA("11");
+        System.out.println(user.getName());
 
+    }
 
-        List<Map<String,Object>> list =userMapper.findMapById("11");
+    @Test
+    public void findMapByIdTest() {
 
-        for (Map<String,Object> map: list){
+        List<Map<String, Object>> list = userMapper.findMapById("11");
+
+        for (Map<String, Object> map : list) {
             System.out.println(map.toString());
         }
+    }
 
 
+    @Test
+    public void deleteByIdTest() {
+        userMapper.deleteById("c70112f7-03a7-4272-beb5-cc925ce3f47b");
+    }
 
-
+    @Test
+    public void updateByEntityTest() {
+        User user = userMapper.findById("11");
+        user.setName("哈哈");
+        userMapper.updateByEntity(user);
     }
 }

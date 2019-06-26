@@ -8,6 +8,20 @@
         select * from user where id =#{id}
     </select>
 
+    <delete id="deleteById" parameterType="String">
+      delete from user where id = #{id}
+    </delete>
+
+
+    <insert id="insertEntity" parameterType="User">
+        insert into user(id,age,create_time,name,real_name)
+        values (#{id},#{age},#{createTime},#{name},#{realName})
+    </insert>
+
+    <update id="updateByEntity" parameterType="User">
+        update user set name = #{name} where id  =#{id}
+    </update>
+
     <select id="findMapById" parameterType="String" resultType="java.util.Map">
         select * from user where id =#{id}
     </select>

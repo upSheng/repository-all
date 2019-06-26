@@ -1,7 +1,6 @@
 package com.chs.dao;
 
 import com.chs.entity.User;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -29,6 +28,12 @@ import java.util.Map;
 public interface UserMapper {
 
     User findById(String id);
+
+
+    public void deleteById(String id);
+    void insertEntity(User user);
+    void updateByEntity(User user);
+
 
     List<Map<String,Object>> findMapById(String id);
 
