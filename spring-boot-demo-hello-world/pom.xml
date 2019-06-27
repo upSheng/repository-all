@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-boot-demo-001-hello-world</artifactId>
+    <artifactId>spring-boot-demo-hello-world</artifactId>
 
 
     <dependencies>
