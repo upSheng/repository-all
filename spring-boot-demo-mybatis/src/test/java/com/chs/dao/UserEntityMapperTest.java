@@ -2,6 +2,7 @@ package com.chs.dao;
 
 import com.chs.Application;
 import com.chs.entity.UserEntity;
+import com.github.pagehelper.PageHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -69,6 +71,21 @@ public class UserEntityMapperTest {
         UserEntity userEntity = userEntityMapper.selectByPrimaryKey("11");
         userEntity.setName("哥哥");
         userEntityMapper.updateByPrimaryKey(userEntity);
+
+        List<UserEntity> list = userEntityMapper.selectAll();
+
+    }
+
+
+    @Test
+    public void selectAllTest() {
+
+        PageHelper.offsetPage(0,2);
+        List<UserEntity> list = userEntityMapper.selectAll();
+
+        for(UserEntity userEntity: list){
+            System.out.println(userEntity.toString());
+        }
 
     }
 
