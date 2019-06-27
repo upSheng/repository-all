@@ -24,7 +24,6 @@ import java.util.Map;
  */
 
 @RestController
-
 public class HelloWorldAction {
 
     @RequestMapping("/helloWorld")
@@ -32,5 +31,11 @@ public class HelloWorldAction {
         Map<String,Object>  map = new HashMap<>();
         map.put("msg","helloWorld");
         return  map;
+    }
+
+    @RequestMapping("/")
+    public String home(){
+
+        return  "hello World!";
     }
 }
