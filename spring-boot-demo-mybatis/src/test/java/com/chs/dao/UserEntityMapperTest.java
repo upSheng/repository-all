@@ -72,7 +72,6 @@ public class UserEntityMapperTest {
         userEntity.setName("哥哥");
         userEntityMapper.updateByPrimaryKey(userEntity);
 
-        List<UserEntity> list = userEntityMapper.selectAll();
 
     }
 
@@ -80,16 +79,14 @@ public class UserEntityMapperTest {
     @Test
     public void selectAllTest() {
 
-        PageHelper.offsetPage(0,2);
+        PageHelper.offsetPage(0, 2); //下一条sql分页
         List<UserEntity> list = userEntityMapper.selectAll();
 
-        for(UserEntity userEntity: list){
+        for (UserEntity userEntity : list) {
             System.out.println(userEntity.toString());
         }
 
     }
-
-
 
 
 }
