@@ -13,6 +13,7 @@
         <module>spring-boot-demo-mybatis</module>
         <module>spring-boot-demo-configuration</module>
         <module>spring-boot-demo-common</module>
+        <module>spring-boot-demo-security</module>
     </modules>
 
 
