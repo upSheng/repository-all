@@ -1,6 +1,7 @@
 package com.chs.security3.config;
 
 import com.alibaba.fastjson.JSON;
+
 import com.chs.security3.bean.AjaxResponseBody;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
