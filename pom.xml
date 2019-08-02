@@ -15,6 +15,7 @@
         <module>spring-boot-demo-common</module>
         <module>spring-boot-demo-security</module>
         <module>spring-boot-demo-rest-template</module>
+        <module>spring-boot-demo-web</module>
     </modules>
 
 
