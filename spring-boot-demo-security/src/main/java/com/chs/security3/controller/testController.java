@@ -1,5 +1,7 @@
 package com.chs.security3.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +12,12 @@ public class testController {
 
     @GetMapping("/index")
     public String index(){
-        return "index";
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String name = userDetails.getUsername();
+        return name;
     }
 
     @GetMapping("/inner")
