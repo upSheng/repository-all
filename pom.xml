@@ -18,6 +18,7 @@
         <module>spring-boot-demo-web</module>
         <module>leetcode</module>
         <module>spring-boot-demo-log</module>
+        <module>spring-boot-demo-eureka</module>
     </modules>
 
 
@@ -26,4 +27,23 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.5.RELEASE</version>
     </parent>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+
+
+
 </project>

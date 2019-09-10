@@ -1,8 +1,11 @@
 package com.chs.action;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +30,12 @@ import java.util.Map;
 public class HelloWorldAction {
 
     @RequestMapping("/helloWorld")
-    public Map<String,Object> helloWorld(){
+    public Map<String,Object> helloWorld(HttpServletRequest request){
+
+
+        String name = request.getRemoteUser();
         Map<String,Object>  map = new HashMap<>();
-        map.put("msg","helloWorld");
+        map.put("name",name);
         return  map;
     }
 
@@ -38,4 +44,17 @@ public class HelloWorldAction {
 
         return  "hello World!";
     }
+
+    @RequestMapping("/data1")
+    public String data1(){
+
+        return  "data1";
+    }
+    @RequestMapping("/data2")
+    public String data2(){
+
+        return  "data1";
+    }
+
+
 }
