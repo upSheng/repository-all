@@ -19,6 +19,7 @@
         <module>leetcode</module>
         <module>spring-boot-demo-log</module>
         <module>spring-boot-demo-eureka</module>
+        <module>spring-boot-demo-eureka-user</module>
     </modules>
 
 

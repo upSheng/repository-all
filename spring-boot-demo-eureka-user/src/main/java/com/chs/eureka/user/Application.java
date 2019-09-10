@@ -1,8 +1,8 @@
-package com.chs.eureka;
+package com.chs.eureka.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * <pre>
@@ -22,7 +22,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
  */
 
 @SpringBootApplication
-@EnableEurekaServer
+@EnableEurekaClient
 public class Application {
 
     public static void main(String[] args) {
