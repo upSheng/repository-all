@@ -31,10 +31,21 @@ public class RedisTest {
     @Autowired
     private StringRedisTemplate template;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Test
     public void  test1(){
 
         template.opsForValue().set("name","6666");
+
+        redisTemplate.boundValueOps("age").set("15");
+
+        User user = new User();
+        user.setAge(11);
+        user.setName("hoh");
+
+        redisTemplate.boundValueOps("user").set(user);
         System.out.println(template);
 
     }
@@ -43,7 +54,12 @@ public class RedisTest {
     public void  test2(){
 
         String name = template.opsForValue().get("name");
+        String age = (String) redisTemplate.boundValueOps("age").get();
+        User user = (User) redisTemplate.boundValueOps("user").get();
         System.out.println(name);
+        System.out.println(age);
+        System.out.println("11"+user.getName());
+        System.out.println("11"+user.getAge());
 
     }
 }
