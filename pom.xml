@@ -22,6 +22,7 @@
         <module>spring-boot-demo-eureka-user</module>
         <module>spring-boot-demo-eureka-order</module>
         <module>spring-boot-demo-redis</module>
+        <module>spring-boot-demo-schedule</module>
     </modules>
 
 

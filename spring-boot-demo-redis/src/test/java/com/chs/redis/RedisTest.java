@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * <pre>
  *
@@ -61,5 +63,13 @@ public class RedisTest {
         System.out.println("11"+user.getName());
         System.out.println("11"+user.getAge());
 
+    }
+
+    @Test
+    public void test3(){
+        redisTemplate.opsForValue().set("name","zhangsan",60, TimeUnit.SECONDS);
+
+        String name = (String) redisTemplate.opsForValue().get("name");
+        System.out.println(name);
     }
 }
