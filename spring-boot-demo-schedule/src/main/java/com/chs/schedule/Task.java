@@ -22,7 +22,7 @@ public class Task {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     private void taskTest(){
         try{
 
@@ -31,7 +31,7 @@ public class Task {
             String ipFromRedis = (String) redisTemplate.opsForValue().get(taskCode);
 
             if(ipFromRedis == null){
-                redisTemplate.opsForValue().set(taskCode,ip,5, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(taskCode,ip,60, TimeUnit.SECONDS);
                 Thread.sleep(2000);
                 ipFromRedis = (String) redisTemplate.opsForValue().get(taskCode);
             }
