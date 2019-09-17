@@ -22,22 +22,15 @@ public class Task {
     @Autowired
     private RedisTemplate redisTemplate;
 
-//    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     private void taskTest(){
         try{
 
             String taskCode = "task001";
             String ip = InetAddress.getLocalHost().getHostAddress();
-            String ipFromRedis = (String) redisTemplate.opsForValue().get(taskCode);
+            Boolean flag =   redisTemplate.opsForValue().setIfAbsent(taskCode,ip,3, TimeUnit.SECONDS);
 
-            if(ipFromRedis == null){
-                redisTemplate.opsForValue().set(taskCode,ip,60, TimeUnit.SECONDS);
-                Thread.sleep(2000);
-                ipFromRedis = (String) redisTemplate.opsForValue().get(taskCode);
-            }
-
-            if(ip.equals(ipFromRedis)){
-
+            if(flag !=null && flag){
                 System.out.println(ip+":"+port +"  "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             }
 

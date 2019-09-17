@@ -72,4 +72,16 @@ public class RedisTest {
         String name = (String) redisTemplate.opsForValue().get("name");
         System.out.println(name);
     }
+
+    @Test
+    public void test4(){
+        String taskCode = "task001";
+        Boolean flag = redisTemplate.opsForValue().setIfAbsent(taskCode,"zhangsan",20, TimeUnit.SECONDS);
+
+        if(flag != null && flag){
+
+            System.out.println("1111");
+        }
+
+    }
 }
