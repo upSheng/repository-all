@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -22,7 +23,7 @@ public class Task {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+    //@Scheduled(cron = "0/5 * * * * ?")
     private void taskTest(){
         try{
 
@@ -35,6 +36,30 @@ public class Task {
             }
 
         }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Scheduled(cron = "0/5 * * * * ?")
+    private void taskTest1(){
+        String taskCode = "task001";
+        try{
+
+
+            String ip = InetAddress.getLocalHost().getHostAddress();
+            Boolean flag =   redisTemplate.opsForValue().setIfAbsent(taskCode,ip);
+
+
+
+            if(flag !=null && flag) {
+                redisTemplate.expire(taskCode,3,TimeUnit.SECONDS);
+                System.out.println(ip + ":" + port + "  " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            }
+
+        }catch (Exception e){
+            redisTemplate.delete(taskCode);
             e.printStackTrace();
         }
 
