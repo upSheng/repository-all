@@ -1,3 +1,1 @@
-module.exports = {
-    lintOnSave: false
-}
+export const lintOnSave = false;
