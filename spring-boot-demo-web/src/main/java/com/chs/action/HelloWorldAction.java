@@ -1,7 +1,5 @@
 package com.chs.action;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,6 +52,12 @@ public class HelloWorldAction {
     public String data2(){
 
         return  "data1";
+    }
+
+    @RequestMapping("/success")
+    public String success() {
+        //这边我们,默认是返到templates下的login.html
+        return "success";
     }
 
 

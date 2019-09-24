@@ -1,14 +1,8 @@
 package com.chs.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -30,11 +24,30 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class WebSecurityConfig implements WebMvcConfigurer {
 
+//    @Bean
+//    public UserDetailsService userDetailsService() throws Exception {
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        manager.createUser(User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build());
+//        manager.createUser(User.withDefaultPasswordEncoder().username("admin").password("password").roles("ADMIN").build());
+//        return manager;
+//    }
+
+
+    UserDetailsService userDetailsService;
+
     @Bean
     public UserDetailsService userDetailsService() throws Exception {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build());
-        manager.createUser(User.withDefaultPasswordEncoder().username("admin").password("password").roles("ADMIN").build());
-        return manager;
+
+//        SelfUserDetails userInfo = new SelfUserDetails();
+//        userInfo.setUsername("zhangsan");
+//        userInfo.setPassword(new BCryptPasswordEncoder().encode("123"));
+//
+//        Set authoritiesSet = new HashSet();
+//        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
+//        authoritiesSet.add(authority);
+//        userInfo.setAuthorities(authoritiesSet);
+
+
+        return userDetailsService;
     }
 }
