@@ -1,6 +1,7 @@
-package com.chs.jpa.repository;
+package com.chs.repository;
 
-import com.chs.jpa.entity.User;
+
+import com.chs.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,4 +1,4 @@
-package com.chs.jpa.entity;
+package com.chs.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,32 +13,28 @@ import java.util.Date;
  *
  * @author 陈洪生<br>
  * <b>mail</b> chenhongsheng@tansun.com.cn<br>
- * <b>date</b> 2019/9/21<br>
+ * <b>date</b> 2019/9/27<br>
  * @version 1.0.1
  * <pre>
  * 版本            修改人            修改日期            修改内容描述
  * --------------------------------------------------------------------
- * 1.0.1 	       陈洪生	        2019/9/21            创建
+ * 1.0.1 	       陈洪生	        2019/9/27            创建
  * --------------------------------------------------------------------
  * </pre>
  */
-
 @Entity
-@Table(name = "USER")
-public class User {
+@Table(name = "USER_ROLE")
+public class UserRole {
 
     @Id
     @Column(name = "ID")
     private String id;
 
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "USER_ID")
+    private String userId;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "AGE")
-    private Integer age;
+    @Column(name = "ROLE_ID")
+    private String roleId;
 
     @Column(name = "CREATE_USER")
     private String createUser;
@@ -52,7 +48,6 @@ public class User {
     @Column(name = "UPDATE_TIME")
     private Date updateTime;
 
-
     public String getId() {
         return id;
     }
@@ -61,28 +56,20 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     public String getCreateUser() {
