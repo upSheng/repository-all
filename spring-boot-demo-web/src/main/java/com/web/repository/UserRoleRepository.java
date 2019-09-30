@@ -1,6 +1,6 @@
-package com.chs.repository;
+package com.web.repository;
 
-import com.chs.entity.UserRole;
+import com.web.entity.UserRoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,6 +19,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * --------------------------------------------------------------------
  * </pre>
  */
-public interface UserRoleRepository extends JpaRepository<UserRole,String> {
+public interface UserRoleRepository extends JpaRepository<UserRoleEntity,String> {
 
 }

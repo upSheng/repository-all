@@ -1,6 +1,6 @@
-package com.chs.repository;
+package com.web.repository;
 
-import com.chs.entity.Menu;
+import com.web.entity.MenuRoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * --------------------------------------------------------------------
  * </pre>
  */
-public interface MenuRepository extends JpaRepository<Menu,String> {
+public interface MenuRoleRepository extends JpaRepository<MenuRoleEntity,String> {
+
 
 }

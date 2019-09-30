@@ -1,6 +1,6 @@
-package com.chs.repository;
+package com.web.repository;
 
-import com.chs.entity.Role;
+import com.web.entity.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,6 +19,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * --------------------------------------------------------------------
  * </pre>
  */
-public interface RoleRepository extends JpaRepository<Role,String> {
+public interface RoleRepository extends JpaRepository<RoleEntity,String> {
 
 }

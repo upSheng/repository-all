@@ -1,4 +1,4 @@
-package com.chs.entity;
+package com.web.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,18 +23,16 @@ import java.util.Date;
  * </pre>
  */
 @Entity
-@Table(name = "USER_ROLE")
-public class UserRole {
+@Table(name = "ROLE")
+public class RoleEntity {
+
 
     @Id
     @Column(name = "ID")
-    private String id;
+    private String Id;
 
-    @Column(name = "USER_ID")
-    private String userId;
-
-    @Column(name = "ROLE_ID")
-    private String roleId;
+    @Column(name = "ROLE_NAME")
+    private String roleName;
 
     @Column(name = "CREATE_USER")
     private String createUser;
@@ -48,28 +46,21 @@ public class UserRole {
     @Column(name = "UPDATE_TIME")
     private Date updateTime;
 
+
     public String getId() {
-        return id;
+        return Id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        Id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getCreateUser() {

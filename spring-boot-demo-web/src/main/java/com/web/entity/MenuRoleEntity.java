@@ -1,4 +1,4 @@
-package com.chs.entity;
+package com.web.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,17 +22,20 @@ import java.util.Date;
  * --------------------------------------------------------------------
  * </pre>
  */
-@Entity
-@Table(name = "ROLE")
-public class Role {
 
+@Table(name = "MENU_ROLE")
+@Entity
+public class MenuRoleEntity {
 
     @Id
     @Column(name = "ID")
-    private String Id;
+    private String id;
 
-    @Column(name = "ROLE_NAME")
-    private String roleName;
+    @Column(name = "MENU_ID")
+    private String menuId;
+
+    @Column(name = "ROLE_ID")
+    private String roleId;
 
     @Column(name = "CREATE_USER")
     private String createUser;
@@ -46,21 +49,28 @@ public class Role {
     @Column(name = "UPDATE_TIME")
     private Date updateTime;
 
-
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getMenuId() {
+        return menuId;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     public String getCreateUser() {

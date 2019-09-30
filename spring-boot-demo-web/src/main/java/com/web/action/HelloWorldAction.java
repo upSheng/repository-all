@@ -1,4 +1,4 @@
-package com.chs.action;
+package com.web.action;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

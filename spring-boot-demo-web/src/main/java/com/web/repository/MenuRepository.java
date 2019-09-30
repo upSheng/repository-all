@@ -1,6 +1,7 @@
-package com.chs.service;
+package com.web.repository;
 
-import com.chs.entity.User;
+import com.web.entity.MenuEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * <pre>
@@ -9,20 +10,15 @@ import com.chs.entity.User;
  *
  * @author 陈洪生<br>
  * <b>mail</b> chenhongsheng@tansun.com.cn<br>
- * <b>date</b> 2019/9/30<br>
+ * <b>date</b> 2019/9/29<br>
  * @version 1.0.1
  * <pre>
  * 版本            修改人            修改日期            修改内容描述
  * --------------------------------------------------------------------
- * 1.0.1 	       陈洪生	        2019/9/30            创建
+ * 1.0.1 	       陈洪生	        2019/9/29            创建
  * --------------------------------------------------------------------
  * </pre>
  */
-public interface IUserService {
+public interface MenuRepository extends JpaRepository<MenuEntity,String> {
 
-    User findByName(String name);
-
-    void save(User user);
-
-    void deleteById(String id);
 }

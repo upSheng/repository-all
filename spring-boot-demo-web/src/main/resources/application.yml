@@ -12,3 +12,19 @@ spring:
         ddl-auto: update
       show-sql: true
 
+#扫描xml
+mybatis:
+  mapper-locations:classpath*: /mappers/*.xml
+  #别名
+  type-aliases-package: com.chs.entity
+  #开启驼峰命名转换
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+pagehelper:
+  helperDialect: mysql
+
+logging:
+  level:
+    com.chs.dao: debug

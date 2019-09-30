@@ -1,4 +1,4 @@
-package com.chs.config;
+package com.web.config;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

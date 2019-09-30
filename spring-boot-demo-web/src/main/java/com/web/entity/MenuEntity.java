@@ -1,4 +1,4 @@
-package com.chs.entity;
+package com.web.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,32 +13,30 @@ import java.util.Date;
  *
  * @author 陈洪生<br>
  * <b>mail</b> chenhongsheng@tansun.com.cn<br>
- * <b>date</b> 2019/9/21<br>
+ * <b>date</b> 2019/9/27<br>
  * @version 1.0.1
  * <pre>
  * 版本            修改人            修改日期            修改内容描述
  * --------------------------------------------------------------------
- * 1.0.1 	       陈洪生	        2019/9/21            创建
+ * 1.0.1 	       陈洪生	        2019/9/27            创建
  * --------------------------------------------------------------------
  * </pre>
  */
-
+@Table(name = "MENU")
 @Entity
-@Table(name = "USER")
-public class User {
-
+public class MenuEntity {
     @Id
     @Column(name = "ID")
     private String id;
 
+    @Column(name = "CODE")
+    private String code;
+
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "AGE")
-    private Integer age;
+    @Column(name = "PARENT_CODE")
+    private String parentCode;
 
     @Column(name = "CREATE_USER")
     private String createUser;
@@ -52,13 +50,20 @@ public class User {
     @Column(name = "UPDATE_TIME")
     private Date updateTime;
 
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -69,20 +74,12 @@ public class User {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getParentCode() {
+        return parentCode;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
     }
 
     public String getCreateUser() {

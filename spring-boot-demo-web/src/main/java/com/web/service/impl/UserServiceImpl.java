@@ -1,8 +1,8 @@
-package com.chs.service.impl;
+package com.web.service.impl;
 
-import com.chs.entity.User;
-import com.chs.repository.UserRepository;
-import com.chs.service.IUserService;
+import com.web.entity.User;
+import com.web.repository.UserRepository;
+import com.web.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
