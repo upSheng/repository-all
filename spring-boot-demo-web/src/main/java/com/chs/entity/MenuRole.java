@@ -23,7 +23,7 @@ import java.util.Date;
  * </pre>
  */
 
-@Table(name = "MENU")
+@Table(name = "MENU_ROLE")
 @Entity
 public class MenuRole {
 
