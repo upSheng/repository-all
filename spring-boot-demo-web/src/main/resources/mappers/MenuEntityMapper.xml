@@ -5,7 +5,7 @@
 
   <select id="findMenuByUser" parameterType="java.lang.String" resultType="java.util.Map">
     select id, name, create_time
-    from user
+    from menu limit 1
 
   </select>
 
