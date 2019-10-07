@@ -1,7 +1,11 @@
 <template>
     <div>
         <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+
+        <el-button @click="addWebMenu">增加子菜单</el-button>
     </div>
+
+
 </template>
 
 <script>
@@ -47,12 +51,22 @@
                 defaultProps: {
                     children: 'children',
                     label: 'label'
+                },
+                selectedMene:{
+                    label:'',
+                    children:[]
                 }
             };
         },
         methods: {
             handleNodeClick(data) {
                 console.log(data);
+                this.selectedMene.label = data.label;
+                this.selectedMene.children = data.children;
+            },
+            addWebMenu(){
+                console.log('vvv');
+                this.data.push(this.selectedMene);
             }
         }
     };
