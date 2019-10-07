@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import movie from './components/movie.vue'
 import novel from './components/novel.vue'
+import webMenu from './components/webMenu.vue'
 
 Vue.config.productionTip = false
 
@@ -16,7 +17,8 @@ Vue.use(ElementUI);
 
 const routes = [
   { path: '/movie', component: movie },
-  { path: '/novel', component: novel }
+  { path: '/novel', component: novel },
+  { path: '/webMenu', component: webMenu }
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置

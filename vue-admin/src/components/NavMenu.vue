@@ -25,9 +25,9 @@
             -->
 
             <template v-for="item in navMenuData">
-                <el-menu-item :index="item.index" v-if="!item.child">{{item.name}}</el-menu-item>
+                <el-menu-item :index="item.index" v-if="item.child.length==0">{{item.name}}</el-menu-item>
 
-                <el-submenu :index="item.index" v-if="item.child">
+                <el-submenu :index="item.index" v-if="item.child.length != 0">
                     <template slot="title">{{item.name}}</template>
                     <template v-for="item2 in item.child">
                         <el-menu-item :index="item2.index">{{item2.name}}</el-menu-item>
@@ -45,12 +45,17 @@
             return {
                 activeIndex: "movie",
                 navMenuData: [
-                    { index: "movie", name: "电影" },
-                    { index: "novel", name: "小说" },
+                    { index: "webMenu", name: "菜单", child:[] },
+                    { index: "movie", name: "电影", child:[] },
+                    { index: "novel", name: "小说",child:[] },
                     {
                         index: "2",
                         name: "我的工作台",
-                        child: [{ index: "2-1", name: "选项1" },{ index: "2-2", name: "选项2" },{ index: "2-3", name: "选项3" }]
+                        child: [
+                            { index: "2-1", name: "选项1",  child:[] },
+                            { index: "2-2", name: "选项2",  child:[] },
+                            { index: "2-3", name: "选项3",  child:[] }
+                            ]
                     },
 
                 ]
