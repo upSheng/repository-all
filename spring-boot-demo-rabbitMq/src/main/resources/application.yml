@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: springcloud-mq
+  rabbitmq:
+    host: 172.96.226.29
+    port: 5672
+    username: chs
+    password: 123456

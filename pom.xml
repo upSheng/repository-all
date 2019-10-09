@@ -24,6 +24,7 @@
         <module>spring-boot-demo-redis</module>
         <module>spring-boot-demo-schedule</module>
         <module>spring-boot-demo-jpa</module>
+        <module>spring-boot-demo-rabbitMq</module>
     </modules>
 
 
