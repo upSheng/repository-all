@@ -42,7 +42,7 @@ public class Solution2 {
             }
         }
 
-        if(carry>0){
+        if (carry > 0) {
             curr.next = new ListNode(carry);
         }
 
