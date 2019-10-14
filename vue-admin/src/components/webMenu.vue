@@ -1,8 +1,38 @@
 <template>
     <div>
-        <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
 
-        <el-button @click="addWebMenu">增加子菜单</el-button>
+        <el-row>
+            <el-col :span="6">
+                <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+
+                <el-button @click="addWebMenu">添加树</el-button>
+                <el-button @click="addWebMenu">添加节点</el-button>
+                <el-button @click="addWebMenu">删除</el-button>
+
+            </el-col>
+            <el-col :span="18">
+                <el-row>
+                    <el-col :span="6">
+                        <el-input><template slot="prepend">ID</template></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-input><template slot="prepend">NAME</template></el-input>
+                    </el-col>
+
+                </el-row>
+                <el-row>
+                    <el-col :span="6">
+                        <el-input><template slot="prepend">URL</template></el-input>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-button>保存</el-button>
+                </el-row>
+
+            </el-col>
+        </el-row>
+
+
     </div>
 
 
