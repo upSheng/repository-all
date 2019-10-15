@@ -96,7 +96,14 @@
             },
             addWebMenu(){
                 console.log('vvv');
-                this.data.push(this.selectedMene);
+                //this.data.push(this.selectedMene);
+                this.axios.get('/api/helloWorld').then((response) => {
+                    console.log(response.data)
+                })
+
+                this.axios.get('/api/').then((response) => {
+                    console.log(response.data)
+                })
             }
         }
     };

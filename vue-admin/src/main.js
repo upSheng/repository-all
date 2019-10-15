@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import VueRouter from 'vue-router'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -10,10 +12,14 @@ import movie from './components/movie.vue'
 import novel from './components/novel.vue'
 import webMenu from './components/webMenu.vue'
 
+
+
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 Vue.use(ElementUI);
+Vue.use(VueAxios, axios)
+
 
 const routes = [
   { path: '/movie', component: movie },
