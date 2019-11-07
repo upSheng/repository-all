@@ -5,7 +5,7 @@ package com.chs.gof23.Single;
  *
  * 枚举
  */
-public enum  singLeDemo04 {
+public enum SingLeDemo04 {
 
     instance;
 
@@ -19,9 +19,9 @@ public enum  singLeDemo04 {
 
 
     public static void main(String[] args) {
-        singLeDemo04.instance.hello();
-        singLeDemo04.instance.setName("111");
-        singLeDemo04.instance.hello();
+        SingLeDemo04.instance.hello();
+        SingLeDemo04.instance.setName("111");
+        SingLeDemo04.instance.hello();
     }
 
 }

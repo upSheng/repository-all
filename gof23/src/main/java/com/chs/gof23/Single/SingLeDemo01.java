@@ -6,10 +6,10 @@ package com.chs.gof23.Single;
  * 饿汉式
  * 无懒加载，执行效率高
  */
-public class singLeDemo01 {
+public class SingLeDemo01 {
     private static Dog dog = new Dog();
 
-    private singLeDemo01() {}
+    private SingLeDemo01() {}
 
     public static Dog getInstance(){
         return dog;

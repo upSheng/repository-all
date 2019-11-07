@@ -6,10 +6,10 @@ package com.chs.gof23.Single;
  * 懒汉式
  * 有懒加载，执行效率低
  */
-public class singLeDemo02 {
+public class SingLeDemo02 {
     private static Dog dog ;
 
-    private singLeDemo02() {}
+    private SingLeDemo02() {}
 
     public synchronized static Dog getInstance(){
 
