@@ -1,4 +1,4 @@
-package com.chs.gof23.factory;
+package com.chs.gof23.factory.factoryMethod;
 
 public interface Animal {
 

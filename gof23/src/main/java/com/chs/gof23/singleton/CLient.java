@@ -1,4 +1,4 @@
-package com.chs.gof23.Single;
+package com.chs.gof23.singleton;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,7 +20,7 @@ public class CLient {
                 public void run() {
 
                     for (int i = 0; i < 1000000; i++) {
-                        Dog dog = SingLeDemo03.getInstance();
+                        SingLeDemo01 singLeDemo01 = SingLeDemo01.getInstance();
                     }
                     countDownLatch.countDown();
                 }
@@ -30,10 +30,6 @@ public class CLient {
         long end = System.currentTimeMillis();
 
         System.out.println("总耗时:" +(end-start));
-
-
-
-
     }
 
     /**
@@ -41,7 +37,7 @@ public class CLient {
      * @throws Exception
      */
     private static void reflect() throws Exception {
-        Class<SingLeDemo01> clazz = (Class<SingLeDemo01>) Class.forName("com.chs.gof23.Single.SingLeDemo01");
+        Class<SingLeDemo01> clazz = (Class<SingLeDemo01>) Class.forName("com.chs.gof23.singleton.SingLeDemo01");
 		Constructor<SingLeDemo01> c = clazz.getDeclaredConstructor(null);
 		c.setAccessible(true);
         SingLeDemo01  s3 = c.newInstance();
