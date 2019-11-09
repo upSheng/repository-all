@@ -12,10 +12,6 @@ public class LuxuryCarFactory implements CarFactory {
 		return new LuxurySeat();
 	}
 
-	@Override
-	public Tyre createTyre() {
-		return new LuxuryTyre();
-	}
 
 
 }

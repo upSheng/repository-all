@@ -8,6 +8,5 @@ public class Client {
 		e.run();
 		e.start();
 		
-		
 	}
 }

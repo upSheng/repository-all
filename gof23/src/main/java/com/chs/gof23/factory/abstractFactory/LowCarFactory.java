@@ -12,10 +12,5 @@ public class LowCarFactory implements CarFactory {
 		return new LowSeat();
 	}
 
-	@Override
-	public Tyre createTyre() {
-		return new LowTyre();
-	}
-
 
 }
