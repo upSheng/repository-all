@@ -3,6 +3,9 @@ package com.chs.annotation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
+/**
+ * 注解
+ */
 public class Application {
 
     public static void main(String[] args) {
@@ -11,7 +14,6 @@ public class Application {
 
             //加载类
             Class clazz = Class.forName("com.chs.annotation.Student");
-
 
             //获取类上的注解
             Annotation[] annotations = clazz.getAnnotations();
