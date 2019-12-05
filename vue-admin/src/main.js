@@ -12,6 +12,9 @@ import movie from './components/movie.vue'
 import novel from './components/novel.vue'
 import webMenu from './components/webMenu.vue'
 
+import login from './components/login.vue'
+import main from './components/Main.vue'
+
 
 
 Vue.config.productionTip = false
@@ -22,14 +25,20 @@ Vue.use(VueAxios, axios)
 
 
 //添加jwt
-axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NTUxOTJ9.yWhDY2kv5-TfeH3fx2IDuBeFgT4Dz0T_biXQYfei87SNli0LRuG9KPXz51j0LeOD_YFOJyPu5zqt1G7Ycjq2_g';
-
+axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NjgwMDF9.jyWRk_44KP0uH4keXbQz5oS3UTejnTTbgw_htj6kJfMFv-OdWnzy-DL5_E-7ZCg5yay93rgO-7ROja1lEcwudg';
 
 
 const routes = [
-  { path: '/movie', component: movie },
-  { path: '/novel', component: novel },
-  { path: '/webMenu', component: webMenu }
+
+    {path: '/login', component: login},
+
+    {
+        path: '/', component: main, children: [
+            {path: 'movie', component: movie},
+            {path: 'novel', component: novel},
+            {path: 'webMenu', component: webMenu}]
+    },
+
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置
