@@ -21,6 +21,11 @@ Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
 
+//添加jwt
+axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NTUxOTJ9.yWhDY2kv5-TfeH3fx2IDuBeFgT4Dz0T_biXQYfei87SNli0LRuG9KPXz51j0LeOD_YFOJyPu5zqt1G7Ycjq2_g';
+
+
+
 const routes = [
   { path: '/movie', component: movie },
   { path: '/novel', component: novel },
