@@ -13,8 +13,7 @@ import novel from './components/novel.vue'
 import webMenu from './components/webMenu.vue'
 
 import login from './components/login.vue'
-import main from './components/Main.vue'
-
+import myMain from './components/myMain.vue'
 
 
 Vue.config.productionTip = false
@@ -25,7 +24,7 @@ Vue.use(VueAxios, axios)
 
 
 //添加jwt
-axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NjgwMDF9.jyWRk_44KP0uH4keXbQz5oS3UTejnTTbgw_htj6kJfMFv-OdWnzy-DL5_E-7ZCg5yay93rgO-7ROja1lEcwudg';
+//axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NjgwMDF9.jyWRk_44KP0uH4keXbQz5oS3UTejnTTbgw_htj6kJfMFv-OdWnzy-DL5_E-7ZCg5yay93rgO-7ROja1lEcwudg';
 
 
 const routes = [
@@ -33,7 +32,7 @@ const routes = [
     {path: '/login', component: login},
 
     {
-        path: '/', component: main, children: [
+        path: '/', component: myMain, children: [
             {path: 'movie', component: movie},
             {path: 'novel', component: novel},
             {path: 'webMenu', component: webMenu}]
@@ -44,12 +43,68 @@ const routes = [
 // 3. 创建 router 实例，然后传 `routes` 配置
 // 你还可以传别的配置参数, 不过先这么简单着吧。
 const router = new VueRouter({
-  mode: 'history',  //h5模式
-  routes // (缩写) 相当于 routes: routes
+    mode: 'history',  //h5模式
+    routes // (缩写) 相当于 routes: routes
 })
 
+
+//请求拦截
+axios.interceptors.request.use(config => {
+
+    var jwtToken = localStorage.getItem('jwtToken');
+    //设置请求头
+    if (jwtToken != null) {
+        axios.defaults.headers.common['Authorization'] = "Bearer " + jwtToken;
+    } else {
+        router.push('/login');
+    }
+    return config
+}, error => {
+    return Promise.reject(error)
+})
+
+
+//响应拦截
+axios.interceptors.response.use(response => {
+
+    if(response.status =='000'){
+        console.log(response);
+        debugger;
+        router.push('/login');
+
+    }
+    return response;
+
+}, error => {
+
+    return Promise.reject(error);
+})
+
+//路由拦截
+router.beforeEach((to, from, next) => {
+
+
+    let jwtToken = localStorage.getItem('jwtToken');
+
+    if (jwtToken) {
+        next();
+    } else {
+
+        if (to.path == '/login') {
+            next()
+        } else {
+            next({
+                path: '/login'
+            });
+        }
+    }
+
+    if (!jwtToken) return next({path: "/login"});
+    next();
+});
+
 new Vue({
-  render: h => h(App),
+    render: h => h(App),
     router
 }).$mount('#app')
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div>
     <el-container>
       <el-header>
         <NavMenu></NavMenu>
@@ -16,7 +16,7 @@
   import NavMenu from "./NavMenu.vue";
 
   export default {
-    name: "main",
+    name: "myMain",
     components: {
       NavMenu
     }

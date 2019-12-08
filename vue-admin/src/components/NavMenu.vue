@@ -33,8 +33,13 @@
                         <el-menu-item :index="item2.index">{{item2.name}}</el-menu-item>
                     </template>
                 </el-submenu>
+
+
             </template>
+            <el-menu-item @click="logout"> 退出</el-menu-item>
         </el-menu>
+
+
     </div>
 </template>
 
@@ -64,7 +69,21 @@
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
+                this.activeIndex = key;
+
+            },
+            logout(){
+                this.axios.post('/api/logout').then((response) => {
+                    console.log(response.data)
+                    if(response.data.status == 100){ // 退出码值
+                        localStorage.removeItem("jwtToken");
+                        this.$router.push('/login');
+                    }
+
+
+                })
             }
+
         },
         mounted(){
             console.log(this.activeIndex)

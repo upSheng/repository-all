@@ -22,13 +22,17 @@
             login(){
                 console.log('vvv');
                 let param = new URLSearchParams()
-                param.append("username", "chs")
-                param.append("password", "123456")
+                param.append("username", this.username)
+                param.append("password", this.password)
 
                 this.axios.post('/api/login',param).then((response) => {
                     console.log(response.data)
+                    if(response.data.status == 200){
+                        localStorage.setItem("jwtToken",response.data.jwtToken);
+                        this.$router.push('/movie');
+                    }
 
-                    localStorage.setItem("jwtToken",response.data.jwtToken);
+
                 })
             },
             check(){
