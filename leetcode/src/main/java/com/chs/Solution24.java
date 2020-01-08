@@ -10,6 +10,8 @@ public class Solution24 {
         l1.next = l2;
         l2.next =l3;
         swapPairs(l1);
+
+
     }
 
     public static ListNode swapPairs(ListNode head) {
