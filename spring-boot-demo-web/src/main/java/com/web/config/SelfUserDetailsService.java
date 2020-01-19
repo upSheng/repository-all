@@ -34,8 +34,11 @@ public class SelfUserDetailsService implements UserDetailsService {
         userInfo.setPassword(user.getPassword());
 
         Set authoritiesSet = new HashSet();
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
-        authoritiesSet.add(authority);
+        GrantedAuthority authority1 = new SimpleGrantedAuthority("admin");
+
+        GrantedAuthority authority2 = new SimpleGrantedAuthority("chs");
+        authoritiesSet.add(authority1);
+        authoritiesSet.add(authority2);
         userInfo.setAuthorities(authoritiesSet);
 
         return userInfo;
