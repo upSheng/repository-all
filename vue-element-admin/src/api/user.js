@@ -1,24 +1,27 @@
 import request from '@/utils/request'
 
 export function login(data) {
+  const param = new URLSearchParams()
+  param.append('username', data.username)
+  param.append('password', data.password)
   return request({
-    url: '/user/login',
+    url: '/login',
     method: 'post',
-    data
+    data: param
   })
 }
 
 export function getInfo(token) {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/info',
+    method: 'post'
+
   })
 }
 
 export function logout() {
   return request({
-    url: '/user/logout',
+    url: '/logout',
     method: 'post'
   })
 }

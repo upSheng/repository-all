@@ -34,9 +34,11 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        debugger
+
+        var jwtToken = response.jwtToken
+        commit('SET_TOKEN', jwtToken)
+        setToken(jwtToken)
         resolve()
       }).catch(error => {
         reject(error)
@@ -48,6 +50,7 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
+        debugger
         const { data } = response
 
         if (!data) {
