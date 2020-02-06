@@ -8,7 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -42,12 +44,16 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void save() {
+    @Transactional(rollbackFor = Exception.class)
+    //@Rollback(false)
+    public void save() throws Exception {
         User user = new User();
         user.setId(UUID.randomUUID().toString());
-        user.setName("chs");
+        user.setName("21111chs");
         user.setPassword(new BCryptPasswordEncoder().encode("123456"));
         iUserService.save(user);
+
+        throw new Exception("1111");
 
     }
 

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-container>
+  <div style="height: 100%" >
+    <el-container >
       <el-header>
         <NavMenu></NavMenu>
       </el-header>
@@ -23,21 +23,33 @@
   };
 </script>
 
-<style scoped>
-  .el-header,
-  .el-footer {
-    background-color: #b3c0d1;
+<style>
+
+  html,body,.el-container{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .el-header, .el-footer {
+    background-color: #B3C0D1;
     color: #333;
     text-align: center;
-    height: 100px;
-    padding: 0px;
+    height: 10%;
+    margin: 0;
+    padding: 0;
+
   }
 
   .el-main {
-    background-color: #e9eef3;
+    background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    /*line-height: 160px;*/
+    height: 80%;
+    margin: 0;
+    padding: 0;
+
+
   }
 
 </style>

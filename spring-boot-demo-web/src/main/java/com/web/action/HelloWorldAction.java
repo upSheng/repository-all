@@ -1,17 +1,20 @@
 package com.web.action;
 
 
+import com.web.entity.User;
+import com.web.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <pre>
@@ -32,6 +35,8 @@ import java.util.Set;
 
 @RestController
 public class HelloWorldAction {
+    @Autowired
+    private IUserService iUserService;
 
     @RequestMapping("/helloWorld")
     public Map<String, Object> helloWorld(HttpServletRequest request) {
@@ -43,15 +48,43 @@ public class HelloWorldAction {
         return map;
     }
 
+    @RequestMapping("/test")
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+    public Map<String, Object> test(HttpServletRequest request) throws Exception {
+
+        iUserService.deleteById("540d4d3c-e2f4-486c-be21-a83bac46317b");
+
+
+        String name = request.getParameter("name");
+        System.out.println("hh");
+        User user = new User();
+        user.setId(UUID.randomUUID().toString());
+        user.setName("666chs");
+        user.setPassword(new BCryptPasswordEncoder().encode("123456"));
+        iUserService.save(user);
+
+
+        if("1".equals(name)){
+            throw new Exception("111");
+        }else if ("2".equals(name)){
+            throw new RuntimeException("222");
+        }
+
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "test");
+        return map;
+    }
+
     @RequestMapping("/info")
     public Map<String, Object> info(HttpServletRequest request) {
 
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Set<GrantedAuthority> authoritiesSet  = (Set) userDetails.getAuthorities();
+        Set<GrantedAuthority> authoritiesSet = (Set) userDetails.getAuthorities();
         Set<String> roles = new HashSet<>();
-        authoritiesSet.forEach((x)->roles.add(x.getAuthority()));
+        authoritiesSet.forEach((x) -> roles.add(x.getAuthority()));
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> map1 = new HashMap<>();
         map1.put("roles", roles);
