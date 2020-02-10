@@ -1,4 +1,4 @@
-package com.chs.note;
+package com.chs.note.steam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +54,6 @@ public class StreamTest {
         mapList3.forEach((k,list)->{
             System.out.println(k + " "+ list.toString());
         });
-
-
-
 
      }
 }
