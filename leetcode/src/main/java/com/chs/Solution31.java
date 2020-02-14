@@ -1,18 +1,20 @@
 package com.chs;
 
+import java.util.Arrays;
+
 public class Solution31 {
 
     public static void main(String[] args) {
 
-        int a[]  = {1,2,3};
-        Solution31 solution31 = new Solution31();
-        solution31.nextPermutation(a);
+        int a[]  = {1,2};
+        nextPermutation(a);
+        System.out.println(Arrays.toString(a));
     }
-    public  void nextPermutation(int[] nums) {
+    public static   void nextPermutation(int[] nums) {
 
         int i = nums.length - 2;
 
-        while (i >= 0 &&   nums[i] > nums[i + 1] ) {
+        while (i >= 0 &&   nums[i+1] <= nums[i] ) {
             i--;
         }
         if (i >= 0) {
@@ -27,7 +29,7 @@ public class Solution31 {
         reverse(nums, i+1);
     }
 
-    private void reverse(int[] nums, int start) {
+    private static void reverse(int[] nums, int start) {
 
         int i = nums.length - 1;
         while (start < i) {
@@ -37,7 +39,7 @@ public class Solution31 {
         }
     }
 
-    private void swap(int[] nums, int i, int j) {
+    private static void swap(int[] nums, int i, int j) {
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
