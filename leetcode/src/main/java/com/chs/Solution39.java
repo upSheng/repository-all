@@ -1,6 +1,7 @@
 package com.chs;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -22,50 +23,48 @@ public class Solution39 {
 
     public static void main(String[] args) {
 
-        int[] arr = {5, 7, 7, 8, 8, 10};
+        int[] candidates = {2, 3, 6, 7};
+        List<List<Integer>> result = combinationSum(candidates, 7);
+        System.out.println("a");
 
-
-        System.out.println(Arrays.toString(searchRange(arr, 8)));
     }
 
-    public static int[] searchRange(int[] nums, int target) {
+    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
 
-        int[] arr = new int[2];
-        arr[0] = searchRange(nums, target, true);
-        arr[1] = searchRange(nums, target, false);
-        return arr;
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        add(result, list, candidates, target);
+        return result;
+
     }
 
-    public static int searchRange(int[] nums, int target, boolean left) {
-        if (nums.length == 0) return -1;
 
-        int low = 0;
-        int high = nums.length - 1;
+    public static void add(List<List<Integer>> result, List<Integer> list, int[] candidates, int cur) {
 
-        while (low < high) {
-            int mid = (low + high) / 2;
 
-            if (target == nums[mid]) {
-                if (left) {
-                    high = mid;
-                } else {
-                    low = mid;
+        if (cur == 0) {
+            result.add(new ArrayList<>(list));
+            return;
+        }
+        if (cur < 0) return;
 
-                    if (nums[high] == target) {
-                        return high;
-                    } else {
-                        high--;
-                    }
-
-                }
-            } else if (target < nums[mid]) {
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
+        Integer min = null;
+        if (list.size() != 0) {
+            min = list.get(list.size() - 1);
         }
 
-        return nums[low] == target ? low : -1;
+        for (int i = 0; i < candidates.length; i++) {
+
+            if (min == null || candidates[i] >= min) {
+
+                list.add(candidates[i]);
+
+                add(result, list, candidates, cur - candidates[i]);
+                list.remove(list.size() - 1);
+            }
+
+        }
+
 
     }
 }
