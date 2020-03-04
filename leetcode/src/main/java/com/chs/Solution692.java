@@ -14,7 +14,7 @@ public class Solution692 {
 
         List<String> result = new ArrayList<>(map.keySet());
 
-        Collections.sort(result, (s, t1) -> map.get(t1).equals(map.get(s)) ? map.get(t1) - map.get(s) : s.compareTo(t1));
+        Collections.sort(result, (s, t1) -> map.get(t1).equals(map.get(s)) ?  s.compareTo(t1): map.get(t1) - map.get(s));
         return result.subList(0,k);
     }
 }
