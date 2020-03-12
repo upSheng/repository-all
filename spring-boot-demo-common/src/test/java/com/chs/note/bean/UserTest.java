@@ -37,4 +37,10 @@ public class UserTest {
         System.out.println(user.getName());
     }
 
+    @Test
+    public void test2(){
+
+      
+    }
+
 }
