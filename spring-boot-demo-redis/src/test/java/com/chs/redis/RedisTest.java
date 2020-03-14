@@ -8,6 +8,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -82,6 +85,29 @@ public class RedisTest {
 
             System.out.println("1111");
         }
+
+    }
+
+
+    @Test
+    public void test5(){
+
+        for(int i=0;i<100;i++){
+            redisTemplate.opsForZSet().add("activityId","chs"+i,i);
+
+            if(redisTemplate.opsForZSet().size("activityId")>10+20){
+                redisTemplate.opsForZSet().removeRange("activityId",0,20);
+            }
+        }
+
+        Set result = redisTemplate.opsForZSet().reverseRange("activityId",0,0);
+
+        System.out.println(redisTemplate.opsForZSet().size("activityId"));
+
+
+        result.forEach((x)-> System.out.println(x));
+
+
 
     }
 }
