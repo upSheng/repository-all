@@ -27,24 +27,20 @@ import java.util.Map;
  */
 
 @RestController
-public class HelloWorldAction {
+public class HelloWorldTwoAction {
 
 
-    private final Logger logger = LoggerFactory.getLogger(HelloWorldAction.class);
+    private final Logger logger = LoggerFactory.getLogger(HelloWorldTwoAction.class);
 
-    @RequestMapping("/helloWorld")
-    public Map<String,Object> helloWorld(){
-        Map<String,Object>  map = new HashMap<>();
-        map.put("msg","helloWorld");
-        logger.info("info");
-        logger.debug("debug");
+    @RequestMapping("/helloWorld2")
+    public Map<String, Object> helloWorld() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", "helloWorld2");
+        logger.debug("hahha2{}", "你好");
 
-        return  map;
+
+        return map;
     }
 
-    @RequestMapping("/")
-    public String home(){
 
-        return  "hello World!";
-    }
 }
