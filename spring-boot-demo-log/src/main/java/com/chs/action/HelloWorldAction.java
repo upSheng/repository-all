@@ -39,6 +39,15 @@ public class HelloWorldAction {
         logger.info("info");
         logger.debug("debug");
 
+        try {
+            int a = 1/0;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+
+            map.put("msg","err");
+            return map;
+
+        }
         return  map;
     }
 
