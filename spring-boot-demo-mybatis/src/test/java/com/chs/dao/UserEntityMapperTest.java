@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ import java.util.UUID;
 public class UserEntityMapperTest {
 
 
-    @Autowired
+    @Resource
     private UserEntityMapper userEntityMapper;
 
 
@@ -45,7 +46,7 @@ public class UserEntityMapperTest {
         System.out.println(userEntity.getName());
     }
 
-    @Transactional //回滚，防止脏数据
+    //@Transactional //回滚，防止脏数据
     @Test
     public void insertTest() {
         UserEntity userEntity = userEntityMapper.selectByPrimaryKey("11");
