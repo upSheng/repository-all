@@ -5,27 +5,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chs</groupId>
-    <artifactId>spring-boot-demo</artifactId>
+    <artifactId>repository-all</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>hello-world</module>
-        <module>spring-boot-demo-mybatis</module>
-        <module>spring-boot-demo-configuration</module>
-        <module>spring-boot-demo-common</module>
-        <module>spring-boot-demo-security</module>
-        <module>spring-boot-demo-rest-template</module>
-        <module>spring-boot-demo-web</module>
+        <module>mybatis</module>
+        <module>configuration</module>
+        <module>common</module>
+        <module>security</module>
+        <module>rest-template</module>
+        <module>web</module>
         <module>leetcode</module>
         <module>aop</module>
-        <module>spring-boot-demo-log</module>
-        <module>spring-boot-demo-eureka</module>
-        <module>spring-boot-demo-eureka-user</module>
-        <module>spring-boot-demo-eureka-order</module>
-        <module>spring-boot-demo-redis</module>
-        <module>spring-boot-demo-schedule</module>
-        <module>spring-boot-demo-jpa</module>
-        <module>spring-boot-demo-rabbitMq</module>
+        <module>log</module>
+        <module>eureka</module>
+        <module>eureka-user</module>
+        <module>eureka-order</module>
+        <module>redis</module>
+        <module>schedule</module>
+        <module>jpa</module>
+        <module>rabbit-mq</module>
         <module>gof23</module>
     </modules>
 
