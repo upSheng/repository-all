@@ -1,9 +1,11 @@
 package com.chs.action;
 
+import com.chs.modal.User;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,19 +30,29 @@ import java.util.Map;
 public class DataAction {
 
     @RequestMapping("/data")
-    public Map<String,Object> data(HttpServletRequest request){
+    public Map<String, Object> data(@RequestParam("name") String name) {
 
-        String id = request.getParameter("id");
-
-
-        Map<String,Object>  map = new HashMap<>();
-        map.put("msg","helloWorld");
-        map.put("id",id);
-        return  map;
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        return map;
     }
 
-    @RequestMapping("/")
-    public String home(){
-        return  "hello World!";
+
+    @RequestMapping("/bodyData")
+    public Map<String, Object> data(@RequestBody User user) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", user.getName());
+        return map;
     }
+
+    @RequestMapping("/bodyDataMap")
+    public Map<String, Object> data(@RequestBody Map user) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", user.get("name"));
+        return map;
+    }
+
+
 }
