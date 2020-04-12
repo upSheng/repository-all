@@ -20,13 +20,15 @@
         <module>aop</module>
         <module>log</module>
         <module>eureka</module>
-        <module>eureka-user</module>
-        <module>eureka-order</module>
+        <module>cloud-user</module>
+        <module>cloud-order</module>
         <module>redis</module>
         <module>schedule</module>
         <module>jpa</module>
         <module>rabbit-mq</module>
         <module>gof23</module>
+        <module>api-user</module>
+        <module>api-order</module>
     </modules>
 
 
