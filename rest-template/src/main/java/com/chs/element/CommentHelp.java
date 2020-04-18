@@ -108,7 +108,7 @@ public class CommentHelp {
      * 读数据库 删除评论 和回复
      */
     public void delCommentAndReply() {
-        Page<Comment> pa = commentRepository.findAll(PageRequest.of(1, 1));
+        Page<Comment> pa = commentRepository.findAll(PageRequest.of(0, 1));
         List<Comment> list = pa.getContent();
 
         for (Comment comment : list) {
