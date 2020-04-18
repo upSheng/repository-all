@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  * <pre>
@@ -31,35 +30,29 @@ public class Comment {
     @Column(name = "ID")
     private String id;
 
-    @Column(name = "GAME_ID")
-    private String gameId;
-
-    @Column(name = "SCORE")
-    private Integer score;
-
-    @Column(name = "COMMENT")
-    private String comment;
-
-    @Column(name = "COMMENTA")
-    private String commenta;
-
-    @Column(name = "COMMENTB")
-    private String commentb;
-
-    @Column(name = "COMMENTC")
-    private String commentc;
-
-    @Column(name = "COMMENTD")
-    private String commentd;
+    @Column(name = "resourceId")
+    private String resourceId;
 
     @Column(name = "UUID")
     private String uuid;
+
+    @Column(name = "SCORE")
+    private String score;
+
+    @Column(name = "CONTENT")
+    private String content;
 
     @Column(name = "CREATE_TIME")
     private Long createTime;
 
     @Column(name = "COMMENT_ID")
     private String commentId;
+
+    @Column(name = "REPLY_ID")
+    private String replyId;
+
+    @Column(name = "JUDGE_COMMENT")
+    private Integer judgeComment;
 
     public String getId() {
         return id;
@@ -69,52 +62,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getGameId() {
-        return gameId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public void setGameId(String gameId) {
-        this.gameId = gameId;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public String getCommenta() {
-        return commenta;
-    }
-
-    public void setCommenta(String commenta) {
-        this.commenta = commenta;
-    }
-
-    public String getCommentb() {
-        return commentb;
-    }
-
-    public void setCommentb(String commentb) {
-        this.commentb = commentb;
-    }
-
-    public String getCommentc() {
-        return commentc;
-    }
-
-    public void setCommentc(String commentc) {
-        this.commentc = commentc;
-    }
-
-    public String getCommentd() {
-        return commentd;
-    }
-
-    public void setCommentd(String commentd) {
-        this.commentd = commentd;
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
     }
 
     public String getUuid() {
@@ -123,6 +76,15 @@ public class Comment {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Long getCreateTime() {
@@ -141,11 +103,27 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public String getComment() {
-        return comment;
+    public String getReplyId() {
+        return replyId;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setReplyId(String replyId) {
+        this.replyId = replyId;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public Integer getJudgeComment() {
+        return judgeComment;
+    }
+
+    public void setJudgeComment(Integer judgeComment) {
+        this.judgeComment = judgeComment;
     }
 }

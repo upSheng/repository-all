@@ -2,6 +2,8 @@ package com.chs.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -36,6 +38,13 @@ public class RestTemplateConfig {
         factory.setConnectTimeout(15000);
         factory.setReadTimeout(5000);
         return factory;
+    }
+    @Bean
+    public HttpHeaders httpHeaders(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/json;charset=UTF-8");
+        httpHeaders.setContentType(type);
+        return httpHeaders;
     }
 
 }

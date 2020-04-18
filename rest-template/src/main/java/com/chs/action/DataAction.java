@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <pre>
@@ -52,6 +54,14 @@ public class DataAction {
         Map<String, Object> map = new HashMap<>();
         map.put("name", user.get("name"));
         return map;
+    }
+
+    @RequestMapping("/comment")
+    public Map<String,Object> comment(@RequestBody Map map){
+        Map<String,Object> result = new HashMap<>();
+        result.put("return_code",200);
+        result.put("data", UUID.randomUUID().toString());
+        return result;
     }
 
 
