@@ -5,6 +5,7 @@ import com.csvreader.CsvReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class CsvUtil {
             String charset = "UTF-8";
             in = new FileInputStream(filePath);
 
+            //csv第一行会多个字符
+            in = getInputStream(in);
             reader = new CsvReader(in, ',', Charset.forName(charset));
             if (reader != null) {
 
@@ -54,5 +57,19 @@ public class CsvUtil {
     }
 
 
+    private static InputStream getInputStream(InputStream in) throws IOException {
+
+        PushbackInputStream stream = new PushbackInputStream(in);
+        int ch = stream.read();
+        if (ch != 0xEF) {
+            stream.unread(ch);
+        } else if ((ch = stream.read()) != 0xBB) {
+            stream.unread(ch);
+            stream.unread(0xef);
+        } else if ((ch = stream.read()) != 0xBF) {
+            throw new IOException("错误的UTF-8格式文件");
+        }
+        return stream;
+    }
 
 }

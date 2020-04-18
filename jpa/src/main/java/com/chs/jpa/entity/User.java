@@ -1,9 +1,6 @@
 package com.chs.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -28,8 +25,9 @@ import java.util.Date;
 public class User {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "ID")
-    private String id;
+    private Integer id;
 
     @Column(name = "NAME")
     private String name;
@@ -53,11 +51,11 @@ public class User {
     private Date updateTime;
 
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

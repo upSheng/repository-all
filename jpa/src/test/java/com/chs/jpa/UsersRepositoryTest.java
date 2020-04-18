@@ -7,13 +7,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -41,25 +40,33 @@ public class UsersRepositoryTest {
 
     @Test
     public void testSave() {
+        Random random = new Random();
+
+
         User user = new User();
-        user.setId("00"+ UUID.randomUUID().toString());
-        user.setAge(11);
-        user.setName("张三");
-        user.setCreateTime(new Date());
-        this.userRepository.save(user);
+        for (int i = 0; i < 1000000; i++) {
+            user.setAge(random.nextInt(100));
+            user.setName("张三" + i);
+            user.setPassword(UUID.randomUUID().toString());
+            user.setCreateTime(new Date());
+            user.setCreateUser(UUID.randomUUID().toString());
+            user.setId(null);
+            this.userRepository.save(user);
+        }
     }
+
     @Test
-    public void testDelete(){
+    public void testDelete() {
 
         this.userRepository.deleteById("005daeb881-3333-4cd8-8f1f-09a5bdb35766");
     }
 
     @Test
-    public void testFind(){
+    public void testFind() {
 
         User user = new User();
         user.setName("zz");
-        Page<User> userList2 =  this.userRepository.findAll(Example.of(user),PageRequest.of(1,3));
+        Page<User> userList2 = this.userRepository.findAll(Example.of(user), PageRequest.of(1, 3));
 
     }
 

@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,10 @@ public class Post {
         for (int i = 1; i < datas.size(); i++) {//去首行
             String[] data = datas.get(i);
             String gameId = data[0];
+            if (StringUtils.isEmpty(gameId)) {
+                //防止空数据
+                continue;
+            }
             String score = data[1];
             String content = data[2];
             String replya = data[3];
@@ -98,6 +103,15 @@ public class Post {
         }
 
     }
+
+    /**
+     * 删除评论 和回复
+     */
+    @Test
+    public void delCommentAndReply() {
+        commentHelp.delCommentAndReply();
+    }
+
 
 
 }
