@@ -2,7 +2,10 @@ package com.chs.element;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chs.entity.Comment;
+import com.chs.entity.CommentData;
+import com.chs.repository.CommentDataRepository;
 import com.chs.repository.CommentRepository;
+import com.chs.util.CsvUtil;
 import com.chs.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +33,10 @@ public class CommentHelp {
 
     @Autowired
     private CommentRepository commentRepository;
+
+
+    @Autowired
+    private CommentDataRepository commentDataRepository;
 
 
     private static final String COMMENT_URL = "http://pre.233xyx.com/apiserv/bbs/addComment";
@@ -66,6 +73,9 @@ public class CommentHelp {
             comment.setCreateTime(createTime);
             comment.setJudgeComment(1);
             commentRepository.save(comment);
+        } else {
+            System.out.println(result.toJSONString() + params.get("uuid").toString());
+
         }
         result.put("createTime", createTime);
         return result;
@@ -77,7 +87,7 @@ public class CommentHelp {
      * @param params
      * @return
      */
-    public JSONObject reply(Map<String, String> params, Long start, Long end) {
+    public boolean reply(Map<String, String> params, Long start, Long end) {
 
         Long createTime = DateUtil.random(start, end);
         params.put("createTime", createTime.toString());
@@ -98,9 +108,12 @@ public class CommentHelp {
             comment.setCreateTime(createTime);
             comment.setJudgeComment(0);
             commentRepository.save(comment);
+            return true;
+        } else {
+            System.out.println(result.toJSONString() + params.get("uuid").toString());
+            return false;
         }
-        result.put("createTime", createTime);
-        return result;
+
     }
 
 
@@ -108,7 +121,7 @@ public class CommentHelp {
      * 读数据库 删除评论 和回复
      */
     public void delCommentAndReply() {
-        Page<Comment> pa = commentRepository.findAll(PageRequest.of(0, 1));
+        Page<Comment> pa = commentRepository.findAll(PageRequest.of(0, 500));
         List<Comment> list = pa.getContent();
 
         for (Comment comment : list) {
@@ -144,10 +157,50 @@ public class CommentHelp {
     }
 
 
-    public String getRandomUUid(List<String[]> uuids) {
+    public String getRandomUUid(List<List<String>> uuids) {
         Random random = new Random();
         int index = random.nextInt(uuids.size());
-        return uuids.get(index)[0];
+        return uuids.get(index).get(0);
+    }
+
+
+    /**
+     * 将excel载入数据库
+     *
+     * @param filePath
+     */
+    public void loadData(String filePath) {
+        List<List<String>> lists = CsvUtil.getExcel(filePath);
+
+        for (List<String> list : lists) {
+            CommentData commentData = new CommentData();
+            commentData.setId(UUID.randomUUID().toString());
+            commentData.setResourceId(list.get(0));
+            commentData.setScore(list.get(1));
+            commentData.setContent(list.get(2));
+
+            if (3 < list.size()) {
+                commentData.setReplya(list.get(3));
+            }
+            if (4 < list.size()) {
+                commentData.setReplyb(list.get(4));
+            }
+            if (5 < list.size()) {
+                commentData.setReplyc(list.get(5));
+            }
+            if (6 < list.size()) {
+                commentData.setReplyd(list.get(6));
+            }
+
+            try {
+               
+                commentDataRepository.save(commentData);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
 

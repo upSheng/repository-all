@@ -2,12 +2,16 @@ package com.chs;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chs.element.CommentHelp;
+import com.chs.entity.CommentData;
+import com.chs.repository.CommentDataRepository;
 import com.chs.util.CsvUtil;
 import com.chs.util.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
 
@@ -26,45 +30,44 @@ public class Post {
     @Autowired
     private CommentHelp commentHelp;
 
+    @Autowired
+    private CommentDataRepository commentDataRepository;
+
     private static final String START_TIME = "2020-04-10 08:00:00";
     private static final String END_TIME = "2020-04-13 08:00:00";
-    private static final String CONTENT_FILE_PATH = "d:/test.csv";
-    private static final String UUID_FILE_PATH = "d:/uuid.csv";
+    private static final String CONTENT_FILE_PATH = "d:/data.xlsx";
+    private static final String UUID_FILE_PATH = "d:/uuid.xlsx";
 
     @Test
     public void post() {
 
-        List<String[]> datas = CsvUtil.getDataList(CONTENT_FILE_PATH);
-        List<String[]> uuids = CsvUtil.getDataList(UUID_FILE_PATH);
+        //读取数据库评论
+        Page<CommentData> pa = commentDataRepository.findAll(PageRequest.of(0, 500));
+        List<CommentData> datas = pa.getContent();
+        //从excel获取uuid
+        List<List<String>> uuids = CsvUtil.getExcelUuid(UUID_FILE_PATH);
         Long start = DateUtil.getLong(START_TIME);
         Long end = DateUtil.getLong(END_TIME);
 
-        for (int i = 1; i < datas.size(); i++) {//去首行
-            String[] data = datas.get(i);
-            String gameId = data[0];
-            if (StringUtils.isEmpty(gameId)) {
+        for (int i = 0; i < datas.size(); i++) {
+            CommentData data = datas.get(i);
+            String resourceId = data.getResourceId();
+            if (StringUtils.isEmpty(resourceId)) {
                 //防止空数据
                 continue;
             }
-            String score = data[1];
-            String content = data[2];
-            String replya = data[3];
-            String replyb = data[4];
-            String replyc = data[5];
-            String replyd = data[6];
-
+            String score = data.getScore();
+            String content = data.getContent();
             Map<String, String> params = new HashMap<>();
             params.put("moduleType", "GAME");
-            params.put("resourceId", gameId);
+            params.put("resourceId", resourceId);
             params.put("uuid", commentHelp.getRandomUUid(uuids));
             params.put("content", content);
             params.put("score", score);
-
             //评论
             JSONObject result = commentHelp.comment(params, start, end);
             Integer code = result.getInteger("return_code");
             if (code.equals(200)) {
-
                 //评论成功
                 String commentId = result.getString("data");
                 Long createTime = result.getLong("createTime");
@@ -76,28 +79,42 @@ public class Post {
                 params.put("commentId", commentId);
 
                 //回复1
-                params.put("uuid", commentHelp.getRandomUUid(uuids));
-                params.put("content", replya);
-                commentHelp.reply(params, createTime, end);
+                String replya = data.getReplya();
+                if (!StringUtils.isEmpty(replya)) {
+                    params.put("uuid", commentHelp.getRandomUUid(uuids));
+                    params.put("content", replya);
+                    commentHelp.reply(params, createTime, end);
+                }
 
                 //回复2
-                params.put("uuid", commentHelp.getRandomUUid(uuids));
-                params.put("content", replyb);
-                commentHelp.reply(params, createTime, end);
-
+                String replyb = data.getReplyb();
+                if (!StringUtils.isEmpty(replyb)) {
+                    params.put("uuid", commentHelp.getRandomUUid(uuids));
+                    params.put("content", replyb);
+                    commentHelp.reply(params, createTime, end);
+                }
                 //回复3
-                params.put("uuid", commentHelp.getRandomUUid(uuids));
-                params.put("content", replyc);
-                commentHelp.reply(params, createTime, end);
+                String replyc = data.getReplyc();
+                if (!StringUtils.isEmpty(replyc)) {
+                    params.put("uuid", commentHelp.getRandomUUid(uuids));
+                    params.put("content", replyc);
+                    commentHelp.reply(params, createTime, end);
+                }
+                //回复4
+                String replyd = data.getReplyd();
+                if (!StringUtils.isEmpty(replyd)) {
+                    params.put("uuid", commentHelp.getRandomUUid(uuids));
+                    params.put("content", replyd);
+                    commentHelp.reply(params, createTime, end);
+                }
 
-                //回4
-                params.put("uuid", commentHelp.getRandomUUid(uuids));
-                params.put("content", replyd);
-                commentHelp.reply(params, createTime, end);
+                //成功就删除
+                commentDataRepository.delete(data);
 
             } else {
-                System.out.println(result.toJSONString());
-                return;
+                //更新失败原因
+                data.setResult(result.toJSONString());
+                commentDataRepository.save(data);
             }
 
         }
@@ -112,6 +129,14 @@ public class Post {
         commentHelp.delCommentAndReply();
     }
 
+
+    /**
+     * 存excel数据进数据库
+     */
+    @Test
+    public void loadData() {
+        commentHelp.loadData(CONTENT_FILE_PATH);
+    }
 
 
 }

@@ -1,6 +1,12 @@
 package com.chs.util;
 
 import com.csvreader.CsvReader;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.util.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -70,6 +76,82 @@ public class CsvUtil {
             throw new IOException("错误的UTF-8格式文件");
         }
         return stream;
+    }
+
+    public static List<List<String>> getExcel(String filePath) {
+
+        try {
+
+            List<List<String>> result = new ArrayList<>();
+            InputStream is = new FileInputStream(filePath);
+            Workbook wb = new XSSFWorkbook(is);
+            Sheet sheet = wb.getSheetAt(0);
+            int rowNum = sheet.getLastRowNum();
+            for (int i = 0; i <= rowNum; i++) {
+                //获得行
+                Row row = sheet.getRow(i);
+                List<String> item = new ArrayList<>();
+                //获得当前行的列数
+                int colNum = row.getLastCellNum();
+                for (int j = 0; j < colNum; j++) {
+                    //获取单元格
+                    Cell cell = row.getCell(j);
+                    if (cell != null) {
+                        if (j == 0 || j == 1) {
+                            item.add(Double.valueOf(cell.toString()).intValue() + "");
+                        } else {
+                            if (!(StringUtils.isEmpty(cell.toString()))) {
+                                item.add(cell.toString());
+                            }
+
+                        }
+
+                    }
+                }
+                result.add(item);
+            }
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public static List<List<String>> getExcelUuid(String filePath) {
+
+        try {
+
+            List<List<String>> result = new ArrayList<>();
+            InputStream is = new FileInputStream(filePath);
+            Workbook wb = new XSSFWorkbook(is);
+            Sheet sheet = wb.getSheetAt(0);
+            int rowNum = sheet.getLastRowNum();
+            for (int i = 0; i <= rowNum; i++) {
+                //获得行
+                Row row = sheet.getRow(i);
+                List<String> item = new ArrayList<>();
+                //获得当前行的列数
+                int colNum = row.getLastCellNum();
+                for (int j = 0; j < colNum; j++) {
+                    //获取单元格
+                    Cell cell = row.getCell(j);
+                    if (cell != null) {
+                        item.add(cell.toString());
+                    }
+                }
+                result.add(item);
+            }
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
     }
 
 }
