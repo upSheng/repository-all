@@ -17,10 +17,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class CommentHelp {
@@ -44,6 +41,8 @@ public class CommentHelp {
 
     private static final String DEL_COMMENT_URL = "http://pre.233xyx.com/apiserv/bbs/delComment";
     private static final String DEL_REPLY_URL = "http://pre.233xyx.com/apiserv/bbs/delReply";
+
+    private static final String MODIFY_START_COUNT_URL = "http://pre.233xyx.com/apiserv/bbs/modifyStarCount";
 
     /**
      * 评论
@@ -73,6 +72,8 @@ public class CommentHelp {
             comment.setCreateTime(createTime);
             comment.setJudgeComment(1);
             commentRepository.save(comment);
+            //修改点赞数
+            JSONObject startResult = modifyStarCountComment(comment);
         } else {
             System.out.println(result.toJSONString() + params.get("uuid").toString());
 
@@ -95,6 +96,7 @@ public class CommentHelp {
         JSONObject result = restTemplate.postForObject(REPLY_URL, objectHttpEntity, JSONObject.class);
         Integer code = result.getInteger("return_code");
         if (code.equals(200)) {
+
             //成功记录日志到数据库
             String data = result.getString("data");
             Comment comment = new Comment();
@@ -108,6 +110,9 @@ public class CommentHelp {
             comment.setCreateTime(createTime);
             comment.setJudgeComment(0);
             commentRepository.save(comment);
+
+            //修改点赞数
+            JSONObject startResult = modifyStarCountReply(comment);
             return true;
         } else {
             System.out.println(result.toJSONString() + params.get("uuid").toString());
@@ -193,7 +198,7 @@ public class CommentHelp {
             }
 
             try {
-               
+
                 commentDataRepository.save(commentData);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -203,5 +208,64 @@ public class CommentHelp {
 
     }
 
+
+    /**
+     * 修改评论点赞
+     *
+     * @param comment
+     * @return
+     */
+    public JSONObject modifyStarCountComment(Comment comment) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("moduleType", "GAME");
+        params.put("resourceId", comment.getResourceId());
+        params.put("commentId", comment.getCommentId());
+        params.put("count", randomStar(comment.getContent()));
+        params.put("adminName", "adminAuto");
+        HttpEntity<Map<String, Object>> objectHttpEntity = new HttpEntity(params, httpHeaders);
+        JSONObject result = restTemplate.postForObject(MODIFY_START_COUNT_URL, objectHttpEntity, JSONObject.class);
+        return result;
+    }
+
+    /**
+     * 修改回复点赞
+     *
+     * @param comment
+     * @return
+     */
+    public JSONObject modifyStarCountReply(Comment comment) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("moduleType", "GAME");
+        params.put("resourceId", comment.getResourceId());
+        params.put("replyId", comment.getReplyId());
+        params.put("count", randomStar(comment.getContent()));
+        params.put("adminName", "adminAuto");
+        HttpEntity<Map<String, Object>> objectHttpEntity = new HttpEntity(params, httpHeaders);
+        JSONObject result = restTemplate.postForObject(MODIFY_START_COUNT_URL, objectHttpEntity, JSONObject.class);
+        return result;
+    }
+
+
+    /**
+     * 根据评论字数随机点赞
+     *
+     * @param content
+     * @return
+     */
+    private int randomStar(String content) {
+        if (content == null) {
+            return 0;
+        }
+
+        if (content.length() < 29) {
+            return 3 + (int) (Math.random() * 12);
+        } else if (content.length() < 49) {
+            return 10 + (int) (Math.random() * 20);
+        } else {
+            return 20 + (int) (Math.random() * 30);
+        }
+    }
 
 }
