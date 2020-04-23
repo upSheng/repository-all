@@ -54,6 +54,9 @@ public class Comment {
     @Column(name = "JUDGE_COMMENT")
     private Integer judgeComment;
 
+    @Column(name = "result")
+    private String result;
+
     public String getId() {
         return id;
     }
@@ -125,5 +128,13 @@ public class Comment {
 
     public void setJudgeComment(Integer judgeComment) {
         this.judgeComment = judgeComment;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

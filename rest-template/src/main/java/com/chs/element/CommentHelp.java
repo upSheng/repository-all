@@ -36,13 +36,13 @@ public class CommentHelp {
     private CommentDataRepository commentDataRepository;
 
 
-    private static final String COMMENT_URL = "http://pre.233xyx.com/apiserv/bbs/addComment";
-    private static final String REPLY_URL = "http://pre.233xyx.com/apiserv/bbs/addReply";
+    private static final String COMMENT_URL = "https://www.233xyx.com/apiserv/bbs/addComment";
+    private static final String REPLY_URL = "https://www.233xyx.com/apiserv/bbs/addReply";
 
-    private static final String DEL_COMMENT_URL = "http://pre.233xyx.com/apiserv/bbs/delComment";
-    private static final String DEL_REPLY_URL = "http://pre.233xyx.com/apiserv/bbs/delReply";
+    private static final String DEL_COMMENT_URL = "https://www.233xyx.com/apiserv/bbs/delComment";
+    private static final String DEL_REPLY_URL = "https://www.233xyx.com/apiserv/bbs/delReply";
 
-    private static final String MODIFY_START_COUNT_URL = "http://pre.233xyx.com/apiserv/bbs/modifyStarCount";
+    private static final String MODIFY_START_COUNT_URL = "https://www.233xyx.com/apiserv/bbs/modifyStarCount";
 
     /**
      * 评论
@@ -71,6 +71,7 @@ public class CommentHelp {
             comment.setCommentId(commentId);
             comment.setCreateTime(createTime);
             comment.setJudgeComment(1);
+            comment.setResult(result.toJSONString());
             commentRepository.save(comment);
             //修改点赞数
             JSONObject startResult = modifyStarCountComment(comment);

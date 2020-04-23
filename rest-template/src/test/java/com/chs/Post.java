@@ -42,7 +42,7 @@ public class Post {
     public void post() {
 
         //读取数据库评论
-        Page<CommentData> pa = commentDataRepository.findAll(PageRequest.of(0, 500));
+        Page<CommentData> pa = commentDataRepository.findAll(PageRequest.of(0, 15));
         List<CommentData> datas = pa.getContent();
         //从excel获取uuid
         List<List<String>> uuids = CsvUtil.getExcelUuid(UUID_FILE_PATH);
