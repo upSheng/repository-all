@@ -1,8 +1,6 @@
 package com.chs.action;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,24 +24,21 @@ import java.util.Map;
  * </pre>
  */
 
+@Slf4j
 @RestController
 public class HelloWorldAction {
-
-
-    private final Logger logger = LoggerFactory.getLogger(HelloWorldAction.class);
 
     @RequestMapping("/helloWorld")
     public Map<String,Object> helloWorld(){
         Map<String,Object>  map = new HashMap<>();
         map.put("msg","helloWorld");
-        logger.info("info");
-        logger.debug("debug");
+        log.info("info");
+        log.debug("debug");
 
         try {
             int a = 1/0;
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
-
+            log.error(e.getMessage(),e);
             map.put("msg","err");
             return map;
 
