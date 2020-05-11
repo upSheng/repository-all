@@ -29,6 +29,7 @@
         <module>gof23</module>
         <module>api-user</module>
         <module>api-order</module>
+        <module>sdk-tool</module>
     </modules>
 
 
