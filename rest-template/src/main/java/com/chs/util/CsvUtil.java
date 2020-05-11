@@ -90,6 +90,7 @@ public class CsvUtil {
             for (int i = 0; i <= rowNum; i++) {
                 //获得行
                 Row row = sheet.getRow(i);
+                if (row==null) continue;
                 List<String> item = new ArrayList<>();
                 //获得当前行的列数
                 int colNum = row.getLastCellNum();
@@ -97,8 +98,13 @@ public class CsvUtil {
                     //获取单元格
                     Cell cell = row.getCell(j);
                     if (cell != null) {
+                        if (StringUtils.isEmpty(cell.toString())){
+                            continue;
+                        }
                         if (j == 0 || j == 1) {
+
                             item.add(Double.valueOf(cell.toString()).intValue() + "");
+
                         } else {
                             if (!(StringUtils.isEmpty(cell.toString()))) {
                                 item.add(cell.toString());
@@ -108,7 +114,10 @@ public class CsvUtil {
 
                     }
                 }
-                result.add(item);
+                if (!item.isEmpty()){
+                    result.add(item);
+                }
+
             }
             return result;
 
