@@ -3,22 +3,24 @@ package com.chs.entity;
 import java.util.Date;
 
 public class UserEntity {
-    private String id;
+    private Integer id;
 
     private Integer age;
 
     private Date createTime;
 
+    private String createUser;
+
     private String name;
 
-    private String realName;
+    private String password;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getAge() {
@@ -37,6 +39,14 @@ public class UserEntity {
         this.createTime = createTime;
     }
 
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser == null ? null : createUser.trim();
+    }
+
     public String getName() {
         return name;
     }
@@ -45,11 +55,11 @@ public class UserEntity {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getRealName() {
-        return realName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName == null ? null : realName.trim();
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 }

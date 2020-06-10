@@ -1,14 +1,15 @@
 package com.chs.dao;
 
 import com.chs.entity.UserEntity;
+
 import java.util.List;
 
 public interface UserEntityMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(UserEntity record);
 
-    UserEntity selectByPrimaryKey(String id);
+    UserEntity selectByPrimaryKey(Integer id);
 
     List<UserEntity> selectAll();
 

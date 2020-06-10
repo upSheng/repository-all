@@ -5,14 +5,12 @@ import com.chs.entity.UserEntity;
 import com.github.pagehelper.PageHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * <pre>
@@ -42,15 +40,15 @@ public class UserEntityMapperTest {
 
     @Test
     public void selectByPrimaryKeyTest() {
-        UserEntity userEntity = userEntityMapper.selectByPrimaryKey("11");
+        UserEntity userEntity = userEntityMapper.selectByPrimaryKey(11);
         System.out.println(userEntity.getName());
     }
 
     //@Transactional //回滚，防止脏数据
     @Test
     public void insertTest() {
-        UserEntity userEntity = userEntityMapper.selectByPrimaryKey("11");
-        userEntity.setId(UUID.randomUUID().toString());
+        UserEntity userEntity = userEntityMapper.selectByPrimaryKey(1);
+        userEntity.setId(null);
         userEntity.setName("cc");
         userEntityMapper.insert(userEntity);
 
@@ -61,7 +59,7 @@ public class UserEntityMapperTest {
     @Test
     public void deleteByPrimaryKeyTest() {
 
-        userEntityMapper.deleteByPrimaryKey("2cbd3362-baa3-40ae-a293-ed9e9058b8a2");
+        userEntityMapper.deleteByPrimaryKey(11);
 
     }
 
@@ -69,7 +67,7 @@ public class UserEntityMapperTest {
     @Test
     public void updateByPrimaryKeyTest() {
 
-        UserEntity userEntity = userEntityMapper.selectByPrimaryKey("11");
+        UserEntity userEntity = userEntityMapper.selectByPrimaryKey(11);
         userEntity.setName("哥哥");
         userEntityMapper.updateByPrimaryKey(userEntity);
 
