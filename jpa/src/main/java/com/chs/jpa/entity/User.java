@@ -1,5 +1,4 @@
 package com.chs.jpa.entity;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -21,35 +20,28 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "AGE")
+    @Column(name = "age")
     private Integer age;
 
-    @Column(name = "CREATE_USER")
+    @Column(name = "create_user")
     private String createUser;
 
-    @Column(name = "UPDATE_USER")
-    private String updateUser;
-
-    @Column(name = "CREATE_TIME")
+    @Column(name = "create_time")
     private Date createTime;
-
-    @Column(name = "UPDATE_TIME")
-    private Date updateTime;
-
 
     public Integer getId() {
         return id;
@@ -91,27 +83,11 @@ public class User {
         this.createUser = createUser;
     }
 
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 }

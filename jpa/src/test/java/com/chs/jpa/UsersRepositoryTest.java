@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -39,34 +40,58 @@ public class UsersRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void testSave() {
+    public void saveTest() {
         Random random = new Random();
-
-
-        User user = new User();
-        for (int i = 0; i < 1000000; i++) {
-            user.setAge(random.nextInt(100));
+        for (int i = 0; i < 5; i++) {
+            User user = new User();
             user.setName("张三" + i);
+            user.setAge(random.nextInt(100));
             user.setPassword(UUID.randomUUID().toString());
             user.setCreateTime(new Date());
             user.setCreateUser(UUID.randomUUID().toString());
-            user.setId(null);
-            this.userRepository.save(user);
+            userRepository.save(user);
         }
     }
 
     @Test
     public void testDelete() {
 
-        this.userRepository.deleteById("005daeb881-3333-4cd8-8f1f-09a5bdb35766");
+        this.userRepository.deleteById(1);
     }
 
     @Test
     public void testFind() {
 
         User user = new User();
-        user.setName("zz");
-        Page<User> userList2 = this.userRepository.findAll(Example.of(user), PageRequest.of(1, 3));
+        user.setName("张三0");
+        Page<User> userList2 = this.userRepository.findAll(Example.of(user), PageRequest.of(0, 3));
+
+        List<User> content = userList2.getContent();
+        System.out.println(content);
+    }
+
+    @Test
+    public void findByAgeTest() {
+        User u = userRepository.findByAge(64);
+        System.out.println(u);
+
+        u.setName("aaaa");
+        userRepository.save(u);
+    }
+
+    @Test
+    public void findByAgeQueryTest() {
+        User u = userRepository.findByAgeQuery(64);
+        System.out.println(u);
+
+    }
+
+    @Test
+    public void findByAgeQuery1Test() {
+        User user = new User();
+        user.setAge(64);
+        User u = userRepository.findByAgeQuery1(user);
+        System.out.println(u);
 
     }
 
