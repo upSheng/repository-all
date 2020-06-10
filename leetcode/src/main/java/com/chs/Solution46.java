@@ -1,9 +1,5 @@
 package com.chs;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * <pre>
  *
@@ -21,41 +17,43 @@ import java.util.List;
  * </pre>
  */
 public class Solution46 {
+    public static int translateNum(int num) {
+
+        String temp = String.valueOf(num);
+        if (temp.length() == 1) return 1;
+
+        int[] result = new int[temp.length()];
+        result[0] = 1;
+        result[1] = Integer.parseInt(temp.substring(0, 2)) <= 25 ? 2 : 1;
+        for (int i = 2; i < temp.length(); i++) {
+
+            int anInt = Integer.parseInt(temp.substring(i - 1, i + 1));
+            if (anInt <= 25 && anInt >9) {
+                result[i] = result[i - 1] + result[i - 2];
+            } else {
+                result[i] = result[i - 1];
+            }
+        }
+        return result[result.length - 1];
+    }
+
+
     public static void main(String[] args) {
-        int[] nums = {1,2,3};
-
-        List<List<Integer>> result = permute(nums);
-
-        System.out.println("a");
+        System.out.println(isPalindrome(121));
     }
 
-    public static List<List<Integer>> permute(int[] nums) {
+    public static boolean isPalindrome(int x) {
 
-
-        List<Integer> list = new ArrayList<>();
-        for (int num : nums) {
-            list.add(num);
+        String temp = String.valueOf(x);
+        int i = 0;
+        int j = temp.length();
+        while(i<j){
+            if(temp.charAt(i) != temp.charAt(j)){
+                return false;
+            }
+            i++;
+            j--;
         }
-
-        List<List<Integer>> result = new ArrayList<>();
-        int lenght = nums.length;
-        add(result, lenght, list, 0);
-
-        return result;
-
-
-    }
-
-    public static void add(List<List<Integer>> result, int length, List<Integer> nums, int index) {
-
-        if (index == length) {
-            result.add(new ArrayList<>(nums));
-        }
-
-        for (int i = index ; i < length; i++) {
-            Collections.swap(nums, index, i);
-            add(result, length, nums, index + 1);
-            Collections.swap(nums, index, i);
-        }
+        return true;
     }
 }
