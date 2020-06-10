@@ -30,6 +30,8 @@
         <module>api-user</module>
         <module>api-order</module>
         <module>sdk-tool</module>
+        <module>task</module>
+        <module>mybatis-generator</module>
     </modules>
 
 
