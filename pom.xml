@@ -32,6 +32,7 @@
         <module>sdk-tool</module>
         <module>task</module>
         <module>mybatis-generator</module>
+        <module>jdk-new</module>
     </modules>
 
 

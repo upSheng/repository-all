@@ -14,7 +14,7 @@ public class Solution125 {
         int left = 0;
         int right = s.length() - 1;
 
-        boolean flag = true;
+
 
         while (left < right) {
 
@@ -26,13 +26,9 @@ public class Solution125 {
                 right--;
             }
 
-            if (flag) {
-                if (Character.isLetterOrDigit(str.charAt(left))) {
-                    flag = false;
-                }
-            }
 
-            if (str.charAt(left) != str.charAt(right) && !flag) {
+
+            if (str.charAt(left) != str.charAt(right) && Character.isLetterOrDigit(str.charAt(left))) {
                 return false;
             }
             left++;
