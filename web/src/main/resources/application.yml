@@ -7,6 +7,9 @@ spring:
 
       type: com.alibaba.druid.pool.DruidDataSource
 
+      druid:
+        filters: stat
+
   jpa:
       hibernate:
         ddl-auto: update
@@ -28,3 +31,5 @@ pagehelper:
 logging:
   level:
     com.chs.dao: debug
+
+uploadRootPath: d:/upload/

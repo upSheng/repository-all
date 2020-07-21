@@ -1,7 +1,7 @@
 package com.web.config;
 
-import com.web.entity.User;
-import com.web.service.IUserService;
+import com.web.entity.UserEntity;
+import com.web.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,16 +17,16 @@ import java.util.Set;
 public class SelfUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private IUserService iUserService;
+    private UserServiceImpl userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //构建用户信息的逻辑(取数据库/LDAP等用户信息)
 
-        User user = iUserService.findByName(username);
+        UserEntity user = userService.findByName(username);
 
-        if (user == null){
-            throw  new UsernameNotFoundException(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
         }
         SelfUserDetails userInfo = new SelfUserDetails();
         userInfo.setUsername(username);

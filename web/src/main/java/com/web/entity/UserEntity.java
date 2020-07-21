@@ -1,42 +1,25 @@
 package com.web.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
-/**
- * <pre>
- *
- * </pre>
- *
- * @author 陈洪生<br>
- * <b>mail</b> chenhongsheng@tansun.com.cn<br>
- * <b>date</b> 2019/9/27<br>
- * @version 1.0.1
- * <pre>
- * 版本            修改人            修改日期            修改内容描述
- * --------------------------------------------------------------------
- * 1.0.1 	       陈洪生	        2019/9/27            创建
- * --------------------------------------------------------------------
- * </pre>
- */
-@Table(name = "MENU")
 @Entity
-public class MenuEntity {
+@Table(name = "USER")
+public class UserEntity {
+
     @Id
     @Column(name = "ID")
-    private String id;
-
-    @Column(name = "CODE")
-    private String code;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "PARENT_CODE")
-    private String parentCode;
+    @Column(name = "PASSWORD")
+    private String password;
+
+    @Column(name = "AGE")
+    private Integer age;
 
     @Column(name = "CREATE_USER")
     private String createUser;
@@ -50,20 +33,13 @@ public class MenuEntity {
     @Column(name = "UPDATE_TIME")
     private Date updateTime;
 
-    public String getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getName() {
@@ -74,12 +50,20 @@ public class MenuEntity {
         this.name = name;
     }
 
-    public String getParentCode() {
-        return parentCode;
+    public String getPassword() {
+        return password;
     }
 
-    public void setParentCode(String parentCode) {
-        this.parentCode = parentCode;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getCreateUser() {

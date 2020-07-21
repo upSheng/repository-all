@@ -6,8 +6,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 
+/**
+ * @author Administrator
+ */
 public class JwtTokenUtil {
-
 
 
     public static String generateToken(String subject, int expirationSeconds, String salt) {
@@ -15,7 +17,8 @@ public class JwtTokenUtil {
                 .setClaims(null)
                 .setSubject(subject)
                 .setExpiration(new Date(System.currentTimeMillis() + expirationSeconds * 1000))
-                .signWith(SignatureAlgorithm.HS512, salt) // 不使用公钥私钥
+                // 不使用公钥私钥
+                .signWith(SignatureAlgorithm.HS512, salt)
 
                 .compact();
     }
@@ -24,7 +27,8 @@ public class JwtTokenUtil {
         String subject = null;
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(salt) // 不使用公钥私钥
+                    // 不使用公钥私钥
+                    .setSigningKey(salt)
 
                     .parseClaimsJws(token).getBody();
             subject = claims.getSubject();

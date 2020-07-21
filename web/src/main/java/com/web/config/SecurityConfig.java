@@ -1,36 +1,56 @@
 package com.web.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.annotation.Resource;
 
-//@EnableWebSecurity
+
+/**
+ * @author Administrator
+ */
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired
-    AjaxAuthenticationEntryPoint authenticationEntryPoint;  //  未登陆时返回 JSON 格式的数据给前端（否则为 html）
+    /**
+     * 未登陆时返回 JSON 格式的数据给前端（否则为 html）
+     */
+    @Resource
+    AjaxAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Autowired
-    AjaxAuthenticationSuccessHandler authenticationSuccessHandler;  // 登录成功返回的 JSON 格式数据给前端（否则为 html）
+    /**
+     * 登录成功返回的 JSON 格式数据给前端（否则为 html）
+     */
+    @Resource
+    AjaxAuthenticationSuccessHandler authenticationSuccessHandler;
 
-    @Autowired
-    AjaxAuthenticationFailureHandler authenticationFailureHandler;  //  登录失败返回的 JSON 格式数据给前端（否则为 html）
+    /**
+     * 登录失败返回的 JSON 格式数据给前端（否则为 html）
+     */
+    @Resource
+    AjaxAuthenticationFailureHandler authenticationFailureHandler;
 
-    @Autowired
-    AjaxLogoutSuccessHandler  logoutSuccessHandler;  // 注销成功返回的 JSON 格式数据给前端（否则为 登录时的 html）
+    /**
+     * 注销成功返回的 JSON 格式数据给前端（否则为 登录时的 html）
+     */
+    @Resource
+    AjaxLogoutSuccessHandler logoutSuccessHandler;
 
-    @Autowired
-    JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter; // JWT 拦截器
+    /**
+     * JWT 拦截器
+     */
+    @Resource
+    JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
-    @Autowired
+    @Resource
     SelfUserDetailsService selfUserDetailsService;
 
 //    @Override
@@ -60,20 +80,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 去掉 CSRF
         http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 使用 JWT，关闭token
+                // 使用 JWT，关闭token
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 
                 .httpBasic().authenticationEntryPoint(authenticationEntryPoint)
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/index.html","/test").permitAll()
+                .antMatchers("/druid/**", "/ignore/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
                 .formLogin()  //开启登录
-                .successHandler(authenticationSuccessHandler) // 登录成功
-                .failureHandler(authenticationFailureHandler) // 登录失败
+                // 登录成功
+                .successHandler(authenticationSuccessHandler)
+                // 登录失败
+                .failureHandler(authenticationFailureHandler)
                 .permitAll()
 
                 .and()
@@ -82,9 +105,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
 
-
-
-        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class); // JWT Filter
+        // JWT Filter
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
@@ -92,6 +114,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         // 加入自定义的安全认证
+
         auth.userDetailsService(selfUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
+
+    /**
+     * 忽视静态文件
+     *
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/swagger-ui.html")
+                .antMatchers("/webjars/**")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/static/**")
+                .antMatchers("/v2/**");
+
+    }
+
 }
