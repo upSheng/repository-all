@@ -1,9 +1,11 @@
 package com.web;
 
 
+import com.web.util.ApplicationContextUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * <pre>
@@ -25,7 +27,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
+        ApplicationContextUtil.setApplicationContext(run);
+
     }
 
 

@@ -1,17 +1,22 @@
 package com.chs.redis;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -33,81 +38,72 @@ import java.util.concurrent.TimeUnit;
 @SpringBootTest(classes = {Application.class})
 public class RedisTest {
 
-    @Autowired
-    private StringRedisTemplate template;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
 
     @Test
-    public void  test1(){
+    public void test1() {
 
-        template.opsForValue().set("name","6666");
-
-        redisTemplate.boundValueOps("age").set("15");
-
-        User user = new User();
-        user.setAge(11);
-        user.setName("hoh");
-
-        redisTemplate.boundValueOps("user").set(user);
-        System.out.println(template);
+        String key = "name";
+        String value = "chs";
+        stringRedisTemplate.opsForValue().set(key, value, 60, TimeUnit.SECONDS);
+        String name = stringRedisTemplate.opsForValue().get("name");
 
     }
 
+
     @Test
-    public void  test2(){
+    public void test2() {
 
-        String name = template.opsForValue().get("name");
-        String age = (String) redisTemplate.boundValueOps("age").get();
-        User user = (User) redisTemplate.boundValueOps("user").get();
-        System.out.println(name);
-        System.out.println(age);
-        System.out.println("11"+user.getName());
-        System.out.println("11"+user.getAge());
+        String key = "activity:chs";
+        for (int i = 0; i < 100; i++) {
+            User user = new User("chs", i, new Date());
+            JSON.toJSONString(user);
+            stringRedisTemplate.opsForList().leftPush(key, JSON.toJSONString(user));
+        }
+        List<String> range = stringRedisTemplate.opsForList().range(key, 0, 50);
+        assert range != null;
+        List<User> collect = range.stream().map(x -> JSON.parseObject(x, User.class)).collect(Collectors.toList());
 
+        //保留0-50 个
+        stringRedisTemplate.opsForList().trim(key, 0, 50);
     }
 
+    /**
+     * hash 结构
+     */
     @Test
     public void test3(){
-        redisTemplate.opsForValue().set("name","zhangsan",60, TimeUnit.SECONDS);
+        String key = "user";
+        redisTemplate.opsForHash().put(key,"name","chs");
+        redisTemplate.opsForHash().put(key,"age",14);
+        Object age = redisTemplate.opsForHash().get(key, "age");
 
-        String name = (String) redisTemplate.opsForValue().get("name");
-        System.out.println(name);
-    }
-
-    @Test
-    public void test4(){
-        String taskCode = "task001";
-        Boolean flag = redisTemplate.opsForValue().setIfAbsent(taskCode,"zhangsan",20, TimeUnit.SECONDS);
-
-        if(flag != null && flag){
-
-            System.out.println("1111");
-        }
+        System.out.println(age);
 
     }
-
-
+    /**
+     * 非阻塞取值
+     */
     @Test
-    public void test5(){
+    public void test4() {
 
-        for(int i=0;i<100;i++){
-            redisTemplate.opsForZSet().add("activityId","chs"+i,i);
-
-            if(redisTemplate.opsForZSet().size("activityId")>10+20){
-                redisTemplate.opsForZSet().removeRange("activityId",0,20);
+        Set<String> keys = new HashSet<>();
+        ScanOptions options = ScanOptions.scanOptions().match("activity*").count(10).build();
+        stringRedisTemplate.execute(connect -> {
+            Cursor<byte[]> cursor = connect.scan(options);
+            while (cursor.hasNext()){
+                byte[] key = cursor.next();
+                keys.add(new String(key));
             }
-        }
+            return true;
+        }, true);
 
-        Set result = redisTemplate.opsForZSet().reverseRange("activityId",0,0);
-
-        System.out.println(redisTemplate.opsForZSet().size("activityId"));
-
-
-        result.forEach((x)-> System.out.println(x));
-
-
-
+        System.out.println(keys);
     }
+
 }

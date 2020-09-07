@@ -1,7 +1,10 @@
 package com.web.dao;
 
 import com.web.entity.UserEntity;
+import com.web.entity.query.UserEntityQuery;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 /**
@@ -10,5 +13,11 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
 
 
-    UserEntity findByName(@Param("name") String name);
+    List<UserEntity> findByQuery(UserEntityQuery userEntityQuery);
+
+    void insert(UserEntity userEntity);
+
+    void update(UserEntity userEntity);
+
+    void delete(@Param("id") Integer id);
 }

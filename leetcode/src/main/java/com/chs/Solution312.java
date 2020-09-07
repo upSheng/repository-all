@@ -1,49 +1,24 @@
 package com.chs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Solution312 {
 
-    public List<String> printVertically(String s) {
+    public int maxCoins(int[] nums) {
+
+        int n = nums.length;
+        int[] vals = new int[n+2];
+        System.arraycopy(nums,0,vals,1,n);
+        vals[0] = 1;
+        vals[1] = 1;
+
+        int[][] dp = new int[n+2][n+2];
 
 
-        String str = s.trim();
+        for (int i=1; i<vals.length-1; i++){
 
-        String[] arr = str.split(" ");
-
-        int max = 0;
-        for (String a : arr) {
-            max = Math.max(max, a.length());
         }
 
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < max; i++) {
-            StringBuilder sb = new StringBuilder();
 
-            int index = -1;
-            for (int j = 0; j < arr.length; j++) {
-                char ch = i < arr[j].length() ? arr[j].charAt(i) : ' ';
-
-
-                if (ch != ' ') {
-                    index = j;
-                }
-
-                sb.append(ch);
-
-
-            }
-
-            String s1 = sb.toString();
-            if (index > 0 && s1.charAt(s1.length() - 1) == ' ') {
-                s1 = s1.substring(0, index + 1);
-            }
-
-            result.add(s1);
-        }
-        return result;
+        return 0;
     }
-
 
 }

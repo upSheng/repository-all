@@ -57,6 +57,9 @@ public class Comment {
     @Column(name = "result")
     private String result;
 
+    @Column(name = "START_COUNT")
+    private Integer starCount;
+
     public String getId() {
         return id;
     }
@@ -136,5 +139,13 @@ public class Comment {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Integer getStarCount() {
+        return starCount;
+    }
+
+    public void setStarCount(Integer starCount) {
+        this.starCount = starCount;
     }
 }

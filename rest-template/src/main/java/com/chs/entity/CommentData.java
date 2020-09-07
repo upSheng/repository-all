@@ -52,6 +52,9 @@ public class CommentData {
     @Column(name = "REPLYD")
     private String replyd;
 
+    @Column(name = "START_COUNT")
+    private Integer startCount;
+
     @Column(name = "RESULT")
     private String result;
 
@@ -125,5 +128,13 @@ public class CommentData {
 
     public void setReplyd(String replyd) {
         this.replyd = replyd;
+    }
+
+    public Integer getStartCount() {
+        return startCount;
+    }
+
+    public void setStartCount(Integer startCount) {
+        this.startCount = startCount;
     }
 }

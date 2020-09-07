@@ -1,13 +1,17 @@
 package com.web.controller;
 
+import com.web.element.Car;
+import com.web.entity.Dog;
 import com.web.modal.Response;
 import com.web.service.impl.UserServiceImpl;
+import com.web.util.ApplicationContextUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,19 +26,30 @@ public class HelloWorldController {
     @Resource
     private UserServiceImpl userService;
 
-//    @RequestMapping("/")
-//    public String home() {
-//
-//        return "hello World!";
-//    }
+    @RequestMapping("/")
+    public String home() {
+
+        return "hello World!";
+    }
+
+    @RequestMapping("/data")
+    public Dog dog() {
+
+        Dog dog = new Dog();
+
+        dog.setDate(new Date());
+        return dog;
+    }
 
 
-    @RequestMapping(value = "/test11", method = RequestMethod.GET)
-    public Response<Map<String, Object>> testaa() throws Exception {
+    @GetMapping(value = "/test")
+    public Response<Map<String, Object>> test() {
+
+        Car car = ApplicationContextUtil.getBean(Car.class);
+        car.sing();
 
         Map<String, Object> map = new HashMap<>();
         map.put("name", "test");
-
         return new Response<>(map);
     }
 

@@ -72,6 +72,7 @@ public class CommentHelp {
             comment.setCreateTime(createTime);
             comment.setJudgeComment(1);
             comment.setResult(result.toJSONString());
+            comment.setStarCount(Integer.valueOf(params.get("starCount")));
             commentRepository.save(comment);
             //修改点赞数
             JSONObject startResult = modifyStarCountComment(comment);
@@ -186,7 +187,8 @@ public class CommentHelp {
             commentData.setContent(list.get(2));
 
             if (3 < list.size()) {
-                commentData.setReplya(list.get(3));
+                //commentData.setReplya(list.get(3));
+                commentData.setStartCount(Double.valueOf(list.get(3)).intValue());
             }
             if (4 < list.size()) {
                 commentData.setReplyb(list.get(4));
@@ -222,7 +224,8 @@ public class CommentHelp {
         params.put("moduleType", "GAME");
         params.put("resourceId", comment.getResourceId());
         params.put("commentId", comment.getCommentId());
-        params.put("count", randomStar(comment.getContent()));
+        //params.put("count", randomStar(comment.getContent()));
+        params.put("count", comment.getStarCount());
         params.put("adminName", "adminAuto");
         HttpEntity<Map<String, Object>> objectHttpEntity = new HttpEntity(params, httpHeaders);
         JSONObject result = restTemplate.postForObject(MODIFY_START_COUNT_URL, objectHttpEntity, JSONObject.class);

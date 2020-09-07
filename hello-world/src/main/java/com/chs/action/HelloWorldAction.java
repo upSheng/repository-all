@@ -1,8 +1,11 @@
 package com.chs.action;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,39 +29,41 @@ import java.util.Map;
 @RestController
 public class HelloWorldAction {
 
-    @RequestMapping("/helloWorld")
-    public Map<String, Object> helloWorld() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("msg", "helloWorld");
-        return map;
-    }
-
     @RequestMapping("/")
     public String home() {
         return "hello World!";
     }
 
-    @RequestMapping("/success1")
-    public Map<String, Object> data1() {
+    @RequestMapping("/data")
+    public Map<String, Object> data() {
         Map<String, Object> map = new HashMap<>();
-        map.put("code", 200);
-        map.put("cpRewarded", 1);
+        map.put("name", "chs");
+        map.put("age", 25);
+        map.put("createTime",new Date());
         return map;
     }
 
-    @RequestMapping("/success0")
-    public Map<String, Object> data0() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", 200);
-        map.put("cpRewarded", 0);
-        return map;
+    @RequestMapping("/data/get")
+    public Map<String, Object> get(@RequestParam Map<String,Object> params) {
+        return params;
     }
 
-    @RequestMapping("/err")
-    public Map<String, Object> data2() {
+    @RequestMapping("/data/post")
+    public Map<String, Object> post(@RequestBody Map<String,Object> params) {
+        return params;
+    }
+
+    @RequestMapping("/data/sleep")
+    public Map<String, Object> sleep()  {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> map = new HashMap<>();
-        map.put("code", 300);
-        map.put("msg", "reward err");
+        map.put("name", "chs");
+        map.put("age", 25);
+        map.put("createTime",new Date());
         return map;
     }
 

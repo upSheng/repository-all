@@ -33,8 +33,8 @@ public class Post {
     @Autowired
     private CommentDataRepository commentDataRepository;
 
-    private static final String START_TIME = "2020-04-01 08:00:00";
-    private static final String END_TIME = "2020-04-23 08:00:00";
+    private static final String START_TIME = "2020-07-10 08:00:00";
+    private static final String END_TIME = "2020-09-07 08:00:00";
     private static final String CONTENT_FILE_PATH = "d:/data.xlsx";
     private static final String UUID_FILE_PATH = "d:/uuid.xlsx";
 
@@ -42,7 +42,7 @@ public class Post {
     public void post() {
 
         //读取数据库评论
-        Page<CommentData> pa = commentDataRepository.findAll(PageRequest.of(0, 4000));
+        Page<CommentData> pa = commentDataRepository.findAll(PageRequest.of(0, 500));
         List<CommentData> datas = pa.getContent();
         //从excel获取uuid
         List<List<String>> uuids = CsvUtil.getExcelUuid(UUID_FILE_PATH);
@@ -58,12 +58,14 @@ public class Post {
             }
             String score = data.getScore();
             String content = data.getContent();
+            Integer startCount = data.getStartCount();
             Map<String, String> params = new HashMap<>();
             params.put("moduleType", "GAME");
             params.put("resourceId", resourceId);
             params.put("uuid", commentHelp.getRandomUUid(uuids));
             params.put("content", content);
             params.put("score", score);
+            params.put("starCount",String.valueOf(startCount));
             //评论
             JSONObject result = commentHelp.comment(params, start, end);
             Integer code = result.getInteger("return_code");

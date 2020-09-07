@@ -78,28 +78,7 @@ public class MyTest {
         System.out.println(result);
     }
 
-    @Test
-    public void test4() {
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        MediaType type = MediaType.APPLICATION_JSON_UTF8;
-        httpHeaders.setContentType(type);
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("cpOrderId", "1570773342696");
-        params.put("send", "1");
-
-        //签名
-        String appSecret = "eee3458c725c15c290b2b94b6eb48881";
-        String sign = SignUtil.createSign(params,appSecret);
-        params.put("sign", sign);
-        HttpEntity<Map<String, Object>> objectHttpEntity = new HttpEntity<>(params, httpHeaders);
-
-        String url = "http://test2500.233xyx.com/apiserv/api/intermodal/v3/handleCPAwardBack";
-        JSONObject result = restTemplate.postForObject(url, objectHttpEntity, JSONObject.class);
-        System.out.println(result);
-
-    }
 
 
 }

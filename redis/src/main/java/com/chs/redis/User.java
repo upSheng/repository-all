@@ -1,6 +1,6 @@
 package com.chs.redis;
 
-import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <pre>
@@ -18,10 +18,18 @@ import java.io.Serializable;
  * --------------------------------------------------------------------
  * </pre>
  */
-public class User implements Serializable {
+public class User {
 
     private String name;
     private int age;
+    private Date createTime;
+
+
+    public User(String name, int age, Date createTime) {
+        this.name = name;
+        this.age = age;
+        this.createTime = createTime;
+    }
 
     public String getName() {
         return name;
@@ -37,5 +45,13 @@ public class User implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

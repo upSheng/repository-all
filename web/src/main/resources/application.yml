@@ -9,7 +9,12 @@ spring:
 
       druid:
         filters: stat
+  jackson:
+    time-zone: GMT+8
 
+  redis:
+      host: 127.0.0.1
+      port: 6379
   jpa:
       hibernate:
         ddl-auto: update
