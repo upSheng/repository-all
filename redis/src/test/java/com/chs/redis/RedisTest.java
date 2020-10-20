@@ -1,6 +1,8 @@
 package com.chs.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.chs.redis.elements.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +47,12 @@ public class RedisTest {
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
+
+    @Resource(name = "redisGenericJ2Json")
+    private RedisTemplate<String,Object> redisGenericJ2Json;
+
+    @Resource(name = "redisObj")
+    private RedisTemplate<String,Object> redisObj;
 
     @Test
     public void test1() {
@@ -104,6 +113,20 @@ public class RedisTest {
         }, true);
 
         System.out.println(keys);
+    }
+
+
+    @Test
+    public void test5() {
+
+        long start = System.currentTimeMillis();
+        for (int i=0; i< 10000; i++){
+            User user = new User("洪生",i,new Date());
+            redisGenericJ2Json.opsForValue().set("user"+i, JSONObject.toJSONString(user), 60*5, TimeUnit.SECONDS);
+
+        }
+        System.out.println(System.currentTimeMillis()-start);
+
     }
 
 }

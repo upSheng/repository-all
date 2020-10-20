@@ -1,4 +1,4 @@
-package com.chs.redis;
+package com.chs.redis.elements;
 
 import java.util.Date;
 
@@ -29,6 +29,9 @@ public class User {
         this.name = name;
         this.age = age;
         this.createTime = createTime;
+    }
+
+    public User() {
     }
 
     public String getName() {

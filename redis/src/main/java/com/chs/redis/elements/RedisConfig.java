@@ -1,6 +1,5 @@
-package com.chs.redis;
+package com.chs.redis.elements;
 
-import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -8,6 +7,9 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -39,15 +41,24 @@ public class RedisConfig {
     @Bean
     public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-
-
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         return redisTemplate;
+    }
+
+    @Bean
+    public RedisRegister init() {
+        RedisItem redisItem1 = new RedisItem(RedisInstance.REDIS_LOCAL, "redisGenericJ2Json");
+        redisItem1.setDatabase(1);
+
+
+        RedisItem redisItem2 = new RedisItem(RedisInstance.REDIS_LOCAL, "redisObj");
+        redisItem2.setDatabase(2);
+
+
+        List<RedisItem> list = new ArrayList<>();
+        list.add(redisItem1);
+        list.add(redisItem2);
+        return new RedisRegister(list);
     }
 
 

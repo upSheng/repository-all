@@ -1,7 +1,6 @@
 package com.chs.redis.elements;
 
 import com.alibaba.fastjson.JSONObject;
-import com.chs.redis.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -55,8 +54,6 @@ public class RedisCache {
         redisTemplate.opsForValue().set(userKey, userValue, tenMinute, TimeUnit.MILLISECONDS);
 
     }
-
-
 
 
 }
