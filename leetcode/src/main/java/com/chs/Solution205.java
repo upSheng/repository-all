@@ -12,14 +12,6 @@ public class Solution205 {
     public boolean isIsomorphic(String s, String t) {
 
 
-        Map<Character,Character> map = new HashMap<>();
-        for (int i=0; i<s.length(); i++){
-            Character ch = s.charAt(i);
-
-            if (map.containsKey(ch)){
-
-            }
-
-        }
+        return false;
     }
 }
