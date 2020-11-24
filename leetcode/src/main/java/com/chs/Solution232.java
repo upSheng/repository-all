@@ -53,6 +53,7 @@ public class Solution232 {
                 stack2.push(stack1.pop());
             }
         }
+
         return stack2.peek();
     }
 
