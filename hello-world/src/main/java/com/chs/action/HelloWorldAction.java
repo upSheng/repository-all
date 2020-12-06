@@ -31,6 +31,9 @@ public class HelloWorldAction {
 
     @RequestMapping("/")
     public String home() {
+        User user = new User();
+        user.setName("cc");
+        UserOne user1 = UserMapper.INSTANSE.user(user);
         return "hello World!";
     }
 
@@ -39,22 +42,22 @@ public class HelloWorldAction {
         Map<String, Object> map = new HashMap<>();
         map.put("name", "chs");
         map.put("age", 25);
-        map.put("createTime",new Date());
+        map.put("createTime", new Date());
         return map;
     }
 
     @RequestMapping("/data/get")
-    public Map<String, Object> get(@RequestParam Map<String,Object> params) {
+    public Map<String, Object> get(@RequestParam Map<String, Object> params) {
         return params;
     }
 
     @RequestMapping("/data/post")
-    public Map<String, Object> post(@RequestBody Map<String,Object> params) {
+    public Map<String, Object> post(@RequestBody Map<String, Object> params) {
         return params;
     }
 
     @RequestMapping("/data/sleep")
-    public Map<String, Object> sleep()  {
+    public Map<String, Object> sleep() {
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
@@ -63,7 +66,7 @@ public class HelloWorldAction {
         Map<String, Object> map = new HashMap<>();
         map.put("name", "chs");
         map.put("age", 25);
-        map.put("createTime",new Date());
+        map.put("createTime", new Date());
         return map;
     }
 
