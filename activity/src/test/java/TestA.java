@@ -1,5 +1,6 @@
-import com.chs.Application;
-import com.chs.aop.Cat;
+
+import com.chs.activity.Application;
+import com.chs.activity.aop.Cat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
