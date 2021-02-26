@@ -17,7 +17,6 @@ public class UserLoginServiceImpl {
 
     }
 
-
     public LoginResVO login(@RequestParam("userId") String userId, @RequestParam("password") String password) {
 
         String token = JwtUtils.creatToken(userId, 10 * 60 * 1000L);
