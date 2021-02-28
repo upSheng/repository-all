@@ -72,5 +72,6 @@ public class AuthFilter implements Filter {
     static {
         notAuthURLMap.put("/wheel", true);
         notAuthURLMap.put("/user", true);
+        notAuthURLMap.put("/fund", true);
     }
 }

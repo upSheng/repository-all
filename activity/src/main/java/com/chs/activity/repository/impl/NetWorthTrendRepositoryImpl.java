@@ -27,4 +27,9 @@ public class NetWorthTrendRepositoryImpl implements INetWorthTrendRepository {
     public List<NetWorthTrendEntity> saveAll(List<NetWorthTrendEntity> netWorthTrendEntityList, String collectionName) {
         return (List<NetWorthTrendEntity>) mongoTemplate.insert(netWorthTrendEntityList, collectionName);
     }
+
+    @Override
+    public List<NetWorthTrendEntity> findAll(String collectionName) {
+        return mongoTemplate.findAll(NetWorthTrendEntity.class, collectionName);
+    }
 }

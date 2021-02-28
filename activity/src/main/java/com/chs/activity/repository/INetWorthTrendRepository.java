@@ -14,4 +14,6 @@ public interface INetWorthTrendRepository {
 
     List<NetWorthTrendEntity> saveAll(List<NetWorthTrendEntity> netWorthTrendEntityList, String collectionName);
 
+    List<NetWorthTrendEntity> findAll(String collectionName);
+
 }

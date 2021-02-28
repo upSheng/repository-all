@@ -17,8 +17,8 @@ import java.net.http.HttpResponse;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -67,6 +67,33 @@ public class FundService {
                 .collect(Collectors.toList());
 
         netWorthTrendRepository.saveAll(dateList, MongoConstants.TABLE_NET_WORTH_TREND + code);
+    }
+
+    public Map<String, Object> data(String code) {
+
+        List<NetWorthTrendEntity> all = netWorthTrendRepository.findAll(MongoConstants.TABLE_NET_WORTH_TREND + code);
+
+        List<List<Object>> equityReturn = new ArrayList<>();
+
+        for (NetWorthTrendEntity entity : all) {
+            List<Object> list = new ArrayList<>();
+            list.add(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(entity.getX()));
+            list.add(entity.getEquityReturn());
+            equityReturn.add(list);
+        }
+
+        List<List<Object>> y = new ArrayList<>();
+        for (NetWorthTrendEntity entity : all) {
+            List<Object> list = new ArrayList<>();
+            list.add(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(entity.getX()));
+            list.add(entity.getY());
+            y.add(list);
+        }
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("equityReturn", equityReturn);
+        res.put("y", y);
+        return res;
     }
 
 }
