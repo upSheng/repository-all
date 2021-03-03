@@ -10,12 +10,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>hello-world</module>
-        <module>security</module>
-        <module>rest-template</module>
         <module>web</module>
         <module>leetcode</module>
         <module>eureka</module>
-        <module>redis</module>
         <module>jpa</module>
         <module>rabbit-mq</module>
         <module>gof23</module>
