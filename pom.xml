@@ -10,21 +10,15 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>hello-world</module>
-        <module>mybatis</module>
-        <module>configuration</module>
-        <module>common</module>
         <module>security</module>
         <module>rest-template</module>
         <module>web</module>
         <module>leetcode</module>
-        <module>log</module>
         <module>eureka</module>
         <module>redis</module>
-        <module>schedule</module>
         <module>jpa</module>
         <module>rabbit-mq</module>
         <module>gof23</module>
-        <module>sdk-tool</module>
         <module>task</module>
         <module>mybatis-generator</module>
         <module>jdk-new</module>
@@ -49,10 +43,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
-
-
-
 
 </project>
