@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.chs</groupId>
+    <groupId>com.chs</groupId>
     <artifactId>provide</artifactId>
     <version>1.0-SNAPSHOT</version>
 
