@@ -7,7 +7,5 @@ package com.chs.activity.config;
 public class MongoConstants {
     public static final String ID = "_id";
     public static final String NAME = "name";
-
-
     public static final String TABLE_NET_WORTH_TREND = "netWorthTrend_";
 }

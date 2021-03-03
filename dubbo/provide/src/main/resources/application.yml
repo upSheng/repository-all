@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: dubbo-provide
+
+dubbo:
+  scan.base-packages: com.chs.dubbo.demo
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://127.0.0.1:8848/?username=nacos&password=nacos
+    group: myTest
+

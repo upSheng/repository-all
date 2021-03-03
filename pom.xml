@@ -17,7 +17,7 @@
         <module>rest-template</module>
         <module>web</module>
         <module>leetcode</module>
-        <module>aop</module>
+
         <module>log</module>
         <module>eureka</module>
         <module>cloud-user</module>

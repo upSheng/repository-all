@@ -28,6 +28,7 @@ public class ResponseEntity<T> {
     public static <T> ResponseEntity<T> withRes(Consumer<ResponseEntity<T>> consumer) {
         long start = System.currentTimeMillis();
         ResponseEntity<T> res = new ResponseEntity<T>();
+        res.setCode(200);
         try {
             consumer.accept(res);
             long delta = System.currentTimeMillis() - start;

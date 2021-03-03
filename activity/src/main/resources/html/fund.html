@@ -1,0 +1,137 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=area-time-axis
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body style="height: 100%; margin: 0">
+
+<div style="height: 20%">
+
+    <input id="code" type="text" value="100022" placeholder="基金代码">
+    <input id="btn" type="button" value="搜索">
+</div>
+<div id="container" style="height: 80%"></div>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<!-- Uncomment this line if you want to dataTool extension
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+    -->
+<!-- Uncomment this line if you want to use gl extension
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+    -->
+<!-- Uncomment this line if you want to echarts-stat extension
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+    -->
+<!-- Uncomment this line if you want to use map
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+    -->
+<!-- Uncomment these two lines if you want to use bmap extension
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+    -->
+
+<script type="text/javascript">
+
+
+    var data = [];
+    var myChart = echarts.init(document.getElementById("container"));
+
+    var option = {
+        tooltip: {
+            trigger: 'axis',
+            position: function (pt) {
+                return [pt[0], '10%'];
+            }
+        },
+        title: {
+            text: '大数据量面积图',
+        },
+        legend: {
+            data: ['单位净值', '涨幅']
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'time',
+            boundaryGap: false
+        },
+        yAxis: {
+            type: 'value',
+        },
+        dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 20
+        }, {
+            start: 0,
+            end: 20
+        }],
+        series: [
+            {
+                name: '单位净值',
+                type: 'line',
+                smooth: false,
+                symbol: 'none',
+                data: data
+            },
+            {
+                name: '涨幅',
+                type: 'line',
+                smooth: false,
+                symbol: 'none',
+                data: data
+            }
+        ]
+    };
+
+
+    function getData() {
+
+        var code= $("#code").val();
+        console.log(code);
+        $.ajax({
+            type: "get",
+            async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url: "http://172.93.47.22:8080/fund/data?code="+code,    //请求发送到TestServlet处
+            data: {},
+            dataType: "json",        //返回数据形式为json
+            success: function (result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result) {
+
+                    option.series[1].data = result.equityReturn;
+                    option.series[0].data = result.y;
+                    option.title.text = result.name;
+                    myChart.setOption(option);
+                }
+            }
+        })
+    }
+
+    $("#btn").click(function () {
+        console.log('aaa');
+        getData();
+    });
+
+    getData();
+
+
+</script>
+</body>
+
+</html>

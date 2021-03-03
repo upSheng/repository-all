@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class NetWorthTrend {
     private Long x;
     private Double y;
+    private Double sumY;
     private String unitMoney;
     private Double equityReturn;
 

@@ -17,4 +17,8 @@ public interface IFundApi {
     @CrossOrigin
     @GetMapping("/data")
     Map<String, Object> data(String code);
+
+
+    @GetMapping("/exportCsv")
+    void exportCsv(String code);
 }

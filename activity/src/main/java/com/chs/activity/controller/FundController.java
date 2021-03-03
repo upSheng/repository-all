@@ -21,4 +21,9 @@ public class FundController implements IFundApi {
     public Map<String, Object> data(String code) {
         return fundService.data(code);
     }
+
+    @Override
+    public void exportCsv(String code) {
+        fundService.exportCsv(code);
+    }
 }

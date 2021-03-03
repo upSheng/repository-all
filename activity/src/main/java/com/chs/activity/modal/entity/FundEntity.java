@@ -16,15 +16,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class NetWorthTrendEntity {
+public class FundEntity {
 
     @MongoId
     private String id;
     private String code;
-    private LocalDate x;
-    private Double y;
-    private Double sumY;
-    private String unitMoney;
-    private Double equityReturn;
+    private String name;
+    private String type;
 
 }

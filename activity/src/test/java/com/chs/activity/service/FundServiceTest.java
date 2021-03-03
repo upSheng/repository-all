@@ -26,4 +26,12 @@ class FundServiceTest {
         //100022
         fundService.saveNetWorthTrendList("100022");
     }
+
+    @Test
+    void saveFundList() {
+
+        //005827
+        //100022
+        fundService.saveFund();
+    }
 }
