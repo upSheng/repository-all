@@ -20,6 +20,7 @@
         <module>spring-cloud-dubbo-sample-api</module>
         <module>spring-cloud-dubbo-client-sample</module>
         <module>spring-cloud-dubbo-server-sample</module>
+        <module>nacos-config-example</module>
     </modules>
 
 

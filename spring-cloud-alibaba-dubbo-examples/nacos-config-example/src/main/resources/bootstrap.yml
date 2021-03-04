@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        shared-configs:
+          - data-id: test2.yaml
+            refresh: true
+            group: GROUP_APP1
+
+        extension-configs:
+          - data-id: extension1.properties
+            refresh: true
+          - data-id: test1.yml
+            refresh: true
