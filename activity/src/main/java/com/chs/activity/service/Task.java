@@ -20,7 +20,7 @@ public class Task {
     @Resource
     StringRedisTemplate stringRedisTemplate;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+    //@Scheduled(cron = "0/5 * * * * ?")
     private void taskTest() {
         log.info("task");
     }
