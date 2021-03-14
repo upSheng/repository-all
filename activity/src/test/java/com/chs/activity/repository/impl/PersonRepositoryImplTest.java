@@ -2,8 +2,8 @@ package com.chs.activity.repository.impl;
 
 import com.chs.activity.Application;
 import com.chs.activity.base.response.EasyPage;
-import com.chs.activity.modal.entity.PersonEntity;
-import com.chs.activity.repository.IPersonRepository;
+import com.chs.activity.modal.entity.ProductEntity;
+import com.chs.activity.repository.IProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 class PersonRepositoryImplTest {
 
     @Autowired
-    private IPersonRepository personRepository;
+    private IProductRepository personRepository;
 
     @Test
     void page() {
 
-        EasyPage<PersonEntity> san = personRepository.page(1, 20, "san");
+        EasyPage<ProductEntity> san = personRepository.page(1, 20, "san");
         System.out.println(san);
     }
 
@@ -32,7 +32,7 @@ class PersonRepositoryImplTest {
     @Test
     void save() {
 
-        PersonEntity personEntity = personRepository.save(new PersonEntity(null, "张三", 25));
+        ProductEntity personEntity = personRepository.save(new ProductEntity());
         System.out.println(personEntity);
     }
 

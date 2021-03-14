@@ -21,7 +21,7 @@ import java.util.Map;
 @WebFilter(urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
 
-    private static HashMap<String, Boolean> notAuthURLMap = new HashMap<>();
+    private static HashMap<String, Boolean> authURLMap = new HashMap<>();
     private final static String TOKEN = "token";
 
     @Override
@@ -61,17 +61,15 @@ public class AuthFilter implements Filter {
 
     private boolean isAuthRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        for (Map.Entry<String, Boolean> entry : notAuthURLMap.entrySet()) {
+        for (Map.Entry<String, Boolean> entry : authURLMap.entrySet()) {
             if (uri.startsWith(entry.getKey())) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     static {
-        notAuthURLMap.put("/wheel", true);
-        notAuthURLMap.put("/user", true);
-        notAuthURLMap.put("/fund", true);
+        //authURLMap.put("/wheel", true);
     }
 }
