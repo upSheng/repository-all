@@ -1,5 +1,6 @@
 package com.chs.activity.utils;
 
+import com.chs.activity.config.Constans;
 import org.springframework.util.DigestUtils;
 
 import java.util.Map;
@@ -10,8 +11,9 @@ import java.util.Map;
  */
 public class SignUtils {
 
-    public static String sign(Map<String, String> map, String key) {
+    public static String sign(Map<String, String> map) {
 
+        String key = Constans.KEY;
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");

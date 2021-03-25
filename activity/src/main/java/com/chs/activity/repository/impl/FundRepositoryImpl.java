@@ -2,12 +2,12 @@ package com.chs.activity.repository.impl;
 
 import com.chs.activity.modal.entity.FundEntity;
 import com.chs.activity.repository.IFundRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ import java.util.List;
 public class FundRepositoryImpl implements IFundRepository {
 
 
-    @Autowired
+    @Resource
     MongoTemplate mongoTemplate;
 
 

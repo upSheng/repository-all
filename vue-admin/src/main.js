@@ -10,7 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import movie from './components/movie.vue'
 import homepage from './components/homepage.vue'
-import product from "./components/product";
+import order from "./components/order";
 import webMenu from './components/webMenu.vue'
 
 import login from './components/login.vue'
@@ -24,7 +24,7 @@ Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
 
-axios.defaults.baseURL='http://localhost:8081/'
+axios.defaults.baseURL='http://1w7255a684.51mypc.cn/'
 
 //添加jwt
 //axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NjgwMDF9.jyWRk_44KP0uH4keXbQz5oS3UTejnTTbgw_htj6kJfMFv-OdWnzy-DL5_E-7ZCg5yay93rgO-7ROja1lEcwudg';
@@ -38,7 +38,7 @@ const routes = [
         path: '/', component: myMain, children: [
             {path: '', component: homepage},
             {path: 'movie/:id', component: movie},
-            {path: 'product', component: product},
+            {path: 'order', component: order},
             {path: 'webMenu', component: webMenu}]
     },
 

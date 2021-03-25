@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 class UserEntityMapperTest {
 
     @Resource
-    UserEntityMapper userEntityMapper;
+    UserMapper userEntityMapper;
 
     @Test
     void deleteByPrimaryKey() {

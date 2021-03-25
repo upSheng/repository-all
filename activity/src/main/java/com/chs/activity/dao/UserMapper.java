@@ -6,7 +6,7 @@ import com.chs.activity.modal.entity.UserEntity;
 import java.util.List;
 
 
-public interface UserEntityMapper {
+public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(UserEntity record);
