@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 @Document(collection = "order")
 public class OrderEntity {
 
-    @MongoId
+
     private String id;
 
     /**

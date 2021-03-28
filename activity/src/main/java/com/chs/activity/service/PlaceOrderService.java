@@ -10,11 +10,9 @@ import com.chs.activity.modal.entity.ProductEntity;
 import com.chs.activity.utils.HttpUtils;
 import com.chs.activity.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -106,15 +104,19 @@ public class PlaceOrderService {
             }
             String transactionId = params.get("transaction_id");
             String timeEnd = params.get("time_end");
+            order.setTimeEnd(timeEnd);
+            order.setTransactionId(transactionId);
+            order.setStatus(Constans.ORDER_STATUS_SUCCESS);
+            order.setUpdateTime(LocalDateTime.now());
 
-
-            Query query = Query.query(Criteria.where(MongoConstants.OUT_TRADE_NO).is(order.getOutTradeNo()));
-            Update update = new Update();
-            update.set(MongoConstants.TRANSACTION_ID, transactionId);
-            update.set(MongoConstants.STATUS, Constans.ORDER_STATUS_SUCCESS);
-            update.set(MongoConstants.TIME_END, timeEnd);
-            update.set(MongoConstants.UPDATE_TIME, LocalDateTime.now());
-            mongoTemplate.upsert(query, update, OrderEntity.class);
+//            Query query = Query.query(Criteria.where(MongoConstants.OUT_TRADE_NO).is(order.getOutTradeNo()));
+//            Update update = new Update();
+//            update.set(MongoConstants.TRANSACTION_ID, transactionId);
+//            update.set(MongoConstants.STATUS, Constans.ORDER_STATUS_SUCCESS);
+//            update.set(MongoConstants.TIME_END, timeEnd);
+//            update.set(MongoConstants.UPDATE_TIME, LocalDateTime.now());
+//            mongoTemplate.upsert(query, update, OrderEntity.class);
+            mongoTemplate.save(order);
 
         } else {
             log.error("sign err");
