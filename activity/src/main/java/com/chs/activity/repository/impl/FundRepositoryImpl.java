@@ -17,7 +17,6 @@ import java.util.List;
 @Repository
 public class FundRepositoryImpl implements IFundRepository {
 
-
     @Resource
     MongoTemplate mongoTemplate;
 

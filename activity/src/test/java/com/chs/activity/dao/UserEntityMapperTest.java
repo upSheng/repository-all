@@ -29,7 +29,7 @@ class UserEntityMapperTest {
     void insert() {
 
         UserEntity userEntity = new UserEntity();
-        userEntity.setAge(11).setCreateTime(LocalDateTime.now()).setName("zzz").setPassword("222");
+        userEntity.setCreateTime(LocalDateTime.now()).setName("zzz").setPassword("222");
         userEntityMapper.insert(userEntity);
     }
 

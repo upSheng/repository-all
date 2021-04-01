@@ -3,16 +3,18 @@ package com.chs.activity.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.chs.activity.base.exception.BusinessException;
+import com.chs.activity.base.exception.ExceptionEnum;
+import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.config.Constans;
-import com.chs.activity.config.MongoConstants;
+import com.chs.activity.modal.bean.OrderAward;
+import com.chs.activity.modal.bean.OrderQuery;
 import com.chs.activity.modal.entity.OrderEntity;
 import com.chs.activity.modal.entity.ProductEntity;
+import com.chs.activity.repository.IOrderRepository;
+import com.chs.activity.repository.IProductRepository;
 import com.chs.activity.utils.HttpUtils;
 import com.chs.activity.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,16 +30,19 @@ import java.util.TreeMap;
  */
 @Slf4j
 @Service
-public class PlaceOrderService {
+public class OrderService {
 
     @Resource
-    MongoTemplate mongoTemplate;
+    IProductRepository productRepository;
+
+    @Resource
+    IOrderRepository orderRepository;
 
     public OrderEntity placeOrder(String id) {
 
-        ProductEntity productEntity = mongoTemplate.findById(id, ProductEntity.class);
+        ProductEntity productEntity = productRepository.findById(id);
         if (productEntity == null) {
-            throw new BusinessException("商品不存在");
+            throw BusinessException.of("商品不存在");
         }
 
         Random random = new Random();
@@ -60,7 +65,7 @@ public class PlaceOrderService {
             log.info("placeOrderRes===>{} ", res);
         } catch (Exception ex) {
             log.error("请求失败");
-            throw new BusinessException(ex.getMessage());
+            throw BusinessException.of(ex.getMessage());
         }
 
         JSONObject resJson = JSON.parseObject(res);
@@ -78,11 +83,11 @@ public class PlaceOrderService {
                     .qrCode(qrCode)
                     .createTime(LocalDateTime.now())
                     .build();
-            mongoTemplate.save(order);
+            orderRepository.save(order);
             return order;
         } else {
             log.error("订单创建失败");
-            throw new BusinessException("订单创建失败");
+            throw BusinessException.of("订单创建失败");
         }
 
     }
@@ -97,7 +102,7 @@ public class PlaceOrderService {
         if (sign.equals(signData)) {
 
             String payJsOrderId = params.get("payjs_order_id");
-            OrderEntity order = mongoTemplate.findOne(Query.query(Criteria.where(MongoConstants.PAY_JS_ORDER_ID).is(payJsOrderId)), OrderEntity.class);
+            OrderEntity order = orderRepository.findByPayJsOrderId(payJsOrderId);
             if (order == null) {
                 log.error("无此订单{}", JSON.toJSONString(params));
                 return;
@@ -108,15 +113,7 @@ public class PlaceOrderService {
             order.setTransactionId(transactionId);
             order.setStatus(Constans.ORDER_STATUS_SUCCESS);
             order.setUpdateTime(LocalDateTime.now());
-
-//            Query query = Query.query(Criteria.where(MongoConstants.OUT_TRADE_NO).is(order.getOutTradeNo()));
-//            Update update = new Update();
-//            update.set(MongoConstants.TRANSACTION_ID, transactionId);
-//            update.set(MongoConstants.STATUS, Constans.ORDER_STATUS_SUCCESS);
-//            update.set(MongoConstants.TIME_END, timeEnd);
-//            update.set(MongoConstants.UPDATE_TIME, LocalDateTime.now());
-//            mongoTemplate.upsert(query, update, OrderEntity.class);
-            mongoTemplate.save(order);
+            orderRepository.save(order);
 
         } else {
             log.error("sign err");
@@ -124,13 +121,31 @@ public class PlaceOrderService {
 
     }
 
+    public OrderEntity findOrderByPayJsOrderId(String payJsOrderId) {
+        return orderRepository.findByPayJsOrderId(payJsOrderId);
+    }
 
-    public OrderEntity findOrder(String id) {
 
-        Criteria criteria = new Criteria()
-                .orOperator(Criteria.where(MongoConstants.OUT_TRADE_NO).is(id), Criteria.where(MongoConstants.TRANSACTION_ID).is(id));
+    public OrderAward findAward(String transactionId) {
 
-        return mongoTemplate.findOne(Query.query(criteria), OrderEntity.class);
+        OrderEntity orderEntity = orderRepository.findByTransactionId(transactionId);
+
+        if (orderEntity == null){
+            throw BusinessException.of(ExceptionEnum.REGISTER_ERR);
+        }
+        String productId = orderEntity.getProductId();
+        ProductEntity productEntity = productRepository.findById(productId);
+        return OrderAward.builder().createTime(orderEntity.getCreateTime())
+                .transactionId(transactionId)
+                .account(productEntity.getAccount())
+                .name(orderEntity.getProductName())
+                .password(productEntity.getPassword())
+                .build();
+
+    }
+
+    public EasyPage<OrderEntity> list(OrderQuery query) {
+        return orderRepository.list(query);
     }
 
 

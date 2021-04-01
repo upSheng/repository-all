@@ -45,4 +45,13 @@ public class ResponseEntity<T> {
         }
         return res;
     }
+
+    public static <T> ResponseEntity<T> success(T data) {
+        return new ResponseEntity<>(200, null, data);
+    }
+
+    public static <T> ResponseEntity<T> fail(Integer code, String msg) {
+        return new ResponseEntity<>(code, msg, null);
+    }
+
 }

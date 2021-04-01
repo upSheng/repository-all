@@ -1,6 +1,7 @@
 package com.chs.activity.repository;
 
 import com.chs.activity.base.response.EasyPage;
+import com.chs.activity.modal.bean.ProductQuery;
 import com.chs.activity.modal.entity.ProductEntity;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface IProductRepository {
 
 
-    EasyPage<ProductEntity> page(Integer pageNum, Integer pageSize, String name);
+    EasyPage<ProductEntity> list(ProductQuery productQuery);
 
     List<ProductEntity> findAll();
 

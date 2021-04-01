@@ -1,4 +1,4 @@
-package com.chs.activity.aop;
+package com.chs.activity.base.aop;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

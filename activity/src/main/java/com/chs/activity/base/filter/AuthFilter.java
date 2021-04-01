@@ -1,5 +1,7 @@
-package com.chs.activity.filter;
+package com.chs.activity.base.filter;
 
+import com.alibaba.fastjson.JSON;
+import com.chs.activity.base.response.ResponseEntity;
 import com.chs.activity.utils.JwtUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -53,8 +55,8 @@ public class AuthFilter implements Filter {
         }
 
         httpResponse.setHeader("Content-Type", "application/json;charset=UTF-8");
-        httpResponse.getWriter().append("no login");
-
+        String res = JSON.toJSONString(ResponseEntity.fail(401, "no login"));
+        httpResponse.getWriter().append(res);
 
     }
 
@@ -70,6 +72,6 @@ public class AuthFilter implements Filter {
     }
 
     static {
-        //authURLMap.put("/wheel", true);
+        authURLMap.put("/wheel", true);
     }
 }

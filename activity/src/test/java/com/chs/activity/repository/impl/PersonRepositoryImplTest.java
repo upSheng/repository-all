@@ -24,8 +24,7 @@ class PersonRepositoryImplTest {
     @Test
     void page() {
 
-        EasyPage<ProductEntity> san = personRepository.page(1, 20, "san");
-        System.out.println(san);
+
     }
 
 

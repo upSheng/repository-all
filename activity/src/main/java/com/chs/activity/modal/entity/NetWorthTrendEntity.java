@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class NetWorthTrendEntity {
 
-    @MongoId
+
     private String id;
     private String code;
     private LocalDate x;

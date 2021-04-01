@@ -1,4 +1,4 @@
-package com.chs.activity.aop;
+package com.chs.activity.base.aop;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ServiceAopManage {
 
 
-    @Around("com.chs.activity.aop.ServicePointCutManage.logService()")
+    @Around("com.chs.activity.base.aop.ServicePointCutManage.logService()")
     public Object methodHandle(ProceedingJoinPoint proceedingJoinPoint) {
         Object[] objects = proceedingJoinPoint.getArgs();
         String className = proceedingJoinPoint.getTarget().getClass().getSimpleName();

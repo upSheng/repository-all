@@ -2,8 +2,10 @@ package com.chs.activity.controller;
 
 import com.chs.activity.base.response.ResponseEntity;
 import com.chs.activity.modal.vo.LoginResVO;
+import com.chs.activity.modal.vo.UserVO;
 import com.chs.activity.service.UserLoginService;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -14,17 +16,16 @@ import javax.annotation.Resource;
  */
 @RestController
 public class UserLoginController {
-
     @Resource
     UserLoginService userLoginService;
 
-
-    public ResponseEntity<Void> register(@RequestParam("userId") String userId, @RequestParam("password") String password) {
-        return ResponseEntity.withRes(res -> userLoginService.register(userId, password));
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@RequestBody UserVO userVO) {
+        return ResponseEntity.withRes(res -> userLoginService.register(userVO.getName(), userVO.getPassword()));
     }
 
-
-    public ResponseEntity<LoginResVO> login(@RequestParam("userId") String userId, @RequestParam("password") String password) {
-        return ResponseEntity.withRes(res -> res.setData(userLoginService.login(userId, password)));
+    @PostMapping("/login")
+    public ResponseEntity<LoginResVO> login(@RequestBody UserVO userVO) {
+        return ResponseEntity.withRes(res -> res.setData(userLoginService.login(userVO.getName(), userVO.getPassword())));
     }
 }

@@ -1,10 +1,17 @@
 package com.chs.activity.service;
 
+import com.chs.activity.base.exception.BusinessException;
+import com.chs.activity.base.exception.ExceptionEnum;
+import com.chs.activity.modal.entity.UserEntity;
 import com.chs.activity.modal.vo.LoginResVO;
+import com.chs.activity.repository.IUserRepository;
 import com.chs.activity.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author : HongSheng.Chen
@@ -14,17 +21,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Service
 public class UserLoginService {
 
+    @Resource
+    IUserRepository userRepository;
 
-    public void register(String userId, String password) {
+    public void register(String name, String password) {
 
+        UserEntity userEntity = userRepository.findByName(name);
+        if (userEntity != null) {
+            throw BusinessException.of(ExceptionEnum.REGISTER_ERR);
+        }
+        userEntity = UserEntity.builder().createTime(LocalDateTime.now())
+                .name(name)
+                .password(password)
+                .updateTime(LocalDateTime.now())
+                .build();
+        userRepository.save(userEntity);
     }
 
-    public LoginResVO login(@RequestParam("userId") String userId, @RequestParam("password") String password) {
+    public LoginResVO login(String name, String password) {
 
-        log.info("info");
-        log.debug("debug");
-        log.error("err");
-        String token = JwtUtils.creatToken(userId, 10 * 60 * 1000L);
+        UserEntity user = userRepository.findByName(name);
+        if (user == null || !Objects.equals(password, user.getPassword())) {
+            throw BusinessException.of(ExceptionEnum.LOGIN_ERR);
+        }
+        String token = JwtUtils.creatToken(user.getId(), 10 * 60 * 1000L);
         return new LoginResVO(token);
     }
 }

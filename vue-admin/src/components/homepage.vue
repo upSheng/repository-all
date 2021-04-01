@@ -1,10 +1,10 @@
 <template>
     <div>
 
-        <el-row  v-for="product in productList">
+        <el-row align="middle" v-for="product in productList">
 
             <el-col :span="6">
-                <img  :src=product.img />
+                <img :src=product.img />
             </el-col>
 
             <el-col :span="6">
@@ -14,6 +14,9 @@
                 <div>
                     {{product.describe}}
                 </div>
+                <a target="_blank" :href="product.steamUrl">
+                    更多信息
+                </a>
             </el-col>
             <el-col :span="6">
                 <div style="color:#ff6700">
@@ -22,7 +25,6 @@
             </el-col>
 
             <el-col :span="6">
-
                 <el-button @click="open(product.id)">购买</el-button>
             </el-col>
         </el-row>
@@ -31,7 +33,6 @@
         <el-dialog :visible.sync="show">
             <img :src="qrCode">
         </el-dialog>
-
 
 
     </div>
@@ -43,66 +44,67 @@
         data() {
             return {
                 productList: [],
-                show:false,
-                outTradeNo:"",
-                qrCode:""
+                show: false,
+                outTradeNo: "",
+                qrCode: "",
+                payJsOrderId: "",
             };
         },
         methods: {
 
-            open(id){
-                this.axios.post('/placeOrder?id='+id).then((response) => {
+            open(id) {
+                this.axios.post('/placeOrder?id=' + id).then((response) => {
                     console.log(response.data)
                     if (response.data.code == 200) {
                         this.qrCode = response.data.data.qrCode;
                         this.outTradeNo = response.data.data.outTradeNo;
+                        this.payJsOrderId = response.data.data.payJsOrderId;
                         this.show = true;
-                        this.lunxun(this.outTradeNo);
+                        this.lunxun(this.payJsOrderId);
                     }
                 })
 
             },
-            init(){
-                this.axios.get('/listProduct').then((response) => {
+            loadProduct() {
+                this.axios.post('/searchProduct', {}).then((response) => {
                     console.log(response.data)
                     if (response.data.code == 200) {
-                        this.productList = response.data.data;
+                        this.productList = response.data.data.content;
+
                     }
                 })
-            },
+            }
+            ,
 
-            lunxun(outTradeNo){
+            lunxun(payJsOrderId) {
                 var l;
-                l = setInterval(() =>{
-                    if (!this.show){
+                l = setInterval(() => {
+                    if (!this.show) {
                         clearInterval(l);
                     }
-                    this.axios.get('/findOrder?id='+outTradeNo).then((response) => {
+                    this.axios.get('/findOrderByPayJsOrderId?payJsOrderId=' + payJsOrderId).then((response) => {
                         if (response.data.code == 200) {
-                            if(response.data.data.status ==1){
+                            if (response.data.data.status == 1) {
                                 console.log("支付成功")
 
-                                var orderList = JSON.parse(localStorage.getItem("orderIdList"));
-                                if (orderList == null){
+                                var orderList = JSON.parse(localStorage.getItem("orderList"));
+                                if (orderList == null) {
                                     orderList = [];
                                 }
-                                orderList.push({"id":response.data.data.transactionId});
-                                localStorage.setItem("orderIdList",JSON.stringify(orderList));
+                                orderList.push({"transactionId": response.data.data.transactionId});
+                                localStorage.setItem("orderList", JSON.stringify(orderList));
                                 this.show = false;
                                 clearInterval(l);
                                 this.$router.push('/order');
-
-
                             }
                         }
                     })
-                },6000)
+                }, 6000)
             }
 
         },
         mounted() {
-            this.init();
-
+            this.loadProduct();
         }
     }
 </script>

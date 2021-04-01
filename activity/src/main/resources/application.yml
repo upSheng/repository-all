@@ -15,16 +15,20 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/test
 
+logging:
+  level:
+    com.chs.activity.repository: debug
+    org.springframework.data.mongodb.core: DEBUG
 
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
-#    database: 0
-#    jedis:
-#      pool:
-#        max-idle: 20
-#        min-idle: 0
-#        max-active: 8
+#redis:
+#  host: 127.0.0.1
+#  port: 6379
+#  database: 0
+#  jedis:
+#    pool:
+#      max-idle: 20
+#      min-idle: 0
+#      max-active: 8
 
   #扫描xml
 #mybatis:

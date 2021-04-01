@@ -1,15 +1,14 @@
 package com.chs.activity.controller;
 
+import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.base.response.ResponseEntity;
+import com.chs.activity.modal.bean.ProductQuery;
 import com.chs.activity.modal.entity.ProductEntity;
-import com.chs.activity.repository.IProductRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.chs.activity.modal.vo.ProductVO;
+import com.chs.activity.service.ProductService;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author : HongSheng.Chen
@@ -19,17 +18,26 @@ import java.util.List;
 public class ProductController {
 
     @Resource
-    IProductRepository productRepository;
+    ProductService productService;
 
+    @PostMapping("/searchProduct")
+    public ResponseEntity<EasyPage<ProductVO>> searchProduct(@RequestBody ProductQuery productQuery) {
+        return ResponseEntity.withRes(res -> res.setData(productService.search(productQuery)));
+    }
 
-    @GetMapping("/listProduct")
-    public ResponseEntity<List<ProductEntity>> listProduct() {
-        return ResponseEntity.withRes(res -> res.setData(productRepository.findAll()));
+    @PostMapping("/listProduct")
+    public ResponseEntity<EasyPage<ProductEntity>> listProduct(@RequestBody ProductQuery productQuery) {
+        return ResponseEntity.withRes(res -> res.setData(productService.list(productQuery)));
     }
 
     @PostMapping("/saveProduct")
     public ResponseEntity<ProductEntity> saveProduct(@RequestBody ProductEntity productEntity) {
-        return ResponseEntity.withRes(res -> res.setData(productRepository.save(productEntity)));
+        return ResponseEntity.withRes(res -> res.setData(productService.save(productEntity)));
+    }
+
+    @GetMapping("/deleteProduct")
+    public ResponseEntity<Void> deleteProduct(@RequestParam("id") String id) {
+        return ResponseEntity.withRes(res -> productService.delete(id));
     }
 
 }

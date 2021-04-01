@@ -1,23 +1,24 @@
-package com.chs.activity.modal.entity;
+package com.chs.activity.modal.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * @author : HongSheng.Chen
- * @date : 2021/2/18 11:41
+ * @date : 2021/4/1 10:04
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "product")
-public class ProductEntity {
-
+@Accessors(chain = true)
+public class ProductVO {
 
     private String id;
     private String name;
@@ -25,11 +26,9 @@ public class ProductEntity {
     private Integer price;
     private String img;
     private Integer quantity;
-    private String steamUrl;
     private List<String> tagList;
-    private String account;
-    private String password;
+
+    private String steamUrl;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-
 }
