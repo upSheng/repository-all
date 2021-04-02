@@ -9,6 +9,7 @@ import com.chs.activity.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +40,11 @@ public class OrderController {
     @PostMapping("/findAward")
     ResponseEntity<OrderAward> findAward(@RequestParam("transactionId") String transactionId) {
         return ResponseEntity.withRes(res -> res.setData(orderService.findAward(transactionId)));
+    }
+
+    @PostMapping("/findAwardList")
+    ResponseEntity<List<OrderAward>> findAwardList(@RequestBody List<String> transactionIdList) {
+        return ResponseEntity.withRes(res -> res.setData(orderService.findAwardList(transactionIdList)));
     }
 
     @PostMapping("/listOrder")

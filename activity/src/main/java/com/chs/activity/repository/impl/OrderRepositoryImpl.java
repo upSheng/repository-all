@@ -71,6 +71,11 @@ public class OrderRepositoryImpl implements IOrderRepository {
     }
 
     @Override
+    public List<OrderEntity> findByTransactionIdList(List<String> transactionIdList) {
+        return mongoTemplate.find(Query.query(Criteria.where(MongoConstants.TRANSACTION_ID).in(transactionIdList)), OrderEntity.class);
+    }
+
+    @Override
     public OrderEntity findByPayJsOrderId(String payJsOrderId) {
         return mongoTemplate.findOne(Query.query(Criteria.where(MongoConstants.PAY_JS_ORDER_ID).is(payJsOrderId)), OrderEntity.class);
     }

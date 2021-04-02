@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <el-row align="middle" v-for="product in productList">
+        <el-row style="margin-top: 30px" align="middle" type="flex" v-for="product in productList">
 
             <el-col :span="6">
                 <img :src=product.img />
@@ -14,19 +14,23 @@
                 <div>
                     {{product.describe}}
                 </div>
-                <a target="_blank" :href="product.steamUrl">
-                    更多信息
-                </a>
-            </el-col>
-            <el-col :span="6">
+                <div>
+                    <a target="_blank" :href="product.steamUrl">
+                        更多信息
+                    </a>
+                </div>
+
                 <div style="color:#ff6700">
-                    {{product.price}}
+                    {{product.price/100}} ￥  <br>
+                </div>
+                <div>
+                    <el-button @click="open(product.id)">购买</el-button>
                 </div>
             </el-col>
+            <el-col :span="12">
 
-            <el-col :span="6">
-                <el-button @click="open(product.id)">购买</el-button>
             </el-col>
+
         </el-row>
 
 
@@ -66,7 +70,7 @@
 
             },
             loadProduct() {
-                this.axios.post('/searchProduct', {}).then((response) => {
+                this.axios.post('/searchProduct', {"pageSize":100}).then((response) => {
                     console.log(response.data)
                     if (response.data.code == 200) {
                         this.productList = response.data.data.content;

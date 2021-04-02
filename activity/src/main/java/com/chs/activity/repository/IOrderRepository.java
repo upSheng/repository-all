@@ -21,6 +21,8 @@ public interface IOrderRepository {
 
     OrderEntity findByTransactionId(String transactionId);
 
+    List<OrderEntity> findByTransactionIdList(List<String> transactionIdList);
+
     OrderEntity findByPayJsOrderId(String payJsOrderId);
 
     OrderEntity save(OrderEntity entity);

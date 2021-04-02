@@ -1,30 +1,34 @@
 <template>
     <div>
 
-        <el-row>
-            <el-col :span="6">
-                <el-input placeholder="微信支付交易号" v-model="transactionId"></el-input>
-                <div>
-                    {{orderAward.account}}
-                    {{orderAward.password}}
-                </div>
+        <el-table
+                :data="orderAwardList"
+                style="width: 100%">
+            <el-table-column
+                    prop="createTime"
+                    label="订单时间"
+            ></el-table-column>
+            <el-table-column
+                    prop="transactionId"
+                    label="单号"
+            >
+            </el-table-column>
 
-                <div>
-                    {{content}}
-                </div>
+            <el-table-column
+                    prop="name"
+                    label="物品"
+            ></el-table-column>
 
-            </el-col>
-            <el-col :span="1">
-                <el-button @click="search">查询</el-button>
-                历史订单
-                <div v-for="order in orderList ">
-                    {{order.transactionId}}
-                </div>
-            </el-col>
-            <el-col :span="12">
-
-            </el-col>
-        </el-row>
+            <el-table-column
+                    prop="account"
+                    label="账号"
+            >
+            </el-table-column>
+            <el-table-column
+                    prop="password"
+                    label="密码">
+            </el-table-column>
+        </el-table>
 
 
     </div>
@@ -35,41 +39,36 @@
         name: 'order',
         data() {
             return {
-
-                orderAward: {},
-                transactionId: "",
-                content: "",
-                orderList: []
+                orderAwardList: []
             };
         },
         methods: {
 
-            search() {
 
-                this.axios.post('/findAward?transactionId=' + this.transactionId).then((response) => {
+            findAwardList() {
+
+                const orderList = JSON.parse(localStorage.getItem("orderList"));
+                const transactionIdList = [];
+                for (var i = 0; i < orderList.length; i++) {
+                    transactionIdList.push(orderList[i].transactionId);
+                }
+
+                let param = new URLSearchParams()
+                param.append("transactionIdList", transactionIdList)
+
+                this.axios.post('/findAwardList', transactionIdList).then((response) => {
                     console.log(response.data)
                     if (response.data.data != null && response.data.code == 200) {
-                        this.orderAward = response.data.data;
-                        this.content = "";
-
+                        this.orderAwardList = response.data.data;
                     } else {
-                        this.orderAward = {};
-                        this.content = "无此订单";
+                        this.orderAwardList = [];
                     }
                 })
-
-            },
+            }
 
         },
         mounted() {
-
-            this.orderList = JSON.parse(localStorage.getItem("orderList"));
-            console.log(this.orderList);
-
-            if (this.orderList != null && this.orderList.length > 0) {
-                this.transactionId = this.orderList[this.orderList.length - 1].transactionId;
-                this.search();
-            }
+            this.findAwardList();
         }
     }
 </script>

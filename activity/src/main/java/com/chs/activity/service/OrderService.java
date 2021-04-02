@@ -16,13 +16,12 @@ import com.chs.activity.utils.HttpUtils;
 import com.chs.activity.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author : HongSheng.Chen
@@ -130,7 +129,7 @@ public class OrderService {
 
         OrderEntity orderEntity = orderRepository.findByTransactionId(transactionId);
 
-        if (orderEntity == null){
+        if (orderEntity == null) {
             throw BusinessException.of(ExceptionEnum.REGISTER_ERR);
         }
         String productId = orderEntity.getProductId();
@@ -141,7 +140,33 @@ public class OrderService {
                 .name(orderEntity.getProductName())
                 .password(productEntity.getPassword())
                 .build();
+    }
 
+    public List<OrderAward> findAwardList(List<String> transactionIdList) {
+
+        List<OrderEntity> orderEntityList = orderRepository.findByTransactionIdList(transactionIdList);
+
+        if (CollectionUtils.isEmpty(orderEntityList)) {
+            return Collections.emptyList();
+        }
+
+        List<OrderAward> res = new ArrayList<>();
+        for (OrderEntity orderEntity : orderEntityList) {
+            String productId = orderEntity.getProductId();
+            ProductEntity productEntity = productRepository.findById(productId);
+            if (productEntity == null){
+                continue;
+            }
+            OrderAward orderAward = OrderAward.builder().createTime(orderEntity.getCreateTime())
+                    .transactionId(orderEntity.getTransactionId())
+                    .account(productEntity.getAccount())
+                    .name(orderEntity.getProductName())
+                    .password(productEntity.getPassword())
+                    .build();
+            res.add(orderAward);
+        }
+
+        return res;
     }
 
     public EasyPage<OrderEntity> list(OrderQuery query) {
