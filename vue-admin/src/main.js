@@ -8,13 +8,14 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 
-import movie from './components/movie.vue'
-import homepage from './components/homepage.vue'
-import order from "./components/order";
-import webMenu from './components/webMenu.vue'
+import homepage from './components/frontend/homepage.vue'
+import order from "./components/frontend/order";
+import login from './components/admin/login.vue'
+import myMain from './components/frontend/myMain.vue'
 
-import login from './components/login.vue'
-import myMain from './components/myMain.vue'
+import adminMain from "./components/admin/adminMain";
+import adminOrder from "./components/admin/adminOrder";
+import adminHomepage from "./components/admin/adminHomepage";
 
 
 Vue.config.productionTip = false
@@ -23,8 +24,7 @@ Vue.use(VueRouter)
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
-
-axios.defaults.baseURL='http://1w7255a684.51mypc.cn/'
+axios.defaults.baseURL = 'http://1w7255a684.51mypc.cn/'
 
 //添加jwt
 //axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NjgwMDF9.jyWRk_44KP0uH4keXbQz5oS3UTejnTTbgw_htj6kJfMFv-OdWnzy-DL5_E-7ZCg5yay93rgO-7ROja1lEcwudg';
@@ -33,13 +33,18 @@ axios.defaults.baseURL='http://1w7255a684.51mypc.cn/'
 const routes = [
 
     {path: '/login', component: login},
+    {
+        path: '/admin', component: adminMain, children: [
+            {path: '', component: adminHomepage},
+            {path: 'order', component: adminOrder},
+        ]
+    },
 
     {
         path: '/', component: myMain, children: [
             {path: '', component: homepage},
-            {path: 'movie/:id', component: movie},
             {path: 'order', component: order},
-            {path: 'webMenu', component: webMenu}]
+        ]
     },
 
 ]
@@ -55,27 +60,21 @@ const router = new VueRouter({
 //请求拦截
 // axios.interceptors.request.use(config => {
 //
-//     var jwtToken = localStorage.getItem('jwtToken');
+//     const token = localStorage.getItem('token');
 //     //设置请求头
-//     if (jwtToken != null) {
-//         axios.defaults.headers.common['Authorization'] = "Bearer " + jwtToken;
-//     } else {
-//         router.push('/login');
-//     }
+//     axios.defaults.headers.common['token'] = 'token';
+//
 //     return config
 // }, error => {
 //     return Promise.reject(error)
 // })
-
-
-//响应拦截
+//
+//
+// //响应拦截
 // axios.interceptors.response.use(response => {
 //
-//     if(response.status =='000'){
-//         console.log(response);
-//         debugger;
+//     if(response.data.status ==401){
 //         router.push('/login');
-//
 //     }
 //     return response;
 //

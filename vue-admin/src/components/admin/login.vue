@@ -9,7 +9,7 @@
                 </div>
             </el-form-item>
             <el-form-item >
-                <el-input  prefix-icon="el-icon-user"  type="text" v-model="username"></el-input>
+                <el-input  prefix-icon="el-icon-user"  type="text" v-model="name"></el-input>
             </el-form-item>
 
             <el-form-item >
@@ -32,7 +32,7 @@
         name: 'login',
         data() {
             return {
-                username: '',
+                name: '',
                 password: ''
             };
         },
@@ -41,20 +41,16 @@
             login() {
 
                 let param = new URLSearchParams()
-                param.append("username", this.username)
+                param.append("name", this.name)
                 param.append("password", this.password)
 
-                this.axios.post('/api/login', param).then((response) => {
+                this.axios.post('/login', param).then((response) => {
                     console.log(response.data)
                     if (response.data.status == 200) {
-                        localStorage.setItem("jwtToken", response.data.jwtToken);
-                        this.$router.push('/movie');
+                        localStorage.setItem("token", response.data.token);
+                        this.$router.push('/admin');
                     }
                 })
-            },
-            check() {
-                var jwtToken = localStorage.getItem('jwtToken');
-                console.log(jwtToken);
             }
         }
     };
