@@ -17,7 +17,7 @@
                         <div style="text-align: left;">
                             {{product.name}}
                         </div>
-                        <div style="text-align: left;">
+                        <div style="text-align: left; height: 105px">
                             {{product.describe}}
 
                         </div>
