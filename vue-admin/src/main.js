@@ -16,6 +16,7 @@ import myMain from './components/frontend/myMain.vue'
 import adminMain from "./components/admin/adminMain";
 import adminOrder from "./components/admin/adminOrder";
 import adminHomepage from "./components/admin/adminHomepage";
+import adminProduct from "./components/admin/adminProduct";
 
 
 Vue.config.productionTip = false
@@ -24,7 +25,7 @@ Vue.use(VueRouter)
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'http://1w7255a684.51mypc.cn/'
+axios.defaults.baseURL = 'http://localhost:8080/'
 
 //添加jwt
 //axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NjgwMDF9.jyWRk_44KP0uH4keXbQz5oS3UTejnTTbgw_htj6kJfMFv-OdWnzy-DL5_E-7ZCg5yay93rgO-7ROja1lEcwudg';
@@ -37,6 +38,7 @@ const routes = [
         path: '/admin', component: adminMain, children: [
             {path: '', component: adminHomepage},
             {path: 'order', component: adminOrder},
+            {path: 'product', component: adminProduct},
         ]
     },
 
@@ -58,30 +60,29 @@ const router = new VueRouter({
 
 
 //请求拦截
-// axios.interceptors.request.use(config => {
-//
-//     const token = localStorage.getItem('token');
-//     //设置请求头
-//     axios.defaults.headers.common['token'] = 'token';
-//
-//     return config
-// }, error => {
-//     return Promise.reject(error)
-// })
-//
-//
+axios.interceptors.request.use(config => {
+
+    const token = localStorage.getItem('token');
+    //设置请求头
+    axios.defaults.headers.common['token'] = token;
+
+    return config
+}, error => {
+    return Promise.reject(error)
+})
+
 // //响应拦截
-// axios.interceptors.response.use(response => {
-//
-//     if(response.data.status ==401){
-//         router.push('/login');
-//     }
-//     return response;
-//
-// }, error => {
-//
-//     return Promise.reject(error);
-// })
+axios.interceptors.response.use(response => {
+
+    if(response.data.code ==401){
+        router.push('/login');
+    }
+    return response;
+
+}, error => {
+
+    return Promise.reject(error);
+})
 
 //路由拦截
 // router.beforeEach((to, from, next) => {

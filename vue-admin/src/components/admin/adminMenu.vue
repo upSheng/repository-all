@@ -8,6 +8,7 @@
         >
 
             <el-menu-item index="/admin">首页</el-menu-item>
+            <el-menu-item index="/admin/product">商品</el-menu-item>
             <el-menu-item index="/admin/order">订单</el-menu-item>
             <el-menu-item index="/">前端首页</el-menu-item>
         </el-menu>

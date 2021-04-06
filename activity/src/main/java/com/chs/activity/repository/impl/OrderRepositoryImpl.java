@@ -33,7 +33,7 @@ public class OrderRepositoryImpl implements IOrderRepository {
         Integer pageNum = orderQuery.getPageNum() == null ? Constans.DEFAULT_PAGENUM : orderQuery.getPageNum();
         String productName = orderQuery.getProductName();
         Query query = new Query();
-        query.skip((pageNum - 1) * pageSize).limit(pageSize);
+
 
         if (!StringUtils.isEmpty(productName)) {
             Pattern pattern = Pattern.compile("^.*" + productName + ".*", Pattern.CASE_INSENSITIVE);
@@ -49,6 +49,7 @@ public class OrderRepositoryImpl implements IOrderRepository {
         }
 
         long count = mongoTemplate.count(query, OrderEntity.class);
+        query.skip((pageNum - 1) * pageSize).limit(pageSize);
         List<OrderEntity> orderEntityList = mongoTemplate.find(query, OrderEntity.class);
         return new EasyPage<>(orderEntityList, count);
 

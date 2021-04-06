@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        homepage
+        后台管理首页
 
         <el-button @click="btn">测试</el-button>
 

@@ -56,6 +56,7 @@ public class AuthFilter implements Filter {
 
         httpResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpResponse.setHeader("Content-Type", "application/json;charset=UTF-8");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "*");
         String res = JSON.toJSONString(ResponseEntity.fail(401, "no login"));
         httpResponse.getWriter().append(res);
 
@@ -74,5 +75,7 @@ public class AuthFilter implements Filter {
 
     static {
         authURLMap.put("/wheel", true);
+        authURLMap.put("/list", true);
+        authURLMap.put("/save", true);
     }
 }

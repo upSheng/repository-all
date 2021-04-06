@@ -34,14 +34,13 @@ public class ProductRepositoryImpl implements IProductRepository {
         Integer pageNum = productQuery.getPageNum() == null ? Constans.DEFAULT_PAGENUM : productQuery.getPageNum();
         String name = productQuery.getName();
         Query query = new Query();
-        query.skip((pageNum - 1) * pageSize).limit(pageSize);
-
         if (!StringUtils.isEmpty(name)) {
             Pattern pattern = Pattern.compile("^.*" + name + ".*", Pattern.CASE_INSENSITIVE);
             query.addCriteria(Criteria.where(MongoConstants.NAME).regex(pattern));
         }
 
         long count = mongoTemplate.count(query, ProductEntity.class);
+        query.skip((pageNum - 1) * pageSize).limit(pageSize);
         List<ProductEntity> personEntities = mongoTemplate.find(query, ProductEntity.class);
         return new EasyPage<>(personEntities, count);
     }
@@ -53,6 +52,9 @@ public class ProductRepositoryImpl implements IProductRepository {
 
     @Override
     public ProductEntity save(ProductEntity entity) {
+        if (entity.getId() == null){
+            entity.setCreateTime(LocalDateTime.now());
+        }
         entity.setUpdateTime(LocalDateTime.now());
         return mongoTemplate.save(entity);
     }

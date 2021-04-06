@@ -40,15 +40,19 @@
 
             login() {
 
-                let param = new URLSearchParams()
-                param.append("name", this.name)
-                param.append("password", this.password)
-
+                let param = {"name":this.name,"password":this.password};
                 this.axios.post('/login', param).then((response) => {
                     console.log(response.data)
-                    if (response.data.status == 200) {
-                        localStorage.setItem("token", response.data.token);
+                    if (response.data.code == 200) {
+                        localStorage.setItem("token", response.data.data.token);
                         this.$router.push('/admin');
+                    }else {
+                        this.$message({
+                            message: response.data.msg,
+                            duration: 1000,
+                            showClose: true,
+                            type: 'error'
+                        });
                     }
                 })
             }
