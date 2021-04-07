@@ -55,8 +55,8 @@
 
                         </div>
                         <div style="margin-top: 10px">
-                            <div style="display: inline-block; background-color: #22ac38; margin-left: 20px; width: 100px; border-radius:5px">-{{(product.oriPrice-product.price)/product.oriPrice * 100}}%</div>
-                            <div style="display: inline-block; text-decoration: line-through; margin-left: 20px; width: 100px; ">￥{{product.oriPrice/100}}</div>
+                            <div style="display: inline-block; background-color: #22ac38; width: 100px; border-radius:5px;">-{{(product.oriPrice-product.price)/product.oriPrice * 100}}%</div>
+                            <div style="display: inline-block; text-decoration: line-through; margin-left: 10px; width: 100px; ">￥{{product.oriPrice/100}}</div>
                             <div style="display: inline-block; font-size: 30px ; margin-left: 50px; width: 100px; ">
                                 <el-button @click="open(product.id)">￥{{product.price/100}}购买</el-button>
                             </div>

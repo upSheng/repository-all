@@ -23,7 +23,7 @@
   };
 </script>
 
-<style>
+<style scoped>
 
   html,body,.el-container{
     height: 100%;
@@ -42,7 +42,7 @@
   }
 
   .el-main {
-    background-color: #E9EEF3;
+    background-color: #FFF;
     color: #333;
     text-align: center;
     height: 80%;

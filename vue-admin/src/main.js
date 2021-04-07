@@ -12,6 +12,7 @@ import homepage from './components/frontend/homepage.vue'
 import order from "./components/frontend/order";
 import login from './components/admin/login.vue'
 import myMain from './components/frontend/myMain.vue'
+import instruction from "./components/frontend/instruction";
 
 import adminMain from "./components/admin/adminMain";
 import adminOrder from "./components/admin/adminOrder";
@@ -46,6 +47,7 @@ const routes = [
         path: '/', component: myMain, children: [
             {path: '', component: homepage},
             {path: 'order', component: order},
+            {path: 'instruction', component: instruction},
         ]
     },
 
