@@ -25,6 +25,14 @@
                         <el-radio-button label="2">经典大作</el-radio-button>
                         <el-radio-button label="">全部游戏</el-radio-button>
                     </el-radio-group>
+
+            </el-col>
+        </el-row>
+        <el-row style="margin-left: 300px; margin-right: 300px; margin-top: 10px">
+            <el-col style="margin-left: 10px; text-align: left" :span="1">
+                <a href="tencent://message/?uin=646188530">
+                    <img style="" src="http://demo.lanrenzhijia.com/2014/service1031/images/online.png" alt="点击这里给我发消息" title="点击这里给我发消息"/>
+                </a>
             </el-col>
 
         </el-row>
@@ -42,7 +50,7 @@
                         <div style="text-align: left;">
                             {{product.name}}
                         </div>
-                        <div style="text-align: left; height: 100px">
+                        <div style="text-align: left; height: 90px">
                             {{product.describe}}
 
                         </div>
@@ -63,7 +71,10 @@
 
 
         <el-dialog :visible.sync="show">
+
             <img :src="qrCode">
+
+            <div>微信支付</div>
         </el-dialog>
 
 

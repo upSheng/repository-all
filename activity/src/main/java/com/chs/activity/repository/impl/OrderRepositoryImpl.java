@@ -6,6 +6,7 @@ import com.chs.activity.config.MongoConstants;
 import com.chs.activity.modal.bean.OrderQuery;
 import com.chs.activity.modal.entity.OrderEntity;
 import com.chs.activity.repository.IOrderRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -48,6 +49,7 @@ public class OrderRepositoryImpl implements IOrderRepository {
             query.addCriteria(Criteria.where(MongoConstants.TRANSACTION_ID).is(orderQuery.getTransactionId()));
         }
 
+        query.with(Sort.by(Sort.Order.desc(MongoConstants.CREATE_TIME)));
         long count = mongoTemplate.count(query, OrderEntity.class);
         query.skip((pageNum - 1) * pageSize).limit(pageSize);
         List<OrderEntity> orderEntityList = mongoTemplate.find(query, OrderEntity.class);

@@ -9,6 +9,7 @@ public class MongoConstants {
     public static final String NAME = "name";
     public static final String LABEL = "label";
     public static final String WEIGHT = "weight";
+    public static final String CREATE_TIME = "createTime";
     public static final String KEY = "key";
     public static final String PRODUCT_NAME = "productName";
 

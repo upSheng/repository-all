@@ -63,7 +63,6 @@ const router = new VueRouter({
 axios.interceptors.request.use(config => {
 
     const token = localStorage.getItem('token');
-    debugger
     //设置请求头
     if ( token && token != ''){
         config.headers.common['token'] = token;
