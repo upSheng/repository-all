@@ -23,8 +23,16 @@ public class ProductEntity {
     private String name;
     private String describe;
     private Integer price;
+    private Integer oriPrice;
     private String img;
     private Integer quantity;
+    private Integer label;
+    private String key;
+
+    /**
+     * 权重
+     */
+    private Integer weight;
     private String steamUrl;
     private List<String> tagList;
     private String account;

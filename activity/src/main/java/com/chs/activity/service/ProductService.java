@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,8 @@ public class ProductService {
                 .img(x.getImg())
                 .name(x.getName())
                 .price(x.getPrice())
+                .oriPrice(x.getOriPrice())
+                .weight(x.getWeight())
                 .quantity(x.getQuantity())
                 .tagList(x.getTagList())
                 .steamUrl(x.getSteamUrl())
@@ -45,6 +48,11 @@ public class ProductService {
     }
 
     public ProductEntity save(ProductEntity productEntity) {
+        if (productEntity.getId() == null) {
+            productEntity.setCreateTime(LocalDateTime.now());
+        } else {
+            productEntity.setUpdateTime(LocalDateTime.now());
+        }
         return productRepository.save(productEntity);
     }
 

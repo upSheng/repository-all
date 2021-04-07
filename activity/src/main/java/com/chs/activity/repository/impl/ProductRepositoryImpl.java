@@ -6,6 +6,7 @@ import com.chs.activity.config.MongoConstants;
 import com.chs.activity.modal.bean.ProductQuery;
 import com.chs.activity.modal.entity.ProductEntity;
 import com.chs.activity.repository.IProductRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -32,15 +33,20 @@ public class ProductRepositoryImpl implements IProductRepository {
 
         Integer pageSize = productQuery.getPageSize() == null ? Constans.DEFAULT_PAGESIZE : productQuery.getPageSize();
         Integer pageNum = productQuery.getPageNum() == null ? Constans.DEFAULT_PAGENUM : productQuery.getPageNum();
-        String name = productQuery.getName();
+        String key = productQuery.getKeys();
+        Integer label = productQuery.getLabel();
         Query query = new Query();
-        if (!StringUtils.isEmpty(name)) {
-            Pattern pattern = Pattern.compile("^.*" + name + ".*", Pattern.CASE_INSENSITIVE);
-            query.addCriteria(Criteria.where(MongoConstants.NAME).regex(pattern));
+        if (!StringUtils.isEmpty(key)) {
+            Pattern pattern = Pattern.compile("^.*" + key + ".*", Pattern.CASE_INSENSITIVE);
+            Criteria keyCriteria = new Criteria().orOperator(Criteria.where(MongoConstants.NAME).regex(pattern), Criteria.where(MongoConstants.KEY).regex(pattern));
+            query.addCriteria(keyCriteria);
         }
 
+        if (label != null) {
+            query.addCriteria(Criteria.where(MongoConstants.LABEL).is(label));
+        }
         long count = mongoTemplate.count(query, ProductEntity.class);
-        query.skip((pageNum - 1) * pageSize).limit(pageSize);
+        query.skip((pageNum - 1) * pageSize).limit(pageSize).with(Sort.by(Sort.Order.desc(MongoConstants.WEIGHT)));
         List<ProductEntity> personEntities = mongoTemplate.find(query, ProductEntity.class);
         return new EasyPage<>(personEntities, count);
     }

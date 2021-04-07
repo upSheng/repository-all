@@ -11,5 +11,6 @@ public class ProductQuery {
 
     private Integer pageNum;
     private Integer pageSize;
-    private String name;
+    private Integer label;
+    private String keys;
 }

@@ -24,7 +24,17 @@ public class ProductVO {
     private String name;
     private String describe;
     private Integer price;
+    private Integer oriPrice;
     private String img;
+    /**
+     * 标签
+     */
+    private Integer label;
+
+    /**
+     * 权重
+     */
+    private Integer weight;
     private Integer quantity;
     private List<String> tagList;
 

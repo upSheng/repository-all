@@ -7,6 +7,7 @@
             <el-table-column
                     prop="createTime"
                     label="订单时间"
+                    :formatter="((row,column)=>{return new Date(row.createTime).Format('yyyy-MM-dd hh:mm:ss')})"
             ></el-table-column>
             <el-table-column
                     prop="transactionId"

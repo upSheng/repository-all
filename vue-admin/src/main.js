@@ -19,6 +19,9 @@ import adminHomepage from "./components/admin/adminHomepage";
 import adminProduct from "./components/admin/adminProduct";
 
 
+import {commonInit} from "./assets/js/common.js"
+
+
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
@@ -26,9 +29,6 @@ Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
 axios.defaults.baseURL = 'http://localhost:8080/'
-
-//添加jwt
-//axios.defaults.headers.common['Authorization'] = "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHMiLCJleHAiOjE1NzU1NjgwMDF9.jyWRk_44KP0uH4keXbQz5oS3UTejnTTbgw_htj6kJfMFv-OdWnzy-DL5_E-7ZCg5yay93rgO-7ROja1lEcwudg';
 
 
 const routes = [
@@ -63,9 +63,13 @@ const router = new VueRouter({
 axios.interceptors.request.use(config => {
 
     const token = localStorage.getItem('token');
+    debugger
     //设置请求头
-    axios.defaults.headers.common['token'] = token;
-
+    if ( token && token != ''){
+        config.headers.common['token'] = token;
+    }else {
+        config.headers.common['token'] = '';
+    }
     return config
 }, error => {
     return Promise.reject(error)
@@ -112,3 +116,5 @@ new Vue({
     router
 }).$mount('#app')
 
+
+commonInit();

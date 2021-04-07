@@ -3,7 +3,9 @@
 
         后台管理首页
 
-        <el-button @click="btn">测试</el-button>
+        <el-button @click="btn">接口测试</el-button>
+
+        <el-button @click="exit">清空token</el-button>
 
 
     </div>
@@ -27,6 +29,9 @@
                     console.log(response.data);
                 })
             },
+            exit(){
+                localStorage.removeItem("token");
+            }
         },
         mounted() {
 

@@ -21,6 +21,7 @@
                     <el-table-column
                             prop="createTime"
                             label="创建时间"
+                            :formatter="((row,column)=>{return new Date(row.createTime).Format('yyyy-MM-dd hh:mm:ss')})"
                     >
                     </el-table-column>
 
@@ -37,13 +38,39 @@
                     </el-table-column>
 
                     <el-table-column
+                            prop="oriPrice"
+                            label="原价"
+                    >
+                    </el-table-column>
+
+                    <el-table-column
                             prop="price"
                             label="价格"
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="quantity"
-                            label="销量"
+                            prop="key"
+                            label="关键字"
+                    >
+
+                    </el-table-column>
+                    <el-table-column
+                            prop="weight"
+                            label="权重"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                            prop="label"
+                            label="标签"
+                            :formatter="((row,column)=>{
+                                if (row.label == 1){
+                                    return '热门新游';
+                                }
+                                if (row.label == 2){
+                                    return '经典大作';
+                                }
+                                return '';
+                            })"
                     >
                     </el-table-column>
 
@@ -105,9 +132,25 @@
                     <el-form-item label="价格">
                         <el-input v-model="productEdit.price"></el-input>
                     </el-form-item>
-                    <el-form-item label="销量">
-                        <el-input v-model="productEdit.quantity"></el-input>
+                    <el-form-item label="原价">
+                        <el-input v-model="productEdit.oriPrice"></el-input>
                     </el-form-item>
+                    <el-form-item label="关键字">
+                        <el-input v-model="productEdit.key"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="权重">
+                        <el-input v-model="productEdit.weight"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="标签">
+                        <el-radio-group   v-model="productEdit.label" size="small">
+                            <el-radio-button label="1">热门新游</el-radio-button>
+                            <el-radio-button label="2">经典大作</el-radio-button>
+                            <el-radio-button label="3">无</el-radio-button>
+                        </el-radio-group>
+                    </el-form-item>
+
                     <el-form-item label="steam链接">
                         <el-input v-model="productEdit.steamUrl"></el-input>
                     </el-form-item>
@@ -216,6 +259,26 @@
                 this.editShow = true;
                 this.productEdit = {};
             },
+
+            dateFormat(fmt, date) {
+                let ret;
+                const opt = {
+                    "Y+": date.getFullYear().toString(),        // 年
+                    "m+": (date.getMonth() + 1).toString(),     // 月
+                    "d+": date.getDate().toString(),            // 日
+                    "H+": date.getHours().toString(),           // 时
+                    "M+": date.getMinutes().toString(),         // 分
+                    "S+": date.getSeconds().toString()          // 秒
+                    // 有其他格式化字符需求可以继续添加，必须转化成字符串
+                };
+                for (let k in opt) {
+                    ret = new RegExp("(" + k + ")").exec(fmt);
+                    if (ret) {
+                        fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+                    };
+                };
+                return fmt;
+            }
 
 
         },

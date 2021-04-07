@@ -7,6 +7,9 @@ package com.chs.activity.config;
 public class MongoConstants {
     public static final String ID = "_id";
     public static final String NAME = "name";
+    public static final String LABEL = "label";
+    public static final String WEIGHT = "weight";
+    public static final String KEY = "key";
     public static final String PRODUCT_NAME = "productName";
 
     public static final String PAY_JS_ORDER_ID = "payJsOrderId";

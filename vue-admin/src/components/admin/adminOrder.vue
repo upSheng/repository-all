@@ -18,6 +18,7 @@
                 <el-table-column
                         prop="createTime"
                         label="创建时间"
+                        :formatter="((row,column)=>{return new Date(row.createTime).Format('yyyy-MM-dd hh:mm:ss')})"
                 >
                 </el-table-column>
 
