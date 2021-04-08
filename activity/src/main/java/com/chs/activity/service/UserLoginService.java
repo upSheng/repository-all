@@ -8,6 +8,7 @@ import com.chs.activity.repository.IUserRepository;
 import com.chs.activity.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -46,5 +47,15 @@ public class UserLoginService {
         }
         String token = JwtUtils.creatToken(user.getId(), 30 * 60 * 1000L);
         return new LoginResVO(token);
+    }
+
+    public UserEntity checkToken(String token) {
+
+        String id = JwtUtils.verifierToken(token);
+        if (StringUtils.isEmpty(id)) {
+            return null;
+        }
+        return userRepository.findById(id);
+
     }
 }

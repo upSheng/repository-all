@@ -6,7 +6,9 @@
         <admin-menu></admin-menu>
       </el-aside>
       <el-container>
-<!--        <el-header>Header</el-header>-->
+        <el-header>
+            <admin-header></admin-header>
+        </el-header>
         <el-main>
           <router-view></router-view> <!--路由出口 -->
         </el-main>
@@ -18,38 +20,45 @@
 
 <script>
   import adminMenu from "./adminMenu";
+  import adminHeader from "./adminHeader";
 
   export default {
     name: "adminMain",
     components: {
+        adminHeader,
       adminMenu
     }
   };
 </script>
 
-<style>
+<style scoped>
 
-  html,body,.el-container{
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+    html,body,.el-container{
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
-  .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    .el-aside {
+      background-color: #FFF;
+      border-right: solid 1px #e6e6e6;
+      color: #333;
+      text-align: center;
+      height: 100%;
+    }
 
-  }
+    .el-header {
 
-  .el-aside {
-    /*background-color: #D3DCE6;*/
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-  }
+        color: #333;
+        text-align: center;
+        line-height: 60px;
+        border-bottom: solid 1px #e6e6e6;
+    }
+
+    .el-main {
+      background-color: #FFF;
+      color: #333;
+      text-align: center;
+    }
 
 </style>

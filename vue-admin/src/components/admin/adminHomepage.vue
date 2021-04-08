@@ -1,13 +1,7 @@
 <template>
     <div>
-
         后台管理首页
-
         <el-button @click="btn">接口测试</el-button>
-
-        <el-button @click="exit">清空token</el-button>
-
-
     </div>
 </template>
 
