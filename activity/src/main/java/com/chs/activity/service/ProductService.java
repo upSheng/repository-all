@@ -42,6 +42,7 @@ public class ProductService {
                 .quantity(x.getQuantity())
                 .tagList(x.getTagList())
                 .steamUrl(x.getSteamUrl())
+                .video(x.getVideo())
                 .updateTime(x.getUpdateTime())
                 .build()).collect(Collectors.toList());
         return new EasyPage<>(productVOList, search.getCount());

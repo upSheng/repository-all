@@ -37,6 +37,8 @@ public class ProductEntity {
     private List<String> tagList;
     private String account;
     private String password;
+
+    private String video;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 

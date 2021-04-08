@@ -39,6 +39,8 @@ public class ProductVO {
     private List<String> tagList;
 
     private String steamUrl;
+
+    private String video;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

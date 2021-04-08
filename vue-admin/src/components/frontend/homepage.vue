@@ -36,8 +36,8 @@
             </el-col>
 
         </el-row>
-        <el-row style="margin-top: 10px; margin-left: 300px; margin-right: 300px"  v-for="index of Math.ceil(productList.length/3)">
-            <el-col style="padding: 10px" :span="8" v-for="product in productList.slice((index-1)*3,index*3)">
+        <el-row style="margin-top: 10px; margin-left: 300px; margin-right: 300px"  v-for="product in productList">
+            <el-col style="padding: 10px" :span="8">
 
                     <div>
                         <a target="_blank"  :href="product.steamUrl">
@@ -62,8 +62,13 @@
                             </div>
                         </div>
                     </div>
+            </el-col>
+            <el-col style="padding: 10px" :span="8">
+                <div>
+                    <video style="height: 382px" :src="product.video"  controls = "controls" controlslist="nodownload nofullscreen noremoteplayback" :disablePictureInPicture="true"  onMouseOver="this.play();" onMouseOut="this.pause()">
 
-
+                    </video>
+                </div>
             </el-col>
         </el-row>
 
@@ -158,5 +163,30 @@
     }
 </script>
 <style scoped>
+
+
+    video::-webkit-media-controls-fullscreen-button {
+        display: none;
+    }
+    video::-webkit-media-controls-current-time-display{
+      display: none;
+    }
+    video::-webkit-media-controls-time-remaining-display {
+      display: none;
+    }
+    video::-webkit-media-controls-mute-button {
+      display: none;
+    }
+
+    video::-webkit-media-controls-toggle-closed-captions-button {
+        display: none;
+    }
+
+    video::-webkit-media-controls-volume-slider {
+      display: none;
+    }
+
+
+
 
 </style>

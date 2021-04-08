@@ -80,6 +80,13 @@
                             label="steam链接"
                     >
                     </el-table-column>
+
+                    <el-table-column
+                            prop="video"
+                            label="视频链接"
+                    >
+                    </el-table-column>
+
                     <el-table-column
                             prop="account"
                             label="账号"
@@ -153,6 +160,10 @@
 
                     <el-form-item label="steam链接">
                         <el-input v-model="productEdit.steamUrl"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="视频链接">
+                        <el-input v-model="productEdit.video"></el-input>
                     </el-form-item>
 
                     <el-form-item label="账号">
