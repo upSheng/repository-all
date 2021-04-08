@@ -25,7 +25,7 @@
                     this.$router.push('/login');
                 }
                 this.axios.get('/checkToken?token=' + token).then((response) => {
-                    console.log(response.data)
+
                     if (response.data.code == 200 && response.data.data != null) {
                         this.name = response.data.data.name;
                     }else {

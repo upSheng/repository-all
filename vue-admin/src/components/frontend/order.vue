@@ -50,15 +50,18 @@
 
                 const orderList = JSON.parse(localStorage.getItem("orderList"));
                 const transactionIdList = [];
-                for (var i = 0; i < orderList.length; i++) {
-                    transactionIdList.push(orderList[i].transactionId);
+
+                if (orderList != null){
+                    for (var i = 0; i < orderList.length; i++) {
+                        transactionIdList.push(orderList[i].transactionId);
+                    }
                 }
+
 
                 let param = new URLSearchParams()
                 param.append("transactionIdList", transactionIdList)
 
                 this.axios.post('/findAwardList', transactionIdList).then((response) => {
-                    console.log(response.data)
                     if (response.data.data != null && response.data.code == 200) {
                         this.orderAwardList = response.data.data;
                     } else {

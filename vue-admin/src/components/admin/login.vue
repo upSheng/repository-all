@@ -42,7 +42,7 @@
 
                 let param = {"name":this.name,"password":this.password};
                 this.axios.post('/login', param).then((response) => {
-                    console.log(response.data)
+
                     if (response.data.code == 200) {
                         localStorage.setItem("token", response.data.data.token);
                         this.$router.push('/admin');

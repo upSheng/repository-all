@@ -204,7 +204,7 @@
 
             loadProduct() {
                 this.axios.post('/listProduct', this.param).then((response) => {
-                    console.log(response.data)
+
                     if (response.data.code == 200) {
                         this.productData = response.data.data.content;
                         this.total = response.data.data.count;
@@ -214,7 +214,7 @@
             },
             deleteProduct(id) {
                 this.axios.get('/deleteProduct?id='+id).then((response) => {
-                    console.log(response.data)
+
                     if (response.data.code == 200) {
                         this.$message({
                             message: '删除成功',
@@ -239,7 +239,7 @@
                     return;
                 }
                 this.axios.post('/saveProduct', this.productEdit).then((response) => {
-                    console.log(response.data)
+
                     if (response.data.code == 200) {
                         this.editShow = false;
                         this.$message({

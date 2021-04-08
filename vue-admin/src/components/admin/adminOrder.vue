@@ -91,7 +91,7 @@
 
             loadOrder() {
                 this.axios.post('/listOrder', this.param).then((response) => {
-                    console.log(response.data)
+
                     if (response.data.code == 200) {
                         this.orderData = response.data.data.content;
                         this.total = response.data.data.count;
