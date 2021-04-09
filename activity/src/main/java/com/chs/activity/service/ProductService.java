@@ -3,6 +3,7 @@ package com.chs.activity.service;
 import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.modal.bean.ProductQuery;
 import com.chs.activity.modal.entity.ProductEntity;
+import com.chs.activity.modal.enums.LabelEnum;
 import com.chs.activity.modal.vo.ProductVO;
 import com.chs.activity.repository.IProductRepository;
 import org.springframework.stereotype.Service;
@@ -43,9 +44,18 @@ public class ProductService {
                 .tagList(x.getTagList())
                 .steamUrl(x.getSteamUrl())
                 .video(x.getVideo())
+                .label(x.getLabel())
                 .updateTime(x.getUpdateTime())
                 .build()).collect(Collectors.toList());
         return new EasyPage<>(productVOList, search.getCount());
+    }
+
+    public ProductEntity searchFree(String id) {
+        ProductEntity productEntity = productRepository.findById(id);
+        if (productEntity == null || !LabelEnum.FREE.getLabel().equals(productEntity.getLabel())) {
+            return null;
+        }
+        return productEntity;
     }
 
     public ProductEntity save(ProductEntity productEntity) {

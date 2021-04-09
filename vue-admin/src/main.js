@@ -29,7 +29,7 @@ Vue.use(VueRouter)
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'http://localhost:8080/'
+axios.defaults.baseURL = 'http://onetu.top/'
 
 
 const routes = [

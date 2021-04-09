@@ -34,7 +34,7 @@ public class ProductRepositoryImpl implements IProductRepository {
         Integer pageSize = productQuery.getPageSize() == null ? Constans.DEFAULT_PAGESIZE : productQuery.getPageSize();
         Integer pageNum = productQuery.getPageNum() == null ? Constans.DEFAULT_PAGENUM : productQuery.getPageNum();
         String key = productQuery.getKeys();
-        Integer label = productQuery.getLabel();
+
         Query query = new Query();
         if (!StringUtils.isEmpty(key)) {
             Pattern pattern = Pattern.compile("^.*" + key + ".*", Pattern.CASE_INSENSITIVE);
@@ -42,9 +42,11 @@ public class ProductRepositoryImpl implements IProductRepository {
             query.addCriteria(keyCriteria);
         }
 
+        Integer label = productQuery.getLabel();
         if (label != null) {
             query.addCriteria(Criteria.where(MongoConstants.LABEL).is(label));
         }
+
         long count = mongoTemplate.count(query, ProductEntity.class);
         query.skip((pageNum - 1) * pageSize).limit(pageSize).with(Sort.by(Sort.Order.desc(MongoConstants.WEIGHT)));
         List<ProductEntity> personEntities = mongoTemplate.find(query, ProductEntity.class);

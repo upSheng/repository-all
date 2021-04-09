@@ -79,7 +79,7 @@
             return {
                 orderData:[],
                 total:100,
-                param:{"pageSize":5,"pageNum":1,"productName":""},
+                param:{"pageSize":10,"pageNum":1,"productName":""},
             };
         },
         methods: {

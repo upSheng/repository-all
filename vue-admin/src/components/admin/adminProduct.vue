@@ -2,7 +2,7 @@
     <div>
 
             <div style="margin: 10px;text-align: left">
-                <el-input placeholder="名称" style="width: 300px" v-model="param.name"></el-input> <el-button @click="search">搜索</el-button>
+                <el-input placeholder="名称"  style="width: 300px" v-model="param.name"></el-input> <el-button  @click="search">搜索</el-button>
                 <br><br>
 
                 <el-button @click="newOpen"  size="small" type="primary" icon="el-icon-circle-plus-outline">添加</el-button>
@@ -68,6 +68,9 @@
                                 }
                                 if (row.label == 2){
                                     return '经典大作';
+                                }
+                                if (row.label == 3){
+                                    return '免费';
                                 }
                                 return '';
                             })"
@@ -152,9 +155,10 @@
 
                     <el-form-item label="标签">
                         <el-radio-group   v-model="productEdit.label" size="small">
+                            <el-radio-button label="0">无</el-radio-button>
                             <el-radio-button label="1">热门新游</el-radio-button>
                             <el-radio-button label="2">经典大作</el-radio-button>
-                            <el-radio-button label="3">无</el-radio-button>
+                            <el-radio-button label="3">免费</el-radio-button>
                         </el-radio-group>
                     </el-form-item>
 

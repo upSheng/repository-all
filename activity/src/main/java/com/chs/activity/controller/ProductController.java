@@ -25,6 +25,11 @@ public class ProductController {
         return ResponseEntity.withRes(res -> res.setData(productService.search(productQuery)));
     }
 
+    @PostMapping("/searchProductFree")
+    public ResponseEntity<ProductEntity> searchProductFree(@RequestParam("id") String id) {
+        return ResponseEntity.withRes(res -> res.setData(productService.searchFree(id)));
+    }
+
     @PostMapping("/listProduct")
     public ResponseEntity<EasyPage<ProductEntity>> listProduct(@RequestBody ProductQuery productQuery) {
         return ResponseEntity.withRes(res -> res.setData(productService.list(productQuery)));

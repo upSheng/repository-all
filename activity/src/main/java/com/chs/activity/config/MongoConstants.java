@@ -21,4 +21,7 @@ public class MongoConstants {
     public static final String UPDATE_TIME = "updateTime";
 
     public static final String TABLE_NET_WORTH_TREND = "netWorthTrend_";
+
+
+    public static final String FREE = "free";
 }

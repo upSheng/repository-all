@@ -21,6 +21,7 @@
         <el-row style="margin-left: 300px; margin-right: 300px;">
             <el-col style="margin-left: 10px; text-align: left" :span="6">
                     <el-radio-group @change="labelChange"  v-model="param.label" size="small">
+                        <el-radio-button label="3">本周免费</el-radio-button>
                         <el-radio-button label="1">热门新游</el-radio-button>
                         <el-radio-button label="2">经典大作</el-radio-button>
                         <el-radio-button label="">全部游戏</el-radio-button>
@@ -58,7 +59,8 @@
                             <div style="display: inline-block; background-color: #22ac38; width: 100px; border-radius:5px;">-{{(product.oriPrice-product.price)/product.oriPrice * 100}}%</div>
                             <div style="display: inline-block; text-decoration: line-through; margin-left: 10px; width: 100px; ">￥{{product.oriPrice/100}}</div>
                             <div style="display: inline-block; font-size: 30px ; margin-left: 50px; width: 100px; ">
-                                <el-button @click="open(product.id)">￥{{product.price/100}}购买</el-button>
+                                <el-button v-if="product.label !== 3" @click="open(product.id)">￥{{product.price/100}}购买</el-button>
+                                <el-button v-if="product.label === 3" @click="freeShow(product.id)">免费获取</el-button>
                             </div>
                         </div>
                     </div>
@@ -73,6 +75,17 @@
             <img :src="qrCode">
 
             <div>微信支付</div>
+        </el-dialog>
+
+        <el-dialog :visible.sync="free.show">
+
+            <div style="margin: 0 auto;width: 500px;text-align: left">
+                账号: {{free.account}} <br>
+                密码: {{free.password}}
+            </div>
+
+
+
         </el-dialog>
 
 
@@ -90,7 +103,8 @@
                 qrCode: "",
                 payJsOrderId: "",
                 key:"",
-                param:{"pageSize":100,"pageNum":1,label:"",keys:""}
+                param:{"pageSize":100,"pageNum":1,label:"",keys:""},
+                free:{show:false}
             };
         },
         methods: {
@@ -104,6 +118,19 @@
                         this.payJsOrderId = response.data.data.payJsOrderId;
                         this.show = true;
                         this.lunxun(this.payJsOrderId);
+                    }
+                })
+
+            },
+
+            freeShow(id) {
+                this.axios.post('/searchProductFree?id=' + id).then((response) => {
+
+                    if (response.data.code == 200) {
+
+                        this.free.account  = response.data.data.account;
+                        this.free.password  = response.data.data.password;
+                        this.free.show = true;
                     }
                 })
 
