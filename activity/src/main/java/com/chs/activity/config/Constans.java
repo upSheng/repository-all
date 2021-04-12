@@ -13,7 +13,6 @@ public class Constans {
 
     public static final Integer ORDER_STATUS_DEFAULT = 0;
     public static final Integer ORDER_STATUS_SUCCESS = 1;
-
     public static final Integer DEFAULT_PAGESIZE = 10;
     public static final Integer DEFAULT_PAGENUM = 1;
 }

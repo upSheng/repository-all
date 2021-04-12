@@ -29,7 +29,7 @@ Vue.use(VueRouter)
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'https://steamhy.com/'
+axios.defaults.baseURL = 'https://steampy.com/'
 
 
 const routes = [

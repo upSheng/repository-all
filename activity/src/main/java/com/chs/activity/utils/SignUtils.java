@@ -11,9 +11,9 @@ import java.util.Map;
  */
 public class SignUtils {
 
-    public static String sign(Map<String, String> map) {
+    public static String sign(Map<String, String> map, String key) {
 
-        String key = Constans.KEY;
+
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");

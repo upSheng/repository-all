@@ -22,7 +22,7 @@ class HttpUtilsTest {
         //payData.put("notify_url", "https://你的域名/api/pay/notify");
 
         // 进行sign签名
-        payData.put("sign", SignUtils.sign(payData));
+        payData.put("sign", SignUtils.sign(payData,"aa"));
 
         String url = "https://payjs.cn/api/native";
         String s = HttpUtils.sendPost(url, payData);

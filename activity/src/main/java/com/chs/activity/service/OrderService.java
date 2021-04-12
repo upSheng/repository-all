@@ -15,6 +15,7 @@ import com.chs.activity.repository.IProductRepository;
 import com.chs.activity.utils.HttpUtils;
 import com.chs.activity.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -37,6 +38,19 @@ public class OrderService {
     @Resource
     IOrderRepository orderRepository;
 
+
+    @Value("${payjs.mchid}")
+    private String mchid;
+
+    @Value("${payjs.key}")
+    private String key;
+
+    @Value("${payjs.url}")
+    private String url;
+
+    @Value("${payjs.notifyUrl}")
+    private String notifyUrl;
+
     public OrderEntity placeOrder(String id) {
 
         ProductEntity productEntity = productRepository.findById(id);
@@ -49,18 +63,18 @@ public class OrderService {
         String outTradeNo = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now()) + code;
 
         Map<String, String> payData = new TreeMap<>();
-        payData.put("mchid", Constans.MCHID);
+        payData.put("mchid", mchid);
         payData.put("total_fee", String.valueOf(productEntity.getPrice()));
         payData.put("out_trade_no", outTradeNo);
         payData.put("body", productEntity.getName());
-        payData.put("notify_url", Constans.NOTIFY_URL);
+        payData.put("notify_url", notifyUrl);
         // 进行sign签名
-        payData.put("sign", SignUtils.sign(payData));
+        payData.put("sign", SignUtils.sign(payData,key));
 
         String res;
         try {
             log.info("placeOrderReq===>{} ", JSON.toJSONString(payData));
-            res = HttpUtils.sendPost(Constans.URL, payData);
+            res = HttpUtils.sendPost(url, payData);
             log.info("placeOrderRes===>{} ", res);
         } catch (Exception ex) {
             log.error("请求失败");
@@ -97,7 +111,7 @@ public class OrderService {
         log.info(JSON.toJSONString(params));
         String sign = params.get("sign");
         params.remove("sign");
-        String signData = SignUtils.sign(params);
+        String signData = SignUtils.sign(params,key);
         if (sign.equals(signData)) {
 
             String payJsOrderId = params.get("payjs_order_id");

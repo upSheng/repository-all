@@ -14,3 +14,10 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/test
 
+
+noSslPort: 80
+payjs:
+  mchid: 1547187151
+  key: LfFjXZ6ANijkPSEC
+  url: https://payjs.cn/api/native
+  notifyUrl: https://steamhy.com/payHandle
