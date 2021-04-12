@@ -9,7 +9,7 @@ public class Constans {
     public static final String MCHID = "1547187151";
     public static final String KEY = "**";
     public static final String URL = "https://payjs.cn/api/native";
-    public static final String NOTIFY_URL = "http://onetu.top/payHandle";
+    public static final String NOTIFY_URL = "https://steamhy.com/payHandle";
 
     public static final Integer ORDER_STATUS_DEFAULT = 0;
     public static final Integer ORDER_STATUS_SUCCESS = 1;

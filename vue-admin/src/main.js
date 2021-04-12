@@ -29,7 +29,7 @@ Vue.use(VueRouter)
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'http://onetu.top/'
+axios.defaults.baseURL = 'https://steamhy.com/'
 
 
 const routes = [
