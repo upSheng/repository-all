@@ -1,18 +1,13 @@
 server:
-  port: 443
   ssl:
     key-store: classpath:5467488_steamhy.com.pfx
     key-store-type: PKCS12
     key-store-password: F47OXM13
 
 spring:
-  application:
-    name: activity
-
-
   data:
     mongodb:
-      uri: mongodb://localhost:27017/test
+      uri: mongodb://localhost:28017/test
 
 
 noSslPort: 80
@@ -20,4 +15,4 @@ payjs:
   mchid: 1547187151
   key: LfFjXZ6ANijkPSEC
   url: https://payjs.cn/api/native
-  notifyUrl: https://steamhy.com/payHandle
+  notifyUrl: https://steamhy.com:${server.port}/payHandle
