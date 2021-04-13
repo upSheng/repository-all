@@ -10,7 +10,7 @@ spring:
       uri: mongodb://localhost:28017/test
 
 
-noSslPort: 80
+noSslPort: 81
 payjs:
   mchid: 1547187151
   key: LfFjXZ6ANijkPSEC
