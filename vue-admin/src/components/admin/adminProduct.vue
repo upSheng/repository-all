@@ -16,6 +16,7 @@
                 <el-table
                         :data="productData"
                         border
+                        height="400"
                         style="width: 100%">
 
                     <el-table-column
@@ -31,6 +32,7 @@
                     >
                     </el-table-column>
                     <el-table-column
+                            show-overflow-tooltip
                             prop="describe"
                             label="描述"
                     >
@@ -79,12 +81,14 @@
 
 
                     <el-table-column
+                            show-overflow-tooltip
                             prop="steamUrl"
                             label="steam链接"
                     >
                     </el-table-column>
 
                     <el-table-column
+                            show-overflow-tooltip
                             prop="video"
                             label="视频链接"
                     >

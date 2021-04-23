@@ -41,7 +41,7 @@
 
     .el-aside {
       background-color: #FFF;
-      border-right: solid 1px #e6e6e6;
+      /*border-right: solid 1px #e6e6e6;*/
       color: #333;
       text-align: center;
       height: 100%;

@@ -13,6 +13,7 @@
             <el-table
                     :data="orderData"
                     border
+                    height="500"
                     style="width: 100%">
 
                 <el-table-column
