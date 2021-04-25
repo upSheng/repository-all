@@ -51,7 +51,7 @@ public class JwtUtils {
             return jwt.getClaim(USER_ID).asString();
         } catch (JWTVerificationException e) {
 
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }

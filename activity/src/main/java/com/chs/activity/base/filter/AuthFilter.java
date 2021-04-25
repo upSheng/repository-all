@@ -74,7 +74,7 @@ public class AuthFilter implements Filter {
     }
 
     static {
-        authURLMap.put("/wheel", true);
+        //authURLMap.put("/wheel", true);
         authURLMap.put("/list", true);
         authURLMap.put("/save", true);
     }

@@ -29,7 +29,7 @@ Vue.use(VueRouter)
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'https://steamhy.com:8081/'
+axios.defaults.baseURL = 'https://steamhy.com:8082/'
 // axios.defaults.baseURL = 'https://localhost/'
 
 

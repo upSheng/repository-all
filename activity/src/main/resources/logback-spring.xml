@@ -13,7 +13,7 @@
 
     <contextName>logback</contextName>
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="log.path" value="d:/logs/log" />
+    <property name="log.path" value="/logs/log" />
     <property name="log.errorPath" value="d:/logs/error/log" />
 
     <!--输出到控制台-->
