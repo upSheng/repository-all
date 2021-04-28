@@ -10,6 +10,7 @@
 
             <el-menu-item index="/">首页</el-menu-item>
             <el-menu-item index="/order">我的订单</el-menu-item>
+            <el-menu-item index="/hot">热游</el-menu-item>
             <el-menu-item index="/help">帮助中心</el-menu-item>
         </el-menu>
 

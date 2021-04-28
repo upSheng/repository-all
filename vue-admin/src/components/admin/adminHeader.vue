@@ -1,5 +1,5 @@
 <template>
-    <div style="text-align: right">
+    <div class="user">
 
         {{name}}
         <el-button @click="exit">退出</el-button>
@@ -50,6 +50,9 @@
 
 <style scoped>
 
+    .user {
+        text-align: right;
+    }
 
 
 </style>

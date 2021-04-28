@@ -37,8 +37,8 @@
             </el-col>
 
         </el-row>
-        <el-row style="margin-top: 10px; margin-left: 300px; margin-right: 300px"  v-for="index of Math.ceil(productList.length/3)">
-            <el-col style="padding: 10px" :span="8" v-for="product in productList.slice((index-1)*3,index*3)">
+        <el-row style="margin-top: 10px; margin-left: 300px; margin-right: 300px"  v-for="index of Math.ceil(productList.length/3)" :key="index">
+            <el-col style="padding: 10px" :span="8" v-for="product in productList.slice((index-1)*3,index*3)" :key="product">
 
                     <div>
                         <a target="_blank"  :href="product.steamUrl">
@@ -70,14 +70,14 @@
 
 
 
-        <el-dialog :visible.sync="show">
+        <el-dialog v-model="show">
 
             <img :src="qrCode">
 
             <div>微信支付</div>
         </el-dialog>
 
-        <el-dialog :visible.sync="free.show">
+        <el-dialog v-model="free.show">
 
             <div style="margin: 0 auto;width: 500px;text-align: left">
                 账号: {{free.account}} <br>

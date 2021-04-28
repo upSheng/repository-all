@@ -1,11 +1,13 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 
-import VueRouter from 'vue-router'
+import { createRouter,createWebHashHistory } from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+
+
+import ElementPlus from 'element-plus';
+import 'element-plus/lib/theme-chalk/index.css';
 
 
 import homepage from './components/frontend/homepage.vue'
@@ -13,6 +15,7 @@ import order from "./components/frontend/order";
 import login from './components/admin/login.vue'
 import myMain from './components/frontend/myMain.vue'
 import help from "./components/frontend/help";
+import hot from "./components/frontend/hot"
 
 import adminMain from "./components/admin/adminMain";
 import adminOrder from "./components/admin/adminOrder";
@@ -23,11 +26,10 @@ import adminProduct from "./components/admin/adminProduct";
 import {commonInit} from "./assets/js/common.js"
 
 
-Vue.config.productionTip = false
 
-Vue.use(VueRouter)
-Vue.use(ElementUI);
-Vue.use(VueAxios, axios)
+const app = createApp(App)
+app.use(ElementPlus)
+app.use(VueAxios, axios)
 
 axios.defaults.baseURL = 'https://steamhy.com:8082/'
 // axios.defaults.baseURL = 'https://localhost/'
@@ -47,6 +49,7 @@ const routes = [
     {
         path: '/', component: myMain, children: [
             {path: '', component: homepage},
+            {path: 'hot', component: hot},
             {path: 'order', component: order},
             {path: 'help', component: help},
         ]
@@ -56,10 +59,16 @@ const routes = [
 
 // 3. 创建 router 实例，然后传 `routes` 配置
 // 你还可以传别的配置参数, 不过先这么简单着吧。
-const router = new VueRouter({
-    // mode: 'history',  //h5模式
-    routes // (缩写) 相当于 routes: routes
+// const router = new VueRouter({
+//     // mode: 'history',  //h5模式
+//     routes // (缩写) 相当于 routes: routes
+// })
+
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes,
 })
+app.use(router)
 
 
 //请求拦截
@@ -113,10 +122,13 @@ axios.interceptors.response.use(response => {
 //     next();
 // });
 
-new Vue({
-    render: h => h(App),
-    router
-}).$mount('#app')
+// new Vue({
+//     render: h => h(App),
+//     router
+// }).$mount('#app')
 
+
+
+app.mount('#app')
 
 commonInit();

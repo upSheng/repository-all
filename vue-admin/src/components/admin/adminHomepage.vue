@@ -1,7 +1,7 @@
 <template>
     <div>
         后台管理首页
-        <el-button @click="btn">接口测试</el-button>
+
     </div>
 </template>
 
@@ -23,9 +23,7 @@
                     console.log(response.data);
                 })
             },
-            exit(){
-                localStorage.removeItem("token");
-            }
+
         },
         mounted() {
 

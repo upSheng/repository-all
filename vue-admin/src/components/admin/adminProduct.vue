@@ -1,18 +1,14 @@
 <template>
-    <div>
+    <div class="product">
 
-            <div style="margin: 10px;text-align: left">
-                <el-input placeholder="名称"  style="width: 300px" v-model="param.name"></el-input> <el-button  @click="search">搜索</el-button>
-                <br><br>
-
+            <div>
+                <el-input class="search" placeholder="名称" v-model="param.name"></el-input> <el-button  @click="search">搜索</el-button>
+            </div>
+            <div>
                 <el-button @click="newOpen"  size="small" type="primary" icon="el-icon-circle-plus-outline">添加</el-button>
-
             </div>
 
-
-
-
-            <div style="margin: 10px">
+            <div>
                 <el-table
                         :data="productData"
                         border
@@ -41,13 +37,13 @@
 
                     <el-table-column
                             prop="oriPrice"
-                            label="原价"
+                            label="原价(分)"
                     >
                     </el-table-column>
 
                     <el-table-column
                             prop="price"
-                            label="价格"
+                            label="价格(分)"
                     >
                     </el-table-column>
                     <el-table-column
@@ -108,7 +104,7 @@
                             fixed="right"
                             label="操作"
                             width="100">
-                        <template slot-scope="scope">
+                        <template #default="scope">>
                             <el-button @click="editOpen(scope.$index)" type="text" size="small">编辑</el-button>
                             <el-button @click="deleteProduct(scope.row.id)" type="text" size="small">删除</el-button>
                         </template>
@@ -118,7 +114,7 @@
 
 
 
-            <div style="margin: 10px">
+            <div>
                 <el-pagination
                         background
                         layout="prev, pager, next"
@@ -132,7 +128,7 @@
 
             <el-dialog
                     title="编辑"
-                    :visible.sync="editShow"
+                    v-model="editShow"
                     width="80%"
                     center>
 
@@ -141,12 +137,12 @@
                         <el-input v-model="productEdit.name"></el-input>
                     </el-form-item>
                     <el-form-item label="描述">
-                        <el-input v-model="productEdit.describe"></el-input>
+                        <el-input type="textarea" autosize v-model="productEdit.describe"></el-input>
                     </el-form-item>
-                    <el-form-item label="价格">
+                    <el-form-item label="价格(分)">
                         <el-input v-model="productEdit.price"></el-input>
                     </el-form-item>
-                    <el-form-item label="原价">
+                    <el-form-item label="原价(分)">
                         <el-input v-model="productEdit.oriPrice"></el-input>
                     </el-form-item>
                     <el-form-item label="关键字">
@@ -182,7 +178,7 @@
                     </el-form-item>
                 </el-form>
 
-                <span slot="footer" class="dialog-footer">
+                <span class="dialog-footer">
                     <el-button @click="editShow = false">取 消</el-button>
                     <el-button type="primary" @click="saveProduct">确 定</el-button>
                 </span>
@@ -198,7 +194,7 @@
             return {
                 productData:[],
                 total:100,
-                param:{"pageSize":5,"pageNum":1,"name":""},
+                param:{"pageSize":10,"pageNum":1,"name":""},
                 productEdit:{},
                 editShow:false
             };
@@ -294,8 +290,8 @@
                     ret = new RegExp("(" + k + ")").exec(fmt);
                     if (ret) {
                         fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
-                    };
-                };
+                    }
+                }
                 return fmt;
             }
 
@@ -308,4 +304,19 @@
 </script>
 <style scoped>
 
+    .product {
+        text-align: left;
+        margin-left: 10px
+    }
+
+    .product>div {
+         margin-top: 10px
+    }
+
+    .search {
+        width: 300px;
+    }
+    .el-pagination {
+        text-align: center;
+    }
 </style>

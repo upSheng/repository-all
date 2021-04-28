@@ -1,15 +1,12 @@
 <template>
-    <div>
+    <div class="order">
 
-        <div style="margin: 10px;text-align: left">
-            <el-input placeholder="名称" style="width: 300px" v-model="param.productName"></el-input> <el-button @click="search">搜索</el-button>
+        <div >
+            <el-input class="search" placeholder="名称"  v-model="param.productName"></el-input> <el-button @click="search">搜索</el-button>
 
         </div>
 
-
-
-
-        <div style="margin: 10px">
+        <div>
             <el-table
                     :data="orderData"
                     border
@@ -58,7 +55,7 @@
 
 
 
-        <div style="margin: 10px">
+        <div>
             <el-pagination
                     background
                     layout="prev, pager, next"
@@ -112,5 +109,22 @@
     }
 </script>
 <style scoped>
+
+    .order {
+
+        text-align: left
+    }
+
+    .order>div {
+        margin-top: 10px;
+    }
+
+    .search {
+       width: 300px;
+    }
+
+    .el-pagination {
+        text-align: center;
+    }
 
 </style>

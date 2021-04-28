@@ -23,7 +23,7 @@
         name: "adminMenu",
         data() {
             return {
-                activeIndex: "/",
+                activeIndex: "/admin",
 
             };
         },
@@ -42,4 +42,8 @@
 </script>
 
 <style scoped>
+
+    #NavMenu, #NavMenu ul {
+        height: 100%;
+    }
 </style>
