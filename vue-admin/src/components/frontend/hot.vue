@@ -1,27 +1,44 @@
 <template>
     <div class="hot">
 
-        <video  autoplay="autoplay" loop="loop" muted="muted"
-
-                :src="src">
-
-        </video>
 
 
+            <swiper style="width: 100%"
+                    :slides-per-view="1"
+                    :space-between="50"
+                    navigation
+                    :pagination="{ clickable: true }"
+                    :scrollbar="{ draggable: true }"
+                    @swiper="onSwiper"
+                    @slideChange="onSlideChange"
+            >
+                <swiper-slide>
 
 
-        <swiper
-                :slides-per-view="3"
-                :space-between="50"
-                @swiper="onSwiper"
-                @slideChange="onSlideChange"
-        >
-            <swiper-slide>Slide 1</swiper-slide>
-            <swiper-slide>Slide 2</swiper-slide>
-            <swiper-slide>Slide 3</swiper-slide>
+                        <video  autoplay="autoplay" loop="loop" muted="muted"
 
-        </swiper>
+                                :src="src">
 
+                        </video>
+
+
+                </swiper-slide>
+                <swiper-slide>
+                    <video  autoplay="autoplay" loop="loop" muted="muted"
+
+                            :src="src">
+
+                    </video>
+                </swiper-slide>
+                <swiper-slide>
+                    <video  autoplay="autoplay" loop="loop" muted="muted"
+
+                            :src="src">
+
+                    </video>
+                </swiper-slide>
+
+            </swiper>
 
 
 
@@ -30,20 +47,22 @@
 </template>
 
 <script>
-    // import Swiper core and required modules
+
     import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
-    // Import Swiper Vue.js components
+
     import { Swiper, SwiperSlide } from 'swiper/vue';
 
-    // Import Swiper styles
+
     import 'swiper/swiper.scss';
     import 'swiper/components/navigation/navigation.scss';
     import 'swiper/components/pagination/pagination.scss';
     import 'swiper/components/scrollbar/scrollbar.scss';
 
-    //install Swiper modules
+    // install Swiper modules
     SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
+
     export default {
         name: 'hot',
         data() {
@@ -72,11 +91,18 @@
 <style scoped>
 
     .hot {
-        height: 100%;
+
+        height: 600px;
     }
 
     video {
-        width: 100%; height: 100%; object-fit: cover;
+        width: 100%;  object-fit: cover;
     }
+
+
+
+
+
+
 
 </style>

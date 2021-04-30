@@ -2,17 +2,19 @@ package com.chs.activity.base.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.chs.activity.base.response.ResponseEntity;
+import com.chs.activity.modal.entity.UserEntity;
+import com.chs.activity.repository.IUserRepository;
 import com.chs.activity.utils.JwtUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author : HongSheng.Chen
@@ -23,7 +25,11 @@ import java.util.Map;
 @WebFilter(urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
 
-    private static HashMap<String, Boolean> authURLMap = new HashMap<>();
+
+    @Resource
+    private IUserRepository userRepository;
+
+    private static HashMap<String, Set<String>> authURLMap = new HashMap<>();
     private final static String TOKEN = "token";
 
     @Override
@@ -40,42 +46,43 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        if (!isAuthRequest(httpRequest)) {
+        String uri = httpRequest.getRequestURI();
+
+        //url 是否能匹配
+        boolean flag = false;
+        for (Map.Entry<String, Set<String>> entry : authURLMap.entrySet()) {
+            if (uri.startsWith(entry.getKey())) {
+                flag = true;
+                String token = httpRequest.getHeader(TOKEN);
+                if (!StringUtils.isEmpty(token)) {
+                    String userId = JwtUtils.verifierToken(token);
+                    if (!StringUtils.isEmpty(userId)) {
+                        UserEntity user = userRepository.findById(userId);
+                        if (entry.getValue().contains(user.getRole())) {
+                            chain.doFilter(request, response);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (flag) {
+            httpResponse.setHeader("Access-Control-Allow-Origin", "*");
+            httpResponse.setHeader("Content-Type", "application/json;charset=UTF-8");
+            httpResponse.setHeader("Access-Control-Allow-Headers", "*");
+            String res = JSON.toJSONString(ResponseEntity.fail(401, "no login"));
+            httpResponse.getWriter().append(res);
+        } else {
             chain.doFilter(request, response);
             return;
         }
-
-        String token = httpRequest.getHeader(TOKEN);
-        if (!StringUtils.isEmpty(token)) {
-            String userId = JwtUtils.verifierToken(token);
-            if (!StringUtils.isEmpty(userId)) {
-                chain.doFilter(request, response);
-                return;
-            }
-        }
-
-        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
-        httpResponse.setHeader("Content-Type", "application/json;charset=UTF-8");
-        httpResponse.setHeader("Access-Control-Allow-Headers", "*");
-        String res = JSON.toJSONString(ResponseEntity.fail(401, "no login"));
-        httpResponse.getWriter().append(res);
-
     }
 
-
-    private boolean isAuthRequest(HttpServletRequest request) {
-        String uri = request.getRequestURI();
-        for (Map.Entry<String, Boolean> entry : authURLMap.entrySet()) {
-            if (uri.startsWith(entry.getKey())) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     static {
-        //authURLMap.put("/wheel", true);
-        authURLMap.put("/list", true);
-        authURLMap.put("/save", true);
+        authURLMap.put("/wheel", new HashSet<>(Arrays.asList("admin", "user")));
+        authURLMap.put("/list", new HashSet<>(Arrays.asList("admin")));
+        authURLMap.put("/save", new HashSet<>(Arrays.asList("admin")));
     }
 }

@@ -34,6 +34,7 @@ public class UserLoginService {
         userEntity = UserEntity.builder().createTime(LocalDateTime.now())
                 .name(name)
                 .password(password)
+                .role("user")
                 .updateTime(LocalDateTime.now())
                 .build();
         userRepository.save(userEntity);
