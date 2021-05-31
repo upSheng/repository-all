@@ -47,6 +47,11 @@ public class OrderEntity {
      */
     private String productId;
 
+    /**
+     * 用户
+     */
+    private String userId;
+
 
     /**
      * 金额

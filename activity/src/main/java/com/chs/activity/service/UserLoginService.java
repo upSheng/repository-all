@@ -46,8 +46,8 @@ public class UserLoginService {
         if (user == null || !Objects.equals(password, user.getPassword())) {
             throw BusinessException.of(ExceptionEnum.LOGIN_ERR);
         }
-        String token = JwtUtils.creatToken(user.getId(), 30 * 60 * 1000L);
-        return new LoginResVO(token);
+        String token = JwtUtils.creatToken(user.getId(), 10 * 60 * 60 * 1000L);
+        return new LoginResVO(token,user.getId());
     }
 
     public UserEntity checkToken(String token) {

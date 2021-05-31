@@ -34,7 +34,6 @@
   .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;
-    text-align: center;
     height: 10%;
     margin: 0;
     padding: 0;
@@ -44,7 +43,6 @@
   .el-main {
     background-color: #FFF;
     color: #333;
-    text-align: center;
     height: 80%;
     margin: 0;
     padding: 0;

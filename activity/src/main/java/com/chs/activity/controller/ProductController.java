@@ -2,6 +2,7 @@ package com.chs.activity.controller;
 
 import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.base.response.ResponseEntity;
+import com.chs.activity.modal.bean.GameAccount;
 import com.chs.activity.modal.bean.ProductQuery;
 import com.chs.activity.modal.entity.ProductEntity;
 import com.chs.activity.modal.vo.ProductVO;
@@ -25,9 +26,9 @@ public class ProductController {
         return ResponseEntity.withRes(res -> res.setData(productService.search(productQuery)));
     }
 
-    @PostMapping("/searchProductFree")
-    public ResponseEntity<ProductEntity> searchProductFree(@RequestParam("id") String id) {
-        return ResponseEntity.withRes(res -> res.setData(productService.searchFree(id)));
+    @PostMapping("/searchGameAccount")
+    public ResponseEntity<GameAccount> searchGameAccount(@RequestParam("id") String id, @RequestParam("userId") String userId) {
+        return ResponseEntity.withRes(res -> res.setData(productService.searchGameAccount(id,userId)));
     }
 
     @PostMapping("/listProduct")

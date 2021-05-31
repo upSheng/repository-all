@@ -23,8 +23,8 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping("/placeOrder")
-    ResponseEntity<OrderEntity> placeOrder(@RequestParam("id") String id) {
-        return ResponseEntity.withRes(res -> res.setData(orderService.placeOrder(id)));
+    ResponseEntity<OrderEntity> placeOrder(@RequestParam("id") String id, @RequestParam("userId") String userId) {
+        return ResponseEntity.withRes(res -> res.setData(orderService.placeOrder(id,userId)));
     }
 
     @PostMapping("/payHandle")

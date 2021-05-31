@@ -42,14 +42,12 @@
     .el-aside {
       background-color: #FFF;
       color: #333;
-      text-align: center;
       height: 100%;
     }
 
     .el-header {
 
         color: #333;
-        text-align: center;
         line-height: 60px;
         border-bottom: solid 1px #e6e6e6;
     }
@@ -57,7 +55,6 @@
     .el-main {
       background-color: #FFF;
       color: #333;
-      text-align: center;
     }
 
 </style>

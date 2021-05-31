@@ -19,7 +19,11 @@
             <el-form-item>
                 <el-button style="width: 100%"  type="primary" @click="login">登入</el-button>
 
-                <!--<el-button @click="check">check</el-button>-->
+            </el-form-item>
+            <el-form-item>
+
+                <el-button style="width: 100%"  type="primary" @click="register">注册</el-button>
+
             </el-form-item>
         </el-form>
 
@@ -45,7 +49,30 @@
 
                     if (response.data.code == 200) {
                         localStorage.setItem("token", response.data.data.token);
-                        this.$router.push('/admin');
+                        localStorage.setItem("userId", response.data.data.userId);
+                        this.$router.push('/');
+                        //window.location.reload();
+                    }else {
+                        this.$message({
+                            message: response.data.msg,
+                            duration: 1000,
+                            showClose: true,
+                            type: 'error'
+                        });
+                    }
+                })
+            },
+            register(){
+                let param = {"name":this.name,"password":this.password};
+                this.axios.post('/register', param).then((response) => {
+
+                    if (response.data.code == 200) {
+                        this.$message({
+                            message: "注册成功",
+                            duration: 1000,
+                            showClose: true,
+                            type: 'success'
+                        });
                     }else {
                         this.$message({
                             message: response.data.msg,

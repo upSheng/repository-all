@@ -5,6 +5,7 @@ import com.chs.activity.modal.bean.OrderQuery;
 import com.chs.activity.modal.entity.OrderEntity;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author : HongSheng.Chen
@@ -30,4 +31,5 @@ public interface IOrderRepository {
     void deleteById(String id);
 
 
+    Set<String> userProduct(String userId);
 }

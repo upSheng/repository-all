@@ -41,6 +41,7 @@ public class ProductVO {
     private String steamUrl;
 
     private String video;
+    private Integer own;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

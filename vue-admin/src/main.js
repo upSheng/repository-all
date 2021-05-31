@@ -31,13 +31,13 @@ const app = createApp(App)
 app.use(ElementPlus)
 app.use(VueAxios, axios)
 
-// axios.defaults.baseURL = 'https://steamhy.com:8082/'
+ //axios.defaults.baseURL = 'https://steamhy.com:8082/'
  axios.defaults.baseURL = 'http://localhost:8081/'
 
 
 const routes = [
 
-    {path: '/login', component: login},
+
     {
         path: '/admin', component: adminMain, children: [
             {path: '', component: adminHomepage},
@@ -52,6 +52,7 @@ const routes = [
             {path: 'hot', component: hot},
             {path: 'order', component: order},
             {path: 'help', component: help},
+            {path: 'login', component: login},
         ]
     },
 

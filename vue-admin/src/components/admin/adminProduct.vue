@@ -75,6 +75,12 @@
                     >
                     </el-table-column>
 
+                    <el-table-column
+                            show-overflow-tooltip
+                            prop="img"
+                            label="图片"
+                    >
+                    </el-table-column>
 
                     <el-table-column
                             show-overflow-tooltip
@@ -91,20 +97,16 @@
                     </el-table-column>
 
                     <el-table-column
-                            prop="account"
+                            prop="gameAccountListJson"
                             label="账号"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="password"
-                            label="密码"
+
                     >
                     </el-table-column>
                     <el-table-column
                             fixed="right"
                             label="操作"
                             width="100">
-                        <template #default="scope">>
+                        <template #default="scope">
                             <el-button @click="editOpen(scope.$index)" type="text" size="small">编辑</el-button>
                             <el-button @click="deleteProduct(scope.row.id)" type="text" size="small">删除</el-button>
                         </template>
@@ -162,6 +164,9 @@
                         </el-radio-group>
                     </el-form-item>
 
+                    <el-form-item label="图片">
+                        <el-input v-model="productEdit.img"></el-input>
+                    </el-form-item>
                     <el-form-item label="steam链接">
                         <el-input v-model="productEdit.steamUrl"></el-input>
                     </el-form-item>
@@ -171,11 +176,9 @@
                     </el-form-item>
 
                     <el-form-item label="账号">
-                        <el-input v-model="productEdit.account"></el-input>
+                        <el-input v-model="productEdit.gameAccountListJson"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码">
-                        <el-input v-model="productEdit.password"></el-input>
-                    </el-form-item>
+
                 </el-form>
 
                 <span class="dialog-footer">

@@ -19,6 +19,12 @@ public class SignUtils {
             sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
         }
         sb.append("key=").append(key);
-        return DigestUtils.md5DigestAsHex(sb.toString().getBytes()).toUpperCase();
+        String res = "";
+        try {
+            res = DigestUtils.md5DigestAsHex(sb.toString().getBytes("UTF-8")).toUpperCase();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return res;
     }
 }

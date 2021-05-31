@@ -11,11 +11,15 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author : HongSheng.Chen
@@ -92,5 +96,19 @@ public class OrderRepositoryImpl implements IOrderRepository {
     public void deleteById(String id) {
 
         mongoTemplate.remove(Query.query(Criteria.where(MongoConstants.ID).is(id)), OrderEntity.class);
+    }
+
+    @Override
+    public Set<String> userProduct(String userId) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        query.addCriteria(Criteria.where("status").is(1));
+        List<OrderEntity> orderEntityList = mongoTemplate.find(query, OrderEntity.class);
+
+        if (CollectionUtils.isEmpty(orderEntityList)){
+            return Collections.emptySet();
+        }
+        return orderEntityList.stream().map(x->x.getProductId()).collect(Collectors.toSet());
     }
 }

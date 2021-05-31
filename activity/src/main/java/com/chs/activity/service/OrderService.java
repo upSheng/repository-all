@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -51,7 +52,11 @@ public class OrderService {
     @Value("${payjs.notifyUrl}")
     private String notifyUrl;
 
-    public OrderEntity placeOrder(String id) {
+    public OrderEntity placeOrder(String id, String userId) {
+
+        if (StringUtils.isEmpty(id) || StringUtils.isEmpty(userId)){
+            throw new IllegalArgumentException("placeOrder param err");
+        }
 
         ProductEntity productEntity = productRepository.findById(id);
         if (productEntity == null) {
@@ -91,6 +96,7 @@ public class OrderService {
                     .payJsOrderId(payJsOrderId)
                     .productName(productEntity.getName())
                     .productId(id)
+                    .userId(userId)
                     .totalFee(productEntity.getPrice())
                     .status(Constans.ORDER_STATUS_DEFAULT)
                     .qrCode(qrCode)
@@ -150,9 +156,7 @@ public class OrderService {
         ProductEntity productEntity = productRepository.findById(productId);
         return OrderAward.builder().createTime(orderEntity.getCreateTime())
                 .transactionId(transactionId)
-                .account(productEntity.getAccount())
                 .name(orderEntity.getProductName())
-                .password(productEntity.getPassword())
                 .build();
     }
 
@@ -173,9 +177,7 @@ public class OrderService {
             }
             OrderAward orderAward = OrderAward.builder().createTime(orderEntity.getCreateTime())
                     .transactionId(orderEntity.getTransactionId())
-                    .account(productEntity.getAccount())
                     .name(orderEntity.getProductName())
-                    .password(productEntity.getPassword())
                     .build();
             res.add(orderAward);
         }
@@ -188,4 +190,8 @@ public class OrderService {
     }
 
 
+    public Set<String> userProduct(String userId) {
+
+        return orderRepository.userProduct(userId);
+    }
 }

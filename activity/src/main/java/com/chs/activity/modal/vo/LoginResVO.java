@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginResVO {
     private String token;
+    private String userId;
 }

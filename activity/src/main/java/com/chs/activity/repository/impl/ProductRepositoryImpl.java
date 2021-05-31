@@ -1,8 +1,10 @@
 package com.chs.activity.repository.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.config.Constans;
 import com.chs.activity.config.MongoConstants;
+import com.chs.activity.modal.bean.GameAccount;
 import com.chs.activity.modal.bean.ProductQuery;
 import com.chs.activity.modal.entity.ProductEntity;
 import com.chs.activity.repository.IProductRepository;
@@ -11,6 +13,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -47,6 +50,17 @@ public class ProductRepositoryImpl implements IProductRepository {
             query.addCriteria(Criteria.where(MongoConstants.LABEL).is(label));
         }
 
+
+
+        if (productQuery.getUserId() != null){
+            if (productQuery.getOwn() != null && productQuery.getOwn() == 1 ){
+                query.addCriteria(Criteria.where(MongoConstants.ID).in(productQuery.getProductIdSet()));
+            }else {
+                query.addCriteria(Criteria.where(MongoConstants.ID).nin(productQuery.getProductIdSet()));
+            }
+        }
+
+
         long count = mongoTemplate.count(query, ProductEntity.class);
         query.skip((pageNum - 1) * pageSize).limit(pageSize).with(Sort.by(Sort.Order.desc(MongoConstants.WEIGHT)));
         List<ProductEntity> personEntities = mongoTemplate.find(query, ProductEntity.class);
@@ -62,6 +76,11 @@ public class ProductRepositoryImpl implements IProductRepository {
     public ProductEntity save(ProductEntity entity) {
         if (entity.getId() == null){
             entity.setCreateTime(LocalDateTime.now());
+        }
+
+        if (!StringUtils.isEmpty(entity.getGameAccountListJson())){
+            List<GameAccount> gameAccountList = JSON.parseArray(entity.getGameAccountListJson(), GameAccount.class);
+            entity.setGameAccountList(gameAccountList);
         }
         entity.setUpdateTime(LocalDateTime.now());
         return mongoTemplate.save(entity);

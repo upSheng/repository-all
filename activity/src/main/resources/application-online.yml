@@ -3,7 +3,8 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:28017/test
+      uri: mongodb://test:123456@steamhy.com:27017/test
+
 
 
 #noSslPort: 81
@@ -11,4 +12,4 @@ payjs:
   mchid: 1547187151
   key: LfFjXZ6ANijkPSEC
   url: https://payjs.cn/api/native
-  notifyUrl: https://steamhy.com:${server.port}/payHandle
+  notifyUrl: https://steamhy.com:8082/payHandle

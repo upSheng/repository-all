@@ -1,5 +1,6 @@
 package com.chs.activity.modal.entity;
 
+import com.chs.activity.modal.bean.GameAccount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,8 +36,12 @@ public class ProductEntity {
     private Integer weight;
     private String steamUrl;
     private List<String> tagList;
-    private String account;
-    private String password;
+
+    /**
+     * 游戏账号
+     */
+    private List<GameAccount> gameAccountList;
+    private String gameAccountListJson;
 
     private String video;
     private LocalDateTime createTime;
