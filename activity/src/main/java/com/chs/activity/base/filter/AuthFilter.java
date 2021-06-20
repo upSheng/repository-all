@@ -2,8 +2,8 @@ package com.chs.activity.base.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.chs.activity.base.response.ResponseEntity;
+import com.chs.activity.dao.UserMapper;
 import com.chs.activity.modal.entity.UserEntity;
-import com.chs.activity.repository.IUserRepository;
 import com.chs.activity.utils.JwtUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -27,9 +27,9 @@ public class AuthFilter implements Filter {
 
 
     @Resource
-    private IUserRepository userRepository;
+    private UserMapper userMapper;
 
-    private static HashMap<String, Set<String>> authURLMap = new HashMap<>();
+    private static HashMap<String, Integer> authURLMap = new HashMap<>();
     private final static String TOKEN = "token";
 
     @Override
@@ -50,15 +50,15 @@ public class AuthFilter implements Filter {
 
         //url 是否能匹配
         boolean flag = false;
-        for (Map.Entry<String, Set<String>> entry : authURLMap.entrySet()) {
+        for (Map.Entry<String, Integer> entry : authURLMap.entrySet()) {
             if (uri.startsWith(entry.getKey())) {
                 flag = true;
                 String token = httpRequest.getHeader(TOKEN);
                 if (!StringUtils.isEmpty(token)) {
                     String userId = JwtUtils.verifierToken(token);
                     if (!StringUtils.isEmpty(userId)) {
-                        UserEntity user = userRepository.findById(userId);
-                        if (entry.getValue().contains(user.getRole())) {
+                        UserEntity user = userMapper.findById(Integer.valueOf(userId));
+                        if (entry.getValue().equals(0) || 1 == user.getAdmin()) {
                             chain.doFilter(request, response);
                             return;
                         }
@@ -81,8 +81,8 @@ public class AuthFilter implements Filter {
 
 
     static {
-        authURLMap.put("/wheel", new HashSet<>(Arrays.asList("admin", "user")));
-        authURLMap.put("/list", new HashSet<>(Arrays.asList("admin")));
-        authURLMap.put("/save", new HashSet<>(Arrays.asList("admin")));
+//        authURLMap.put("/wheel", 0);
+//        authURLMap.put("/list", 1);
+//        authURLMap.put("/save", 1);
     }
 }

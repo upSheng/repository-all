@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
@@ -16,21 +15,20 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "order")
 public class OrderEntity {
 
 
-    private String id;
+    private Integer id;
 
     /**
      * 用户端自主生成的订单号
      */
-    private String outTradeNo;
+    private String orderId;
 
     /**
      * 平台订单号
      */
-    private String payJsOrderId;
+    private String orderJsId;
 
     /**
      * 交易号
@@ -40,17 +38,17 @@ public class OrderEntity {
     /**
      * 商品名称
      */
-    private String productName;
+    private String gameName;
 
     /**
      * 商品id
      */
-    private String productId;
+    private Integer gameId;
 
     /**
      * 用户
      */
-    private String userId;
+    private String phone;
 
 
     /**

@@ -2,7 +2,7 @@
     <div class="order">
 
         <div >
-            <el-input class="search" placeholder="名称"  v-model="param.productName"></el-input> <el-button @click="search">搜索</el-button>
+            <el-input class="search" placeholder="订单号/名称/电话"  v-model="param.name"></el-input> <el-button @click="search">搜索</el-button>
 
         </div>
 
@@ -13,10 +13,16 @@
                     height="500"
                     style="width: 100%">
 
+
                 <el-table-column
-                        prop="createTime"
-                        label="创建时间"
-                        :formatter="((row,column)=>{return new Date(row.createTime).Format('yyyy-MM-dd hh:mm:ss')})"
+                        prop="orderId"
+                        label="订单号"
+                >
+                </el-table-column>
+
+                <el-table-column
+                        prop="phone"
+                        label="电话"
                 >
                 </el-table-column>
 
@@ -26,12 +32,12 @@
                 >
                 </el-table-column>
                 <el-table-column
-                        prop="productId"
-                        label="商品id"
+                        prop="gameId"
+                        label="游戏Id"
                 >
                 </el-table-column>
                 <el-table-column
-                        prop="productName"
+                        prop="gameName"
                         label="名称"
                 >
 
@@ -39,7 +45,7 @@
 
                 <el-table-column
                         prop="totalFee"
-                        label="价格"
+                        label="价格(元)"
                         :formatter="((row,column)=>{return row.totalFee/100})"
                 >
                 </el-table-column>
@@ -47,6 +53,20 @@
                         prop="status"
                         label="状态"
                         :formatter="((row,column)=>{return row.status==1?'支付成功':'未支付'})"
+                >
+                </el-table-column>
+
+                <el-table-column
+                        prop="timeEnd"
+                        label="支付时间"
+                        :formatter="((row,column)=>{return new Date(row.timeEnd).Format('yyyy-MM-dd hh:mm:ss')})"
+                >
+                </el-table-column>
+
+                <el-table-column
+                        prop="createTime"
+                        label="创建时间"
+                        :formatter="((row,column)=>{return new Date(row.createTime).Format('yyyy-MM-dd hh:mm:ss')})"
                 >
                 </el-table-column>
 
@@ -77,7 +97,7 @@
             return {
                 orderData:[],
                 total:100,
-                param:{"pageSize":10,"pageNum":1,"productName":""},
+                param:{"pageSize":10,"pageNum":1,"name":""},
             };
         },
         methods: {

@@ -1,7 +1,7 @@
 <template>
     <div class="user">
 
-        {{name}}
+        {{phone}}
         <el-button @click="exit">退出</el-button>
 
     </div>
@@ -14,7 +14,7 @@
         name: "adminHeader",
         data() {
             return {
-                name:''
+                phone:''
             };
         },
         methods: {
@@ -27,7 +27,7 @@
                 this.axios.get('/checkToken?token=' + token).then((response) => {
 
                     if (response.data.code == 200 && response.data.data != null) {
-                        this.name = response.data.data.name;
+                        this.phone = response.data.data.phone;
                     }else {
                         this.$router.push('/login');
                     }
@@ -37,7 +37,7 @@
 
             exit(){
                 localStorage.removeItem("token");
-                localStorage.removeItem("userId");
+                localStorage.removeItem("phone");
                 this.$router.push('/login');
             }
         },

@@ -16,11 +16,12 @@ import login from './components/admin/login.vue'
 import myMain from './components/frontend/myMain.vue'
 import help from "./components/frontend/help";
 import hot from "./components/frontend/hot"
+import myIndex from "./components/frontend/myIndex";
 
 import adminMain from "./components/admin/adminMain";
 import adminOrder from "./components/admin/adminOrder";
 import adminHomepage from "./components/admin/adminHomepage";
-import adminProduct from "./components/admin/adminProduct";
+import adminGame from "./components/admin/adminGame";
 
 
 import {commonInit} from "./assets/js/common.js"
@@ -31,28 +32,36 @@ const app = createApp(App)
 app.use(ElementPlus)
 app.use(VueAxios, axios)
 
- //axios.defaults.baseURL = 'https://steamhy.com:8082/'
+ //axios.defaults.baseURL = 'http://steamhy.com:8081/'
  axios.defaults.baseURL = 'http://localhost:8081/'
 
 
 const routes = [
 
+    {
+        path: '/',
+        component: myIndex
+    },
+
+    {
+        path: '/login',
+        component: login
+    },
 
     {
         path: '/admin', component: adminMain, children: [
             {path: '', component: adminHomepage},
             {path: 'order', component: adminOrder},
-            {path: 'product', component: adminProduct},
+            {path: 'game', component: adminGame},
         ]
     },
 
     {
-        path: '/', component: myMain, children: [
+        path: '/game/', component: myMain, children: [
             {path: '', component: homepage},
             {path: 'hot', component: hot},
             {path: 'order', component: order},
             {path: 'help', component: help},
-            {path: 'login', component: login},
         ]
     },
 

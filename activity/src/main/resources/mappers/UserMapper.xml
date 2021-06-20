@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chs.activity.dao.UserMapper">
+
+
+    <insert id="insert" parameterType="com.chs.activity.modal.entity.UserEntity" useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+
+            <if test="password != null">
+                password,
+            </if>
+
+            <if test="admin != null">
+                admin,
+            </if>
+
+            <if test="member != null">
+                member,
+            </if>
+
+            <if test="createTime != null">
+                create_time,
+            </if>
+
+            <if test="updateTime != null">
+                update_time,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+
+            <if test="password != null">
+                #{password},
+            </if>
+
+            <if test="admin != null">
+                #{admin},
+            </if>
+
+            <if test="member != null">
+                #{member},
+            </if>
+
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+
+        </trim>
+    </insert>
+
+</mapper>

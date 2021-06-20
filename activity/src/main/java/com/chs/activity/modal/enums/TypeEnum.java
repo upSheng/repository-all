@@ -4,7 +4,7 @@ package com.chs.activity.modal.enums;
  * @author : HongSheng.Chen
  * @date : 2021/4/9 9:59
  */
-public enum LabelEnum {
+public enum TypeEnum {
 
     /**
      * 热游
@@ -15,16 +15,13 @@ public enum LabelEnum {
      * 经典
      */
     CLASSIC(2),
-    /**
-     * 免费
-     */
-    FREE(3),
+  
     ;
 
     private Integer label;
 
 
-    LabelEnum(Integer label) {
+    TypeEnum(Integer label) {
         this.label = label;
     }
 

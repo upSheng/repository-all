@@ -1,5 +1,6 @@
 package com.chs.activity.modal.vo;
 
+import com.chs.activity.modal.bean.heybox.GameInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author : HongSheng.Chen
@@ -18,30 +18,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class ProductVO {
+public class GameVO {
 
-    private String id;
+    private Integer id;
     private String name;
-    private String describe;
+    private String nameEn;
+    private String appId;
     private Integer price;
     private Integer oriPrice;
-    private String img;
-    /**
-     * 标签
-     */
-    private Integer label;
-
-    /**
-     * 权重
-     */
-    private Integer weight;
-    private Integer quantity;
-    private List<String> tagList;
-
     private String steamUrl;
+    private String steamImg;
+    private GameInfo gameInfo;
 
-    private String video;
-    private Integer own;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
 }

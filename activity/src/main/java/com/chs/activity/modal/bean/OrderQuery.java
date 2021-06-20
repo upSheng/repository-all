@@ -9,24 +9,8 @@ import lombok.Data;
 @Data
 public class OrderQuery {
 
-    private String id;
-
-    /**
-     * 用户端自主生成的订单号
-     */
-    private String outTradeNo;
-
-    /**
-     * 平台订单号
-     */
-    private String payJsOrderId;
-
-    /**
-     * 交易号
-     */
-    private String transactionId;
-
+    private String name;
     private Integer pageNum;
     private Integer pageSize;
-    private String productName;
+
 }

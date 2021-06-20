@@ -1,8 +1,8 @@
 <template>
-    <div class="product">
+    <div class="game">
 
             <div>
-                <el-input class="search" placeholder="名称" v-model="param.name"></el-input> <el-button  @click="search">搜索</el-button>
+                <el-input class="search" placeholder="名称/appId" v-model="param.name"></el-input> <el-button  @click="search">搜索</el-button>
             </div>
             <div>
                 <el-button @click="newOpen"  size="small" type="primary" icon="el-icon-circle-plus-outline">添加</el-button>
@@ -10,29 +10,27 @@
 
             <div>
                 <el-table
-                        :data="productData"
+                        :data="gameData"
                         border
                         height="400"
                         style="width: 100%">
 
+
+
                     <el-table-column
-                            prop="createTime"
-                            label="创建时间"
-                            :formatter="((row,column)=>{return new Date(row.createTime).Format('yyyy-MM-dd hh:mm:ss')})"
+                            prop="appId"
+                            label="appId"
                     >
                     </el-table-column>
-
                     <el-table-column
                             prop="name"
                             label="名称"
                     >
                     </el-table-column>
                     <el-table-column
-                            show-overflow-tooltip
-                            prop="describe"
-                            label="描述"
+                            prop="nameEn"
+                            label="英文名称"
                     >
-
                     </el-table-column>
 
                     <el-table-column
@@ -46,62 +44,50 @@
                             label="价格(分)"
                     >
                     </el-table-column>
-                    <el-table-column
-                            prop="key"
-                            label="关键字"
-                    >
 
-                    </el-table-column>
                     <el-table-column
                             prop="weight"
                             label="权重"
                     >
                     </el-table-column>
-                    <el-table-column
-                            prop="label"
-                            label="标签"
-                            :formatter="((row,column)=>{
-                                if (row.label == 1){
-                                    return '热门新游';
-                                }
-                                if (row.label == 2){
-                                    return '经典大作';
-                                }
-                                if (row.label == 3){
-                                    return '免费';
-                                }
-                                return '';
-                            })"
-                    >
-                    </el-table-column>
+<!--                    <el-table-column-->
+<!--                            prop="label"-->
+<!--                            label="标签"-->
+<!--                            :formatter="((row,column)=>{-->
+<!--                                if (row.label == 1){-->
+<!--                                    return '热门新游';-->
+<!--                                }-->
+<!--                                if (row.label == 2){-->
+<!--                                    return '经典大作';-->
+<!--                                }-->
+<!--                                if (row.label == 3){-->
+<!--                                    return '免费';-->
+<!--                                }-->
+<!--                                return '';-->
+<!--                            })"-->
+<!--                    >-->
+<!--                    </el-table-column>-->
 
                     <el-table-column
                             show-overflow-tooltip
-                            prop="img"
+                            prop="steamImg"
                             label="图片"
                     >
+
+                        <template #default="scope" >
+                            <a target="_blank"  :href="scope.row.steamUrl">
+                                <img :src="scope.row.steamImg" style="width: 100px" alt="">
+                            </a>
+                        </template>
                     </el-table-column>
 
                     <el-table-column
-                            show-overflow-tooltip
-                            prop="steamUrl"
-                            label="steam链接"
+                            prop="createTime"
+                            label="创建时间"
+                            :formatter="((row,column)=>{return new Date(row.createTime).Format('yyyy-MM-dd hh:mm:ss')})"
                     >
                     </el-table-column>
 
-                    <el-table-column
-                            show-overflow-tooltip
-                            prop="video"
-                            label="视频链接"
-                    >
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="gameAccountListJson"
-                            label="账号"
-
-                    >
-                    </el-table-column>
                     <el-table-column
                             fixed="right"
                             label="操作"
@@ -134,56 +120,52 @@
                     width="80%"
                     center>
 
-                <el-form label-position="right" label-width="100px" :model="productEdit">
-                    <el-form-item label="名称">
-                        <el-input v-model="productEdit.name"></el-input>
+                <el-form label-position="right" label-width="100px" :model="gameEdit">
+                    <el-form-item label="appId">
+                        <el-input v-model="gameEdit.appId"></el-input>
                     </el-form-item>
-                    <el-form-item label="描述">
-                        <el-input type="textarea" autosize v-model="productEdit.describe"></el-input>
-                    </el-form-item>
+
                     <el-form-item label="价格(分)">
-                        <el-input v-model="productEdit.price"></el-input>
+                        <el-input v-model="gameEdit.price"></el-input>
                     </el-form-item>
+
+                    <el-form-item label="名称">
+                        <el-input v-model="gameEdit.name"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="英文名称">
+                        <el-input v-model="gameEdit.nameEn"></el-input>
+                    </el-form-item>
+                    <el-form-item label="游戏信息">
+                        <el-input type="textarea" autosize v-model="gameEdit.info"></el-input>
+                    </el-form-item>
+
                     <el-form-item label="原价(分)">
-                        <el-input v-model="productEdit.oriPrice"></el-input>
-                    </el-form-item>
-                    <el-form-item label="关键字">
-                        <el-input v-model="productEdit.key"></el-input>
+                        <el-input v-model="gameEdit.oriPrice"></el-input>
                     </el-form-item>
 
                     <el-form-item label="权重">
-                        <el-input v-model="productEdit.weight"></el-input>
+                        <el-input v-model="gameEdit.weight"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="标签">
-                        <el-radio-group   v-model="productEdit.label" size="small">
-                            <el-radio-button label="0">无</el-radio-button>
-                            <el-radio-button label="1">热门新游</el-radio-button>
-                            <el-radio-button label="2">经典大作</el-radio-button>
-                            <el-radio-button label="3">免费</el-radio-button>
-                        </el-radio-group>
-                    </el-form-item>
+<!--                    <el-form-item label="标签">-->
+<!--                        <el-radio-group   v-model="productEdit.label" size="small">-->
+<!--                            <el-radio-button label="0">无</el-radio-button>-->
+<!--                            <el-radio-button label="1">热门新游</el-radio-button>-->
+<!--                            <el-radio-button label="2">经典大作</el-radio-button>-->
+<!--                            <el-radio-button label="3">免费</el-radio-button>-->
+<!--                        </el-radio-group>-->
+<!--                    </el-form-item>-->
 
-                    <el-form-item label="图片">
-                        <el-input v-model="productEdit.img"></el-input>
-                    </el-form-item>
-                    <el-form-item label="steam链接">
-                        <el-input v-model="productEdit.steamUrl"></el-input>
-                    </el-form-item>
 
-                    <el-form-item label="视频链接">
-                        <el-input v-model="productEdit.video"></el-input>
-                    </el-form-item>
 
-                    <el-form-item label="账号">
-                        <el-input v-model="productEdit.gameAccountListJson"></el-input>
-                    </el-form-item>
+
 
                 </el-form>
 
                 <span class="dialog-footer">
                     <el-button @click="editShow = false">取 消</el-button>
-                    <el-button type="primary" @click="saveProduct">确 定</el-button>
+                    <el-button type="primary" @click="saveGame">确 定</el-button>
                 </span>
             </el-dialog>
 
@@ -192,13 +174,13 @@
 
 <script>
     export default {
-        name: 'adminProduct',
+        name: 'adminGame',
         data() {
             return {
-                productData:[],
+                gameData:[],
                 total:100,
                 param:{"pageSize":10,"pageNum":1,"name":""},
-                productEdit:{},
+                gameEdit:{},
                 editShow:false
             };
         },
@@ -206,21 +188,22 @@
 
             search(){
                 this.param.pageNum =1;
-                this.loadProduct();
+                this.loadGame();
             },
 
-            loadProduct() {
-                this.axios.post('/listProduct', this.param).then((response) => {
+            loadGame() {
+                this.axios.post('/listGame', this.param).then((response) => {
 
                     if (response.data.code == 200) {
-                        this.productData = response.data.data.content;
+
+                        this.gameData = response.data.data.content;
                         this.total = response.data.data.count;
 
                     }
                 })
             },
-            deleteProduct(id) {
-                this.axios.get('/deleteProduct?id='+id).then((response) => {
+            deleteGame(id) {
+                this.axios.get('/deleteGame?id='+id).then((response) => {
 
                     if (response.data.code == 200) {
                         this.$message({
@@ -233,9 +216,9 @@
                     }
                 })
             },
-            saveProduct() {
+            saveGame() {
 
-                if (this.productEdit == null){
+                if (this.gameEdit == null){
 
                     this.$message({
                         message: '参数填写不全',
@@ -245,7 +228,7 @@
                     });
                     return;
                 }
-                this.axios.post('/saveProduct', this.productEdit).then((response) => {
+                this.axios.post('/saveGame', this.gameEdit).then((response) => {
 
                     if (response.data.code == 200) {
                         this.editShow = false;
@@ -255,7 +238,7 @@
                             showClose: true,
                             type: 'success'
                         });
-                        this.loadProduct();
+                        this.loadGame();
 
                     }
                 })
@@ -266,16 +249,16 @@
 
             curChange(pageNum){
                 this.param.pageNum = pageNum;
-                this.loadProduct();
+                this.loadGame();
             },
             editOpen(index){
                 this.editShow = true;
-                this.productEdit = this.productData[index];
+                this.gameEdit = this.gameData[index];
             },
 
             newOpen(){
                 this.editShow = true;
-                this.productEdit = {};
+                this.gameEdit = {};
             },
 
             dateFormat(fmt, date) {
@@ -301,7 +284,7 @@
 
         },
         mounted() {
-            this.loadProduct();
+            this.loadGame();
         }
     }
 </script>

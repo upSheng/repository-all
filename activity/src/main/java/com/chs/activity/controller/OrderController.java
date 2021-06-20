@@ -2,14 +2,13 @@ package com.chs.activity.controller;
 
 import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.base.response.ResponseEntity;
-import com.chs.activity.modal.bean.OrderAward;
+import com.chs.activity.modal.bean.OrderParam;
 import com.chs.activity.modal.bean.OrderQuery;
 import com.chs.activity.modal.entity.OrderEntity;
 import com.chs.activity.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,8 +22,8 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping("/placeOrder")
-    ResponseEntity<OrderEntity> placeOrder(@RequestParam("id") String id, @RequestParam("userId") String userId) {
-        return ResponseEntity.withRes(res -> res.setData(orderService.placeOrder(id,userId)));
+    ResponseEntity<OrderEntity> placeOrder(@RequestBody OrderParam orderParam) {
+        return ResponseEntity.withRes(res -> res.setData(orderService.placeOrder(orderParam.getGameId(), orderParam.getPhone())));
     }
 
     @PostMapping("/payHandle")
@@ -32,23 +31,14 @@ public class OrderController {
         return ResponseEntity.withRes(res -> orderService.payHandle(params));
     }
 
-    @GetMapping("/findOrderByPayJsOrderId")
-    public ResponseEntity<OrderEntity> findOrderByPayJsOrderId(@RequestParam("payJsOrderId") String payJsOrderId) {
-        return ResponseEntity.withRes(res -> res.setData(orderService.findOrderByPayJsOrderId(payJsOrderId)));
-    }
-
-    @PostMapping("/findAward")
-    ResponseEntity<OrderAward> findAward(@RequestParam("transactionId") String transactionId) {
-        return ResponseEntity.withRes(res -> res.setData(orderService.findAward(transactionId)));
-    }
-
-    @PostMapping("/findAwardList")
-    ResponseEntity<List<OrderAward>> findAwardList(@RequestBody List<String> transactionIdList) {
-        return ResponseEntity.withRes(res -> res.setData(orderService.findAwardList(transactionIdList)));
+    @GetMapping("/findByOrderId")
+    ResponseEntity<OrderEntity> findByOrderId(@RequestParam("orderId") String orderId) {
+        return ResponseEntity.withRes(res -> res.setData(orderService.findByOrderId(orderId)));
     }
 
     @PostMapping("/listOrder")
-    ResponseEntity<EasyPage<OrderEntity>> listOrder(@RequestBody OrderQuery orderQuery) {
+    public ResponseEntity<EasyPage<OrderEntity>> listGame(@RequestBody OrderQuery orderQuery) {
         return ResponseEntity.withRes(res -> res.setData(orderService.list(orderQuery)));
     }
+
 }

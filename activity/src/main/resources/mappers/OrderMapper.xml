@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chs.activity.dao.OrderMapper">
+
+
+    <select id="list" parameterType="com.chs.activity.modal.bean.OrderQuery" resultType="com.chs.activity.modal.entity.OrderEntity">
+        select * from `order`
+        <where>
+
+
+            <if test="name != null">
+                and (
+                game_name like concat('%',#{name},'%') or
+                game_id like concat('%',#{name},'%') or
+                phone like concat('%',#{name},'%') or
+                order_id like concat('%',#{name},'%')
+                )
+            </if>
+
+
+        </where>
+        order by create_time desc
+    </select>
+
+
+    <insert id="insert" parameterType="com.chs.activity.modal.entity.OrderEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+
+            <if test="orderJsId != null">
+                order_js_id,
+            </if>
+
+            <if test="transactionId != null">
+                transaction_id,
+            </if>
+
+            <if test="gameId != null">
+                game_id,
+            </if>
+
+            <if test="gameName != null">
+                game_name,
+            </if>
+
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="totalFee != null">
+                total_fee,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="qrCode != null">
+                qr_code,
+            </if>
+            <if test="timeEnd != null">
+                time_end,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="orderId != null">
+                #{orderId},
+            </if>
+
+            <if test="orderJsId != null">
+                #{orderJsId},
+            </if>
+
+            <if test="transactionId != null">
+                #{transactionId},
+            </if>
+
+            <if test="gameId != null">
+                #{gameId},
+            </if>
+
+            <if test="gameName != null">
+                #{gameName},
+            </if>
+
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="totalFee != null">
+                #{totalFee},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="qrCode != null">
+                #{qrCode},
+            </if>
+            <if test="timeEnd != null">
+                #{timeEnd},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.chs.activity.modal.entity.OrderEntity">
+        update `order`
+        <set>
+            <if test="transactionId != null">
+                transaction_id = #{transactionId},
+            </if>
+
+            <if test="status != null">
+                status = #{status},
+            </if>
+
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+
+        where id = #{id}
+    </update>
+
+</mapper>

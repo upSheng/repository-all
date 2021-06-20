@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
@@ -14,13 +13,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@Document(collection = "user")
 public class UserEntity {
 
-    private String id;
+    private Integer id;
     private String name;
     private String password;
-    private String role;
+
+    private Integer member;
+    private Integer admin;
+    private String phone;
 
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

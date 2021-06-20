@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class LoginResVO {
     private String token;
     private String userId;
+    private String phone;
 }

@@ -15,13 +15,30 @@ import java.util.Map;
  */
 public class HttpUtils {
 
-    public static String sendPost(String url, Map<String,String> params){
+    public static String post(String url, Map<String,String> params){
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(params)))
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        }catch (Exception ex){
+            return "err";
+        }
+
+    }
+
+    public static String get(String url){
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .GET()
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

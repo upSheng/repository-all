@@ -1,20 +1,25 @@
-package com.chs.activity.modal.vo;
+package com.chs.activity.modal.entity;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author : HongSheng.Chen
- * @date : 2021/4/1 16:14
+ * @date : 2021/2/18 11:41
  */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserVO {
 
+public class VerificationCodeEntity {
+
+
+    private Integer id;
     private String phone;
-    private String password;
     private String code;
+    private LocalDateTime createTime;
 }

@@ -12,6 +12,7 @@ public enum ExceptionEnum {
     LOGIN_ERR(600, "无此用户或密码错误"),
     REGISTER_ERR(601, "用户名已存在"),
     ORDER_NOT_FIND(602, "订单找不到"),
+    VERIFICARTION_ERR(600, "验证码错误"),
 
     ;
 

@@ -9,7 +9,7 @@
                 </div>
             </el-form-item>
             <el-form-item >
-                <el-input  prefix-icon="el-icon-user"  type="text" v-model="name"></el-input>
+                <el-input  prefix-icon="el-icon-user"  type="text" v-model="phone"></el-input>
             </el-form-item>
 
             <el-form-item >
@@ -20,11 +20,11 @@
                 <el-button style="width: 100%"  type="primary" @click="login">登入</el-button>
 
             </el-form-item>
-            <el-form-item>
+<!--            <el-form-item>-->
 
-                <el-button style="width: 100%"  type="primary" @click="register">注册</el-button>
+<!--                <el-button style="width: 100%"  type="primary" @click="register">注册</el-button>-->
 
-            </el-form-item>
+<!--            </el-form-item>-->
         </el-form>
 
 
@@ -36,7 +36,7 @@
         name: 'login',
         data() {
             return {
-                name: '',
+                phone: '',
                 password: ''
             };
         },
@@ -44,13 +44,13 @@
 
             login() {
 
-                let param = {"name":this.name,"password":this.password};
-                this.axios.post('/login', param).then((response) => {
+                let param = {"phone":this.phone,"password":this.password};
+                this.axios.post('/loginByPassword', param).then((response) => {
 
                     if (response.data.code == 200) {
                         localStorage.setItem("token", response.data.data.token);
-                        localStorage.setItem("userId", response.data.data.userId);
-                        this.$router.push('/');
+                        localStorage.setItem("phone", response.data.data.phone);
+                        this.$router.push('/admin');
                         //window.location.reload();
                     }else {
                         this.$message({

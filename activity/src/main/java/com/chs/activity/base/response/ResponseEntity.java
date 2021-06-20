@@ -40,6 +40,7 @@ public class ResponseEntity<T> {
             res.setCode(ex.getCode());
             res.setMsg(ex.getMessage());
         } catch (Exception ex) {
+            ex.printStackTrace();
             res.setCode(500);
             res.setMsg(ex.getMessage());
         }

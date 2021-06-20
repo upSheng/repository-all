@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chs.activity.dao.GameMapper">
+
+    <select id="list" parameterType="com.chs.activity.modal.bean.GameQuery" resultType="com.chs.activity.modal.entity.GameEntity">
+        select * from game
+        <where>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+
+            <if test="name != null">
+                and (
+                name like concat('%',#{name},'%') or
+                name_en like concat('%',#{name},'%') or
+                app_id like concat('%',#{name},'%')
+                )
+            </if>
+
+
+        </where>
+        order by weight desc
+    </select>
+
+    <insert id="insert" parameterType="com.chs.activity.modal.entity.GameEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into game
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+
+            <if test="nameEn != null">
+                name_en,
+            </if>
+
+            <if test="appId != null">
+                app_id,
+            </if>
+
+
+            <if test="price != null">
+                price,
+            </if>
+
+            <if test="oriPrice != null">
+                ori_price,
+            </if>
+
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="steamUrl != null">
+                steam_url,
+            </if>
+            <if test="steamImg != null">
+                steam_img,
+            </if>
+
+            <if test="exe != null">
+                exe,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+
+            <if test="createTime != null">
+                create_time,
+            </if>
+
+            <if test="updateTime != null">
+                update_time,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+
+            <if test="nameEn != null">
+                #{nameEn},
+            </if>
+
+            <if test="appId != null">
+                #{appId},
+            </if>
+
+
+            <if test="price != null">
+                #{price},
+            </if>
+
+            <if test="oriPrice != null">
+                #{oriPrice},
+            </if>
+
+
+            <if test="weight != null">
+                #{weight},
+            </if>
+            <if test="steamUrl != null">
+                #{steamUrl},
+            </if>
+            <if test="steamImg != null">
+                #{steamImg},
+            </if>
+
+            <if test="exe != null">
+                #{exe},
+            </if>
+
+            <if test="info != null">
+                #{info},
+            </if>
+
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.chs.activity.modal.entity.GameEntity">
+        update game
+        <set>
+
+            <if test="name != null">
+                name = #{name},
+            </if>
+
+            <if test="nameEn != null">
+                name_en = #{nameEn},
+            </if>
+
+            <if test="appId != null">
+                app_id = #{appId},
+            </if>
+
+
+            <if test="price != null">
+                price = #{price},
+            </if>
+
+            <if test="oriPrice != null">
+                ori_price = #{oriPrice},
+            </if>
+
+
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="steamUrl != null">
+               steam_url =  #{steamUrl},
+            </if>
+            <if test="steamImg != null">
+               steam_img =  #{steamImg},
+            </if>
+
+            <if test="exe != null">
+                exe = #{exe},
+            </if>
+
+            <if test="info != null">
+                info = #{info},
+            </if>
+
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+
+        where id = #{id}
+    </update>
+
+</mapper>

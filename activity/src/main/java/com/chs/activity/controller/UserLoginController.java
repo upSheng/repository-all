@@ -20,16 +20,31 @@ public class UserLoginController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody UserVO userVO) {
-        return ResponseEntity.withRes(res -> userLoginService.register(userVO.getName(), userVO.getPassword()));
+        return ResponseEntity.withRes(res -> userLoginService.register(userVO.getPhone(),userVO.getCode(), userVO.getPassword()));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResVO> login(@RequestBody UserVO userVO) {
-        return ResponseEntity.withRes(res -> res.setData(userLoginService.login(userVO.getName(), userVO.getPassword())));
+    @PostMapping("/loginByPassword")
+    public ResponseEntity<LoginResVO> loginByPassword(@RequestBody UserVO userVO) {
+        return ResponseEntity.withRes(res -> res.setData(userLoginService.loginByPassword(userVO.getPhone(), userVO.getPassword())));
+    }
+
+    @PostMapping("/loginByCode")
+    public ResponseEntity<LoginResVO> loginByCode(@RequestBody UserVO userVO) {
+        return ResponseEntity.withRes(res -> res.setData(userLoginService.loginByCode(userVO.getPhone(), userVO.getCode())));
     }
 
     @GetMapping("/checkToken")
     public ResponseEntity<UserEntity> checkToken(@RequestParam("token") String token) {
         return ResponseEntity.withRes(res -> res.setData(userLoginService.checkToken(token)));
+    }
+
+    @GetMapping("/sendVerificationCode")
+    public ResponseEntity<Void> sendVerificationCode(@RequestParam("phone") String phone){
+        return ResponseEntity.withRes(res -> userLoginService.sendVerificationCode(phone));
+    }
+
+    @GetMapping("/getCode")
+    public ResponseEntity<Void> getCode(@RequestParam("phone") String phone){
+        return ResponseEntity.withRes(res -> userLoginService.getCode(phone));
     }
 }

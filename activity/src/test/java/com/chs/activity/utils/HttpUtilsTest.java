@@ -25,7 +25,7 @@ class HttpUtilsTest {
         payData.put("sign", SignUtils.sign(payData,"aa"));
 
         String url = "https://payjs.cn/api/native";
-        String s = HttpUtils.sendPost(url, payData);
+        String s = HttpUtils.post(url, payData);
         System.out.println(s);
     }
 }

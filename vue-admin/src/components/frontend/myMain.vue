@@ -2,7 +2,7 @@
   <div style="height: 100%" >
     <el-container >
       <el-header>
-        <NavMenu></NavMenu>
+        <navMenu></navMenu>
       </el-header>
       <el-main>
         <router-view></router-view> <!--路由出口 -->
@@ -13,12 +13,12 @@
 </template>
 
 <script>
-  import NavMenu from "./NavMenu.vue";
+  import navMenu from "./navMenu.vue";
 
   export default {
     name: "myMain",
     components: {
-      NavMenu
+      navMenu
     }
   };
 </script>

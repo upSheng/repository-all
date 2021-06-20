@@ -2,9 +2,11 @@ package com.chs.activity.service;
 
 import com.chs.activity.base.exception.BusinessException;
 import com.chs.activity.base.exception.ExceptionEnum;
+import com.chs.activity.dao.UserMapper;
+import com.chs.activity.dao.VerificationCodeMapper;
 import com.chs.activity.modal.entity.UserEntity;
+import com.chs.activity.modal.entity.VerificationCodeEntity;
 import com.chs.activity.modal.vo.LoginResVO;
-import com.chs.activity.repository.IUserRepository;
 import com.chs.activity.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,8 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.time.temporal.ChronoUnit;
+import java.util.Random;
 
 /**
  * @author : HongSheng.Chen
@@ -23,31 +26,66 @@ import java.util.Objects;
 public class UserLoginService {
 
     @Resource
-    IUserRepository userRepository;
+    UserMapper userMapper;
 
-    public void register(String name, String password) {
+    @Resource
+    VerificationCodeMapper verificationCodeMapper;
 
-        UserEntity userEntity = userRepository.findByName(name);
+    public void register(String phone,String code, String password) {
+
+        if(!checkVerifitionCode(phone,code)){
+            throw BusinessException.of(ExceptionEnum.VERIFICARTION_ERR);
+        }
+
+        UserEntity userEntity = userMapper.findByPhone(phone);
         if (userEntity != null) {
             throw BusinessException.of(ExceptionEnum.REGISTER_ERR);
         }
         userEntity = UserEntity.builder().createTime(LocalDateTime.now())
-                .name(name)
+                .phone(phone)
                 .password(password)
-                .role("user")
+                .admin(0)
+                .member(0)
                 .updateTime(LocalDateTime.now())
                 .build();
-        userRepository.save(userEntity);
+        userMapper.insert(userEntity);
     }
 
-    public LoginResVO login(String name, String password) {
+    public LoginResVO loginByPassword(String phone, String password) {
 
-        UserEntity user = userRepository.findByName(name);
-        if (user == null || !Objects.equals(password, user.getPassword())) {
+        UserEntity user = userMapper.findByPhone(phone);
+        if (user == null) {
             throw BusinessException.of(ExceptionEnum.LOGIN_ERR);
         }
-        String token = JwtUtils.creatToken(user.getId(), 10 * 60 * 60 * 1000L);
-        return new LoginResVO(token,user.getId());
+
+        if (user.getPassword() == null || !user.getPassword().equals(password)){
+            throw BusinessException.of(ExceptionEnum.LOGIN_ERR);
+        }
+
+        String token = JwtUtils.creatToken(user.getId().toString(), 10 * 60 * 60 * 1000L);
+        return new LoginResVO(token, user.getId().toString(),user.getPhone());
+
+    }
+    public LoginResVO loginByCode(String phone, String code) {
+
+
+        if(!checkVerifitionCode(phone,code)){
+            throw BusinessException.of(ExceptionEnum.VERIFICARTION_ERR);
+        }
+
+        UserEntity user = userMapper.findByPhone(phone);
+        if (user == null) {
+            UserEntity userEntity =
+            UserEntity.builder().phone(phone).member(0).admin(0)
+                    .createTime(LocalDateTime.now()).updateTime(LocalDateTime.now())
+                    .build();
+            userMapper.insert(userEntity);
+
+        }
+
+
+        String token = JwtUtils.creatToken(user.getId().toString(), 10 * 60 * 60 * 1000L);
+        return new LoginResVO(token, user.getId().toString(),user.getPhone());
     }
 
     public UserEntity checkToken(String token) {
@@ -56,7 +94,36 @@ public class UserLoginService {
         if (StringUtils.isEmpty(id)) {
             return null;
         }
-        return userRepository.findById(id);
+        return userMapper.findById(Integer.valueOf(id));
 
+    }
+
+    public void sendVerificationCode(String phone) {
+
+        verificationCodeMapper.insert(new VerificationCodeEntity(null,phone,"11",LocalDateTime.now()));
+
+    }
+
+    private   boolean checkVerifitionCode(String phone, String code){
+        VerificationCodeEntity verificationCodeEntity = verificationCodeMapper.findByCodeAndPhone(code, phone);
+
+        if (verificationCodeEntity == null || !verificationCodeEntity.getCode().equals(code)){
+            return false;
+        }
+
+        long between = ChronoUnit.MINUTES.between(verificationCodeEntity.getCreateTime(), LocalDateTime.now());
+        if (between>5){
+            return false;
+        }
+
+        return true;
+    }
+
+    public String getCode(String phone) {
+
+        Random random = new Random();
+        String code = String.format("%06d",random.nextInt(999999));
+        verificationCodeMapper.insert(new VerificationCodeEntity(null,phone,code,LocalDateTime.now()));
+        return code;
     }
 }

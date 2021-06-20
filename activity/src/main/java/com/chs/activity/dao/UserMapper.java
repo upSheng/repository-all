@@ -1,19 +1,22 @@
 package com.chs.activity.dao;
 
-
 import com.chs.activity.modal.entity.UserEntity;
+import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
-
-
+/**
+ * @author : HongSheng.Chen
+ * @date : 2021/3/31 13:59
+ */
 public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(UserEntity record);
+    @Select("select * from user where name = #{name}")
+    UserEntity findByName(String name);
 
-    UserEntity selectByPrimaryKey(Integer id);
+    @Select("select * from user where phone = #{phone}")
+    UserEntity findByPhone(String phone);
 
-    List<UserEntity> selectAll();
+    @Select("select * from user where id = #{id}")
+    UserEntity findById(Integer id);
 
-    int updateByPrimaryKey(UserEntity record);
+    void insert(UserEntity entity);
 }
