@@ -38,12 +38,14 @@ public class OrderEntity {
     /**
      * 商品名称
      */
-    private String gameName;
+    private String productName;
 
     /**
      * 商品id
      */
-    private Integer gameId;
+    private Integer productId;
+
+    private Integer type;
 
     /**
      * 用户

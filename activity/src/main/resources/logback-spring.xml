@@ -85,7 +85,7 @@
     </appender>
 
 
-    <logger name="com.chs.action.HelloWorldTwoAction"  level="debug"/>
+    <logger name="com.chs.dao"  level="debug"/>
 
     <root level="info">
         <appender-ref ref="console" />

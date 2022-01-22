@@ -3,6 +3,7 @@ package com.chs.activity.dao;
 import com.chs.activity.modal.bean.GameQuery;
 import com.chs.activity.modal.entity.GameEntity;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface GameMapper {
 
     @Select("select * from game where id = #{id}")
     GameEntity findById(Integer id);
+
+    List<GameEntity> findByIdList(@Param("list") List<Integer> idList);
 
     void insert(GameEntity entity);
 

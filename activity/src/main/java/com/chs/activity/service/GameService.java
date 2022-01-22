@@ -5,6 +5,7 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.dao.GameMapper;
+import com.chs.activity.element.OssElement;
 import com.chs.activity.modal.bean.GameQuery;
 import com.chs.activity.modal.bean.heybox.GameInfo;
 import com.chs.activity.modal.bean.heybox.GameInfoRes;
@@ -38,11 +39,8 @@ public class GameService {
     @Resource
     GameMapper gameMapper;
 
-    @Value("${oss.accessKeyId}")
-    private String accessKeyId;
-
-    @Value("${oss.accessKeySecret}")
-    private String accessKeySecret;
+    @Resource
+    OssElement ossElement;
 
     private String heihePrefix = "https://api.xiaoheihe.cn/game/web/get_game_detail/?appid=";
 
@@ -64,7 +62,7 @@ public class GameService {
                 .oriPrice(x.getOriPrice())
                 .steamImg(x.getSteamImg())
                 .steamUrl(x.getSteamUrl())
-                .gameInfo(JSON.parseObject(x.getInfo(),GameInfo.class))
+                //.gameInfo(JSON.parseObject(x.getInfo(),GameInfo.class))
                 .build()).collect(Collectors.toList());
         return new EasyPage<>(gameVOList, pageInfo.getTotal());
     }
@@ -89,6 +87,9 @@ public class GameService {
                 gameEntity.setWeight(0);
                 gameEntity.setOriPrice(gameInfo.getHeybox_price().getOriginal_coin()/10);
                 gameEntity.setExe(UUID.randomUUID().toString().replaceAll("-",""));
+
+                String fileUrl = ossElement.fileUrl(gameInfo.getName());
+                gameEntity.setExe(fileUrl);
 
 
             }
@@ -122,24 +123,7 @@ public class GameService {
 
 
     public String upload(MultipartFile file) {
-
-        String endpoint = "https://oss-cn-beijing.aliyuncs.com";
-        String bucketName = "steamhy";
-        String objectName = "abc/"+file.getOriginalFilename();
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-        String url = "";
-        try {
-            ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(file.getBytes()));
-            ossClient.shutdown();
-            url = ossClient.generatePresignedUrl(bucketName, objectName, new Date(System.currentTimeMillis()+1000L*60*60)).toString();
-            System.out.println(url);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return url;
-
+        return ossElement.upload(file);
     }
 
     private String getHeadImg(String appId) {

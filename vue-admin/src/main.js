@@ -6,7 +6,11 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 
-import ElementPlus from 'element-plus';
+//import ElementPlus from 'element-plus';
+
+import {ElHeader,ElContainer,ElMain,ElButton,ElDialog,ElInput} from 'element-plus';
+
+
 import 'element-plus/lib/theme-chalk/index.css';
 
 
@@ -16,7 +20,8 @@ import login from './components/admin/login.vue'
 import myMain from './components/frontend/myMain.vue'
 import help from "./components/frontend/help";
 import hot from "./components/frontend/hot"
-import myIndex from "./components/frontend/myIndex";
+import detail from "./components/frontend/detail";
+import gameUser from "./components/frontend/gameUser";
 
 import adminMain from "./components/admin/adminMain";
 import adminOrder from "./components/admin/adminOrder";
@@ -29,19 +34,22 @@ import {commonInit} from "./assets/js/common.js"
 
 
 const app = createApp(App)
-app.use(ElementPlus)
+//app.use(ElementPlus)
+// app.use(ElHeader,ElContainer,ElMain,ElButton,ElDialog)
+app.use(ElHeader)
+app.use(ElButton)
+app.use(ElContainer)
+app.use(ElMain)
+app.use(ElDialog)
+app.use(ElInput)
 app.use(VueAxios, axios)
 
- //axios.defaults.baseURL = 'http://steamhy.com:8081/'
- axios.defaults.baseURL = 'http://localhost:8081/'
+ axios.defaults.baseURL = 'http://steamhy.com:8081/'
+ //axios.defaults.baseURL = 'http://localhost:8081/'
 
 
 const routes = [
 
-    {
-        path: '/',
-        component: myIndex
-    },
 
     {
         path: '/login',
@@ -57,11 +65,13 @@ const routes = [
     },
 
     {
-        path: '/game/', component: myMain, children: [
+        path: '/', component: myMain, children: [
             {path: '', component: homepage},
             {path: 'hot', component: hot},
             {path: 'order', component: order},
             {path: 'help', component: help},
+            {path: 'detail/:id', component: detail},
+            {path: 'gameUser', component: gameUser},
         ]
     },
 

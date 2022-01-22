@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class GameQuery {
 
+    private Integer id;
     private Integer pageNum;
     private Integer pageSize;
     private String appId;

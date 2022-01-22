@@ -5,11 +5,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.chs.activity.base.exception.BusinessException;
 import com.chs.activity.base.response.EasyPage;
 import com.chs.activity.config.Constans;
-import com.chs.activity.dao.OrderMapper;
+import com.chs.activity.dao.GameListMapper;
 import com.chs.activity.dao.GameMapper;
+import com.chs.activity.dao.GameUserMapper;
+import com.chs.activity.dao.OrderMapper;
+import com.chs.activity.modal.bean.OrderParam;
 import com.chs.activity.modal.bean.OrderQuery;
-import com.chs.activity.modal.entity.OrderEntity;
 import com.chs.activity.modal.entity.GameEntity;
+import com.chs.activity.modal.entity.GameListEntity;
+import com.chs.activity.modal.entity.GameUserEntity;
+import com.chs.activity.modal.entity.OrderEntity;
 import com.chs.activity.utils.HttpUtils;
 import com.chs.activity.utils.SignUtils;
 import com.github.pagehelper.PageHelper;
@@ -39,6 +44,13 @@ public class OrderService {
     GameMapper gameMapper;
 
     @Resource
+    GameUserMapper gameUserMapper;
+
+    @Resource
+    GameListMapper gameListMapper;
+
+
+    @Resource
     OrderMapper orderMapper;
 
 
@@ -54,16 +66,103 @@ public class OrderService {
     @Value("${payjs.notifyUrl}")
     private String notifyUrl;
 
-    public OrderEntity placeOrder(Integer gameId, String phone) {
+    public OrderEntity placeOrder(OrderParam orderParam) {
 
-        if (StringUtils.isEmpty(gameId) || StringUtils.isEmpty(phone)){
+        Integer type = orderParam.getType();
+        String phone = orderParam.getPhone();
+        Integer productId = orderParam.getProductId();
+
+        if (StringUtils.isEmpty(phone) || type == null || productId == null) {
             throw new IllegalArgumentException("placeOrder param err");
         }
 
-        GameEntity gameEntity = gameMapper.findById(gameId);
-        if (gameEntity == null) {
-            throw BusinessException.of("游戏不存在");
+        if (type == 1) {
+
+            GameEntity gameEntity = gameMapper.findById(productId);
+            if (gameEntity == null) {
+                throw BusinessException.of("游戏不存在");
+            }
+
+            Integer totalFee = gameEntity.getPrice();
+            String productName = gameEntity.getName();
+            return doOrder(type, productId, productName, totalFee, phone);
         }
+
+        if (type == 2) {
+            GameListEntity gameListEntity = gameListMapper.findById(productId);
+
+            Integer totalFee = gameListEntity.getPrice();
+            String productName = gameListEntity.getName();
+            return doOrder(type, productId, productName, totalFee, phone);
+        }
+        if (type == 3) {
+            Integer totalFee = productId == 1 ? 198 : 298;
+            String productName = productId == 1 ? "会员" : "高级会员";
+            return doOrder(type, productId, productName, totalFee, phone);
+        }
+
+        return null;
+
+    }
+
+    public void payHandle(Map<String, String> params) {
+
+        params = new TreeMap<>(params);
+        log.info(JSON.toJSONString(params));
+        String sign = params.get("sign");
+        params.remove("sign");
+        String signData = SignUtils.sign(params, key);
+        if (sign.equals(signData)) {
+
+            String orderId = params.get("out_trade_no");
+            OrderEntity order = orderMapper.findByOrderId(orderId);
+            if (order == null) {
+                log.error("无此订单{}", JSON.toJSONString(params));
+                return;
+            }
+            String transactionId = params.get("transaction_id");
+            String timeEnd = params.get("time_end");
+            order.setTimeEnd(timeEnd);
+            order.setTransactionId(transactionId);
+            order.setStatus(Constans.ORDER_STATUS_SUCCESS);
+            order.setUpdateTime(LocalDateTime.now());
+            orderMapper.update(order);
+
+            Integer type = order.getType();
+            if (type == 1) {
+
+                GameUserEntity gameUserEntity = gameUserMapper.findByOrderId(orderId);
+                if (gameUserEntity == null) {
+                    gameUserEntity = GameUserEntity.builder().gameId(order.getProductId())
+                            .orderId(orderId)
+                            .phone(order.getPhone())
+                            .createTime(LocalDateTime.now())
+                            .updateTime(LocalDateTime.now())
+                            .build();
+                    gameUserMapper.insert(gameUserEntity);
+                }
+
+            }
+
+        } else {
+            log.error("sign err");
+        }
+
+    }
+
+    public OrderEntity findByOrderId(String orderId) {
+        return orderMapper.findByOrderId(orderId);
+    }
+
+    public EasyPage<OrderEntity> list(OrderQuery orderQuery) {
+        PageHelper.startPage(orderQuery.getPageNum(), orderQuery.getPageSize());
+        List<OrderEntity> orderEntityList = orderMapper.list(orderQuery);
+        PageInfo pageInfo = new PageInfo(orderEntityList);
+        return new EasyPage<>(pageInfo.getList(), pageInfo.getTotal());
+    }
+
+
+    private OrderEntity doOrder(Integer type, Integer productId, String productName, Integer totalFee, String phone) {
 
         Random random = new Random();
         String code = String.format("%s%05d", "HS", random.nextInt(9999));
@@ -71,12 +170,12 @@ public class OrderService {
 
         Map<String, String> payData = new TreeMap<>();
         payData.put("mchid", mchid);
-        payData.put("total_fee", String.valueOf(gameEntity.getPrice()));
+        payData.put("total_fee", String.valueOf(totalFee));
         payData.put("out_trade_no", orderId);
-        payData.put("body", gameEntity.getName());
+        payData.put("body", productName);
         payData.put("notify_url", notifyUrl);
         // 进行sign签名
-        payData.put("sign", SignUtils.sign(payData,key));
+        payData.put("sign", SignUtils.sign(payData, key));
 
         String res;
         try {
@@ -96,10 +195,11 @@ public class OrderService {
             OrderEntity order = OrderEntity.builder()
                     .orderId(orderId)
                     .orderJsId(payJsOrderId)
-                    .gameName(gameEntity.getName())
-                    .gameId(gameId)
+                    .productName(productName)
+                    .productId(productId)
                     .phone(phone)
-                    .totalFee(gameEntity.getPrice())
+                    .type(type)
+                    .totalFee(totalFee)
                     .status(Constans.ORDER_STATUS_DEFAULT)
                     .qrCode(qrCode)
                     .createTime(LocalDateTime.now())
@@ -111,45 +211,5 @@ public class OrderService {
             throw BusinessException.of("订单创建失败");
         }
 
-    }
-
-    public void payHandle(Map<String, String> params) {
-
-        params = new TreeMap<>(params);
-        log.info(JSON.toJSONString(params));
-        String sign = params.get("sign");
-        params.remove("sign");
-        String signData = SignUtils.sign(params,key);
-        if (sign.equals(signData)) {
-
-            String orderId = params.get("out_trade_no");
-            OrderEntity order = orderMapper.findByOrderId(orderId);
-            if (order == null) {
-                log.error("无此订单{}", JSON.toJSONString(params));
-                return;
-            }
-            String transactionId = params.get("transaction_id");
-            String timeEnd = params.get("time_end");
-            order.setTimeEnd(timeEnd);
-            order.setTransactionId(transactionId);
-            order.setStatus(Constans.ORDER_STATUS_SUCCESS);
-            order.setUpdateTime(LocalDateTime.now());
-            orderMapper.update(order);
-
-        } else {
-            log.error("sign err");
-        }
-
-    }
-
-    public OrderEntity findByOrderId(String orderId) {
-        return orderMapper.findByOrderId(orderId);
-    }
-
-    public EasyPage<OrderEntity> list(OrderQuery orderQuery) {
-        PageHelper.startPage(orderQuery.getPageNum(), orderQuery.getPageSize());
-        List<OrderEntity> orderEntityList = orderMapper.list(orderQuery);
-        PageInfo pageInfo = new PageInfo(orderEntityList);
-        return new EasyPage<>(pageInfo.getList(), pageInfo.getTotal());
     }
 }

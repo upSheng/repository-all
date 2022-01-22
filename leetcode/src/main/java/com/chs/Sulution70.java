@@ -1,5 +1,8 @@
 package com.chs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <pre>
  *
@@ -18,19 +21,24 @@ package com.chs;
  */
 public class Sulution70 {
 
-    public int climbStairs(int n) {
+    public int longestPalindrome(String[] words) {
 
-
-
-        int[] dp = new int[n];
-        dp[0] = 1;
-        dp[1] = 2;
-
-        for(int i= 2;i<n;i++){
-            dp[i] = dp[i-1] + dp[i-2];
+        Map<String,Integer> map = new HashMap<>();
+        for(String word : words){
+            map.put(word, map.getOrDefault(word,0)+1);
         }
 
-        return dp[n-1];
+        int n = 0;
+        for(String key : map.keySet()){
 
+            n += Math.min(map.get(key),map.getOrDefault(new StringBuilder(key).reverse().toString(),0));
+        }
+        return 2*n;
+
+    }
+
+    public static void main(String[] args) {
+        Sulution70 s = new Sulution70();
+        System.out.println(s.longestPalindrome(new String[]{"ab","ty","yt","lc","cl","ab"}));
     }
 }

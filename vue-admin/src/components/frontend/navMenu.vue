@@ -10,8 +10,8 @@
 <!--                <i class="el-icon-s-data"></i>游戏中心-->
 <!--            </div>-->
 
-            <div @click="goPath('/myGame')">
-                <i class="el-icon-s-order"></i>我的游戏
+            <div @click="goPath('/gameUser')">
+                <i class="el-icon-s-order"></i>我的收藏
             </div>
 
 
@@ -20,15 +20,16 @@
 <!--                会员中心-->
 <!--            </div>-->
 
-            <div @click="goPath('/')">
-                <i class="el-icon-headset"></i>联系客服
-            </div>
+<!--            <div @click="kf">-->
+<!--                    <i class="el-icon-headset"></i>联系客服-->
+
+<!--            </div>-->
 
             <div>
 
                 <div @click="dialogLogin = true" v-show="!login">
                     <i class="el-icon-s-custom"></i>登录
-                    <div class="game">免费领取游戏</div>
+<!--                    <div class="game">免费领取游戏</div>-->
                 </div>
 
                 <div @click="exit" v-show="login">
@@ -100,22 +101,29 @@
             };
         },
         methods: {
+
+            kf(){
+                window.open('https://cschat-ccs.aliyun.com/index.htm?tntInstId=_2SHE8Ns&scene=SCE00010820');
+            }
+            ,
             loginByCode() {
 
-                this.axios.post('/loginByCode', this.user).then((response) => {
+                ElMessage("暂未接入");
 
-                    if (response.data.code == 200) {
-
-                        localStorage.setItem("token", response.data.data.token)
-                        localStorage.setItem("userId", response.data.data.userId)
-                        localStorage.setItem("phone", response.data.data.phone)
-                        this.login = true;
-                        this.dialogLogin = false;
-
-                    } else {
-                        ElMessage(response.data.msg);
-                    }
-                })
+                // this.axios.post('/loginByCode', this.user).then((response) => {
+                //
+                //     if (response.data.code == 200) {
+                //
+                //         localStorage.setItem("token", response.data.data.token)
+                //         localStorage.setItem("userId", response.data.data.userId)
+                //         localStorage.setItem("phone", response.data.data.phone)
+                //         this.login = true;
+                //         this.dialogLogin = false;
+                //
+                //     } else {
+                //         ElMessage(response.data.msg);
+                //     }
+                // })
 
             }
             ,
@@ -130,12 +138,12 @@
 
             goPath(path) {
                 if (!this.login){
-                    if (path == '/myGame'){
+                    if (path == '/gameUser'){
                         this.dialogLogin = true;
                         return;
                     }
                 }
-                path = '/game'+path;
+                //path = '/game'+path;
                 this.$router.push(path);
             },
             getCode(){
@@ -144,10 +152,12 @@
                     ElMessage("请填写手机号码");
                     return;
                 }
+
                 this.axios.get('/getCode?phone='+this.user.phone).then((response) => {
 
                     if (response.data.code == 200) {
-                        ElMessage("短信发送成功");
+                        //ElMessage("短信发送成功");
+                        ElMessage("暂未接入");
                     } else {
                         ElMessage(response.data.msg);
                     }

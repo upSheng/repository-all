@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class OrderParam {
-    private Integer gameId;
+    private Integer productId;
     private String phone;
+    private Integer type;
 }

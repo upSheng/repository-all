@@ -10,8 +10,8 @@
 
             <if test="name != null">
                 and (
-                game_name like concat('%',#{name},'%') or
-                game_id like concat('%',#{name},'%') or
+                product_name like concat('%',#{name},'%') or
+                product_id like concat('%',#{name},'%') or
                 phone like concat('%',#{name},'%') or
                 order_id like concat('%',#{name},'%')
                 )
@@ -41,12 +41,16 @@
                 transaction_id,
             </if>
 
-            <if test="gameId != null">
-                game_id,
+            <if test="productId != null">
+                product_id,
             </if>
 
-            <if test="gameName != null">
-                game_name,
+            <if test="productName != null">
+                product_name,
+            </if>
+
+            <if test="type != null">
+                type,
             </if>
 
             <if test="phone != null">
@@ -89,12 +93,16 @@
                 #{transactionId},
             </if>
 
-            <if test="gameId != null">
-                #{gameId},
+            <if test="productId != null">
+                #{productId},
             </if>
 
-            <if test="gameName != null">
-                #{gameName},
+            <if test="productName != null">
+                #{productName},
+            </if>
+
+            <if test="type != null">
+                #{type},
             </if>
 
             <if test="phone != null">

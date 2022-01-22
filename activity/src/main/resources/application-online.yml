@@ -1,15 +1,32 @@
 server:
 
 spring:
-  data:
-    mongodb:
-      uri: mongodb://test:123456@steamhy.com:27017/test
+#  data:
+#    mongodb:
+#      uri: mongodb://test:123456@steamhy.com:27017/test
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-uf6y0dxj4qd3dv7r16o.mysql.rds.aliyuncs.com:3306/steam?characterEncoding=UTF-8&useSSL=false
+    username: chs
+    password: Chs123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      max-lifetime: 250000
 
+pagehelper:
+  helper-dialect: mysql
 
+mybatis:
+  mapper-locations: classpath*:/mappers/*.xml
+  #开启驼峰命名转换
+  configuration.map-underscore-to-camel-case: true
 
-#noSslPort: 81
+oss:
+  accessKeyId: LTAI5tF7SfqcS1AKEj7JkDz1
+  accessKeySecret: AJINNpc6Ho9tiDVSU2hySYW3wgm2I7
+
 payjs:
   mchid: 1547187151
   key: LfFjXZ6ANijkPSEC
   url: https://payjs.cn/api/native
-  notifyUrl: https://steamhy.com:8082/payHandle
+  notifyUrl: http://steamhy.com:${server.port}/payHandle

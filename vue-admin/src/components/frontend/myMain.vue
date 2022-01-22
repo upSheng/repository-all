@@ -7,7 +7,6 @@
       <el-main>
         <router-view></router-view> <!--路由出口 -->
       </el-main>
-<!--      <el-footer>Footer <a href="tencent://message/?uin=646188530">在线客服①</a></el-footer>-->
     </el-container>
   </div>
 </template>

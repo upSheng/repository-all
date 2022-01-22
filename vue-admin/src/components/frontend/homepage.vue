@@ -1,30 +1,34 @@
 <template>
     <div class="homepage" >
 
+        <h1>steamhy steamdb, 杉云</h1>
         <div class="productBox">
             <div class="product"  v-for="game in gameList" :key="game">
                 <div >
-                    <a target="_blank"  :href="game.steamUrl">
+<!--                    <router-link target="_blank" :to="{path:'/game/detail/'+game.id}">-->
+<!--                        <img class="img"  :src=game.steamImg />-->
+<!--                    </router-link>-->
+
+                    <a target="_blank" :href="game.steamUrl">
                         <img class="img"  :src=game.steamImg />
                     </a>
+
                 </div>
                 <div class="desc">
                     <div>
                         {{game.name}}
                     </div>
 
-                    <div>
-                        {{game.price/100}}
-                    </div>
+<!--                    <div>-->
+<!--                        {{game.price/100}}-->
+<!--                    </div>-->
 
-                    <div>
-                        <el-button @click="open(game.id)">购买</el-button>
-                    </div>
+<!--                    <div>-->
+<!--                        <el-button @click="open(game.id)">购买</el-button>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
-
-
 
 
 
@@ -55,7 +59,7 @@
 
                 gameList: [],
                 param:{"pageSize":100,"pageNum":1},
-                placeOrderParam:{phone:"",gameId:""},
+                placeOrderParam:{"phone":"","productId":"","type":1},
                 qrCode: "",
                 orderId:"",
                 show: false,
@@ -83,7 +87,7 @@
             open: function (id) {
 
                 this.qrCode = "";
-                this.placeOrderParam.gameId = id;
+                this.placeOrderParam.productId = id;
 
                 let phone = localStorage.getItem("phone");
                 if (phone != null && phone != ""){
