@@ -12,7 +12,7 @@
     "compression-webpack-plugin": "^1.1.12",
     "core-js": "^3.6.5",
     "element-plus": "*",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^10",
     "swiper": "^6.5.8",
     "vue": "^3.0.11",
